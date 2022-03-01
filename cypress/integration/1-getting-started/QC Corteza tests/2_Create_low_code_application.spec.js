@@ -10,7 +10,7 @@ it('should be able to create a low code application', () => {
     cy.visit('https://qc.cortezaproject.org/compose/')
     cy.get('.btn-primary').click()
     cy.get('#ns-nm').type("Cypress Test Namespace") // in .type("Name") write the name of your namespace
-    cy.get('#__BVID__97').type("test_namespace") // in .type("handle") write the short name/handle of your namespace
+    cy.get('#__BVID__107').type("test_namespace") // in .type("handle") write the short name/handle of your namespace
     cy.get('.d-flex > .btn-light').click()
     cy.get('[href="/compose/ns/test_namespace/pages"]').click() // here in the link where it says test_namespace, use your handle that you gave in the function above
 
