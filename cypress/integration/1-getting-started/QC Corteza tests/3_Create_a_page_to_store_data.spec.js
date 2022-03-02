@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
+const baseURL = Cypress.env('baseURL')
 
 it('should be able to create a page that stores data', () => {
 // Once your namespace is created from the previous step '2_Create_low_code_application', we are going to use the same namespace here
 
-cy.visit('https://qc.cortezaproject.org/compose/')
+cy.visit(baseURL + '/compose/')
 cy.get(':nth-child(2) > .form-control').type("bojan.svirkov@planetcrust.com") // Here in .type("Email") write your email address for your account
-    cy.get(':nth-child(3) > .form-control').type("Corteza123") // In .type("PASS") write the password for your account 
+    cy.get(':nth-child(3) > .form-control').type("Corteza123") // In .type("PASS") write the password for your account
     cy.get('.btn-primary').click()
     cy.get('[href="/compose/ns/test_namespace/pages"]').click()
     // cy.get('a > .btn').click()

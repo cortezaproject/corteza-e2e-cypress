@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
+const baseURL = Cypress.env('baseURL')
 
 it('should be able to create a new user in corteza', () => {
 
-    cy.visit('https://qc.cortezaproject.org/auth/login')
+    cy.visit(baseURL + '/auth/login')
     cy.get(':nth-child(2) > a').click()
     cy.get(':nth-child(2) > .form-control').type("cypress@test.com") // in .type("EMAIL") write any email that you want to create
     cy.get(':nth-child(3) > .form-control').type("Cypress123$?") // in .type("PASSWORD") write any password that you want to have for the account

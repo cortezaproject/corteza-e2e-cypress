@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
+const baseURL = Cypress.env('baseURL')
 
 it('should be able to visit the page', () => {
 
-    cy.visit('http://127.0.0.1:8080/')
-    
+    cy.visit(baseURL + '/')
+
 })
 
 it('should be able to enter login credentials', () => {
@@ -14,7 +15,7 @@ it('should be able to enter login credentials', () => {
 })
 
 it('should be able to login in', () => {
-    
+
     cy.get('.btn-primary').click()
 
 })
