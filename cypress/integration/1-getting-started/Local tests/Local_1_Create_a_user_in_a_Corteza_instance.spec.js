@@ -2,25 +2,21 @@
 const baseURL = Cypress.env('baseURL')
 
 it('should be able to visit the page', () => {
-    cy.visit(baseURL + '/')
+  cy.visit(baseURL + '/')
 })
 
 it('should be able to go to the create a new account page', () => {
-    cy.get(':nth-child(2) > a').click()
+    cy.request(baseURL + '/auth/signup')
+    cy.visit(baseURL + '/auth/signup')
 })
 
-it('should be able to write signup credentials', () => {
-    cy.visit(baseURL + '/')
-    cy.get(':nth-child(2) > a').click()
-    cy.get(':nth-child(2) > .form-control').type("cypress@test.com")
-    cy.get(':nth-child(3) > .form-control').type("CypressTest123$?")
-    cy.get(':nth-child(4) > .form-control').type("Cypress Test Account")
-    cy.get(':nth-child(5) > .form-control').type("Cypress_test_account")
-
-    // "clicks" (submit) should be inside the same test!
+it('should be able to write signup credentials, create an account and log in', () => {
+   
+    cy.get('[name=email]').type("cypress@test.com")
+    cy.get('[name=password]').type("CypressTest123$?")
+    cy.get('[name=name]').type("Cypress Test Account")
+    cy.get('[name=handle]').type("Cypress_test_account")
     cy.get('#submit').click()
+    cy.get('[href="/"] > .bi').click()
+    cy.get('.close').click()
 })
-
-// it('should be able create the account', () => {
-//     cy.request(baseURL + '/auth/signup')
-// })
