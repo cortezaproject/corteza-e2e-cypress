@@ -16,19 +16,18 @@ it('Log in and access the already created NS', () => {
 
 it('Create a page to store data', () => {
 
-    cy.get('.vue-portal-target > .btn').click()
-    cy.get('.btn-primary').click()
-    cy.get('input:eq(3)').type("Cypress Test Module")
-    cy.get('input:eq(4)').type("Cypress_Test_Module")
-    cy.get('input:eq(5)').clear().type("Name")
-    cy.get('input:eq(6)').clear().type("Name")
-    cy.get('[colspan="7"] > .btn').click()
-    cy.get('input:eq(8)').type("Surname")
-    cy.get('input:eq(9)').type("Surname")
-    cy.get('[colspan="7"] > .btn').click()
-    cy.get('input:eq(11)').type("Age")
-    cy.get('input:eq(12)').type("Age")
-    cy.get('select:eq(2)').select('Number input')
-    cy.get('.d-flex > .btn-light').click()
-
+    cy.get('.vue-portal-target > .btn').click() // Accesing the admin panel
+    cy.get('.btn-primary').click() // Clicking on New Module button
+    cy.get('input:eq(3)').type("Cypress Test Module") // Typing the Module name
+    cy.get('input:eq(4)').type("Cypress_Test_Module") // Typing the Module Handle
+    cy.get('input:eq(5)').clear().type("Name") // Entering the name of the first module record field
+    cy.get('input:eq(6)').clear().type("Name") // Entering the title of the first module record field
+    cy.get('[colspan="7"] > .btn').click() // Clicking on the + Add new field button
+    cy.get('input:eq(8)').type("Surname") // Entering the name of the Second module record field
+    cy.get('input:eq(9)').type("Surname") // Entering the title of the Second module record field
+    cy.get('[colspan="7"] > .btn').click() // Clicking on the + Add new field button
+    cy.get('input:eq(11)').type("Age") // Entering the name of the third module record field
+    cy.get('input:eq(12)').type("Age") // Entering the title of the Second module record field
+    cy.get('select:eq(2)').select('Number input') // Selecting the type of the record, in this case Number input
+    cy.get('.d-flex > .btn-light').click() // Clicking on Save and close
 })
