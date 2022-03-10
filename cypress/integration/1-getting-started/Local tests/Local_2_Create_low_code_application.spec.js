@@ -27,8 +27,8 @@ it('should be able to login in', () => {
 it('should be able to create a new namespace', () => {
 
     cy.get('.btn-primary').click()
-    cy.get('#ns-nm').type("Cypress test namespace")    // in .type("Name") write the name of your namespace
-    cy.get('[id=__BVID__114]').type("Cypress_test_NS")  // in .type("handle") write the short name/handle of your namespace
+    cy.get('input:eq(1)').type("Cypress test namespace")    // in .type("Name") write the name of your namespace
+    cy.get('input:eq(2)').type("Cypress_test_NS")  // in .type("handle") write the short name/handle of your namespace
     cy.get('.d-flex > .btn-light').click()
 
 })
