@@ -4,5 +4,7 @@
   },
 
   "watchForFileChanges": false,
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "video":true
 }
+
