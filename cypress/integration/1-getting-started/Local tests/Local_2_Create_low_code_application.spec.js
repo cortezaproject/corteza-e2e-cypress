@@ -12,7 +12,7 @@ it('should be able to enter login credentials', () => {
 
 it('should be able to login in', () => {
     cy.get('[data-test-id="button-login-and-remember"]').click()
-    cy.visit(baseURL + '/compose/namespaces')
+    cy.visit(baseURL + '/compose/namespaces') // When testing things locally compose part should be removed (since compose is added in .env file)
 })
 
 
