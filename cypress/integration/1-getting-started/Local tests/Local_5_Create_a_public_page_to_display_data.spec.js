@@ -4,15 +4,15 @@ const baseURL = Cypress.env('baseURL')
 
 it('Log in and access the already created NS', () => {
     // First we will need to log in and access the already created NS from the previos test;
-    cy.visit(baseURL + '/compose/namespaces')  // When testing things locally compose part should be removed
-    cy.get('[data-test-id="input-email"]').type("bojan.svirkov@planetcrust.com") // Here in .type("Email") write your email address for your account
-    cy.get('[data-test-id="input-password"]').type("Corteza123") // In .type("PASS") write the password for your account
+    cy.visit(baseURL + '/compose/namespaces') // When testing things locally compose part should be removed
+    cy.get('[data-test-id="input-email"]').type("EMAIL") // Here in .type("Email") write your email address for your account
+    cy.get('[data-test-id="input-password"]').type("PASS") // In .type("PASS") write the password for your account
     cy.get('[data-test-id="button-login-and-remember"]').click()
-    cy.get('[href="/compose/ns/Cypress_test_NS/pages"]').click() // Here we use the handle from the created NS (When testing things locally compose part should be removed)
+    cy.get('[href="/compose/ns/>>HANDLE<</pages"]').click() // Here we use the handle from the created NS (When testing things locally compose part should be removed)
     cy.get('[data-test-id="button-admin"]').click() // Pressing on admin button
 })
+
 it('Builds a public page to display data', () => {
-    // This scenario might fail sometimes so just make sure to rerun the test from scratch
     cy.get('a:eq(12)').click() // We access the pages from the sidebar
     cy.get('[data-test-id="input-name"]').type("Demo Page") // We type the name of our page
     cy.get('[data-test-id="button-create-page"]').click() // We click on the Create page button

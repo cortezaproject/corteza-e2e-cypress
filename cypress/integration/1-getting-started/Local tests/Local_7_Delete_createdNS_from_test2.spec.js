@@ -15,10 +15,8 @@ it('should be able to login in', () => {
     cy.visit(baseURL + '/compose/namespaces') // When testing things locally compose part should be removed (since compose is added in .env file)
 })
 
-
-it('should be able to create a new namespace', () => {
-    cy.get('[data-test-id="button-create"]').click()
-    cy.get('[data-test-id="input-name"]').type("NAME")    // in .type("Name") write the name of your namespace
-    cy.get('[data-test-id="input-slug"]').type("HANDLE")  // in .type("handle") write the short name/handle of your namespace
-    cy.get('[data-test-id="button-save-and-close"]').click()
+// In order the tests from 2-6 to be re-run we need to delete the already create namespace from the second test
+it('should delete the preexisting namespace', () => {
+    cy.get('.card-footer:eq(7) > div > :eq(1)').click() // The number 7 here may vary depending on how many NS (cards) you have on your main screen (DB)
+    cy.get('button:eq(10)').click().click() // Here we click on button Delete and confirming 
 })
