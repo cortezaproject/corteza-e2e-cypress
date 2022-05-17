@@ -1,0 +1,132 @@
+allow:
+  cypress-super-admin:
+    corteza::compose/:
+      - grant
+      - action-log.read
+      - settings.read
+      - settings.manage
+
+    corteza::automation/:
+      - grant
+      - settings.read
+      - settings.manage
+
+    corteza::federation/:
+      - grant
+      - settings.read
+      - settings.manage
+
+    corteza::system/:
+      - grant
+      - settings.read
+      - settings.manage
+      - application.create
+      - applications.search
+      - auth-client.create
+      - auth-clients.search
+      - user.create
+      - users.search
+      - template.create
+      - templates.search
+      - role.create
+      - roles.search
+      - reminder.assign
+      - queue.create
+      - queues.search
+      - report.create
+      - reports.search
+
+    corteza::system:auth-client/*:
+      - read
+      - update
+      - delete
+      - authorize
+
+    corteza::system:application/*:
+      - read
+      - update
+      - delete
+
+    corteza::system:user/*:
+      - read
+      - update
+      - suspend
+      - unsuspend
+      - delete
+
+    corteza::system:role/*:
+      - read
+      - update
+      - delete
+      - members.manage
+
+    corteza::system:report/*:
+      - read
+      - update
+      - delete
+      - run
+
+  cypress-viewer:
+    corteza::compose/:
+      - grant
+      - action-log.read
+      - settings.read
+      - namespaces.search
+
+    corteza::compose:namespace/*:
+      - read
+      - pages.search
+      - modules.search
+      - charts.search
+
+    corteza::compose:module/*/*:
+      - read
+      - records.search
+
+    corteza::compose:module-field/*/*/*:
+      - record.value.read
+
+    corteza::compose:record/*/*/*:
+      - read
+
+    corteza::compose:chart/*/*:
+      - read
+
+    corteza::compose:page/*/*:
+        - read
+
+  cypress-updater:
+    corteza::compose/:
+      - grant
+      - settings.read
+      - settings.manage
+      - namespaces.search
+
+    corteza::compose:namespace/*:
+      - read
+      - update
+      - manage
+      - pages.search
+      - modules.search
+      - charts.search
+
+    corteza::compose:module/*/*:
+      - read
+      - update
+      - records.search
+
+    corteza::compose:module-field/*/*/*:
+      - record.value.read
+      - record.value.update
+
+    corteza::compose:record/*/*/*:
+      - read
+      - update
+
+    corteza::compose:chart/*/*:
+      - read
+      - update
+
+    corteza::compose:page/*/*:
+        - read
+        - update

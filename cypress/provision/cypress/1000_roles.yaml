@@ -1,0 +1,4 @@
+roles:
+  cypress-super-admin: { name: Cypress Super Admin }
+  cypress-viewer:      { name: Cypress Viewer }
+  cypress-updater:     { name: Cypress Updater }
