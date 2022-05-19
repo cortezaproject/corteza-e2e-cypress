@@ -4,6 +4,12 @@
 yarn
 ```
 
+# Use in case of a CSRF token issue
+
+```shell
+AUTH_CSRF_ENABLED=false
+```
+
 # Running
 
 ```shell
