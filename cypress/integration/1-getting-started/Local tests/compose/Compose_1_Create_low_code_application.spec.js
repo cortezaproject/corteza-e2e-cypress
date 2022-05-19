@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 const baseURL = Cypress.env('baseURL')
 
-it('should be able to visit the page', () => {
+it('should be able to visit the log in page', () => {
     cy.visit(baseURL + '/') // localhost in the env file should be changed to reflect the compose host
 })
 
