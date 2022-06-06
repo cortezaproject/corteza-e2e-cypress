@@ -1,25 +1,18 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const baseURL = Cypress.env('baseURL')
+const email = Cypress.env('user').email
+const password = Cypress.env('user').password
+const updatedPassword = Cypress.env('user').updatedPassword
+// email and password should be declared in your local cypress.env.json file
+
+Cypress.Commands.add('login', (changePassword) => {
+  if (changePassword) {
+    cy.visit(baseURL + '/auth') // When running this test make sure that the base url is set to localhost:3000
+    cy.get('[data-test-id="input-password"]').type(updatedPassword)
+  } else {
+    cy.visit(baseURL + '/')
+    cy.get('[data-test-id="input-password"]').type(password)
+  }
+
+  cy.get('[data-test-id="input-email"]').type(email)
+  cy.get('[data-test-id="button-login-and-remember"]').click()
+})

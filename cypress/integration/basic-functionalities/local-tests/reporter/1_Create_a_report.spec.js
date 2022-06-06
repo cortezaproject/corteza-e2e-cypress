@@ -1,15 +1,10 @@
 /// <reference types="cypress" />
 const baseURL = Cypress.env('baseURL')
+
 // Before running this test first run the Server test 2 in order to create a user so you can log in.
 describe('Test for creating a report', () => {
-  context('Test for logging in the user', () => {
-    it('should be able to log in successfully', () => {
-      cy.visit(baseURL + '/') // Localhost in the env file should be changed to reflect the Reporter host. We are visiting the main authentication page here.
-      cy.get('[data-test-id="input-email"]').type('cypress@test.com')
-      cy.get('[data-test-id="input-password"]').type('cypress123')
-      cy.get('[data-test-id="button-login-and-remember"]').click()
-      cy.visit(baseURL + '/list') // Visiting main page of Reporter
-    })
+  before(() => {
+    cy.login()
   })
 
   context('Test for creating a report without any data entered', () => {
@@ -56,14 +51,14 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="input-description"]').type('This is an automated description.')
       cy.get('[data-test-id="button-save"]').click()
       cy.get('.b-toast-success') // We check if the success toast appears
-      
+
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress report')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_handle')
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is an automated description.')
       cy.get('[data-test-id="button-report-builder"]').click()
       cy.contains('Cypress report')
       cy.get('[data-test-id="button-back"]').click()
-     
+
       cy.get('table > tbody > :first-child()').click() // We click on the created report
       cy.get('.b-toast-danger').should('not.exist') // We check that an error toast doesn't appear
       cy.visit(baseURL + '/list') // Visiting main page of Reporter
