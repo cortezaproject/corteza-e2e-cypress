@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 const baseURL = Cypress.env('baseURL')
+const email = Cypress.env('user').email
+const password = Cypress.env('user').password
 
 // Before running this test first run the Server test 2 in order to create a user so you can log in
 // and after that you need to run the reporter test 1_Create_a_report.spec.js in order to create a report so you can edit it
 describe('Test for editing a report', () => {
   before(() => {
-    cy.login()
+    cy.login({ email, password })
   })
 
   context('Test for editing a report', () => {
