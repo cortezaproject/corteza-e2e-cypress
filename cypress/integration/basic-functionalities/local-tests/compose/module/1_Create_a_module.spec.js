@@ -9,23 +9,19 @@ describe('Test for creating a module', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a module without any data entered', () => {
-    it('should not be able to create a module', () => {
+  context('Test for creating a module without any data or misconfigured field', () => {
+    it('should not be able to create a module without nay data entered', () => {
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-save-and-close"].disabled').should('exist')
     })
-  })
 
-  context('Test for creating a module with missing name', () => {
     it('should not be able to create a module with missing name', () => {
       cy.get('[data-test-id="input-module-handle"]').type('handle')
       cy.get('[data-test-id="button-save"].disabled').should('exist')
     })
-  })
 
-  context('Test for creating a module with misconfigured handle', () => {
     it('should not be able to create a module with misconfigured handle', () => {
       cy.get('[data-test-id="input-module-name"]').type('Cypress module')
       cy.get('[data-test-id="input-module-handle"]').clear().type('h')
@@ -33,15 +29,13 @@ describe('Test for creating a module', () => {
     })
   })
 
-  context('Test for checking the back button functionality', () => {
+  context('Test for checking if buttons in the toolbar or component should/should not be displayed', () => {
     it('should be able to press the back button and be redirected to the list of modules page', () => {
       cy.get('[data-test-id="button-back-without-save"]').should('exist').click()
       cy.url().should('be.equal', baseURL + '/ns/cypress_namespace/admin/modules')
     })
-  })
   
-  context('Test if the federation, discovery settings, export and permissions buttons are displayed', () => {
-    it('should not be displayed when in create a module mode', () => {
+    it('should not display federation, discovery settings, export and permissions buttons when in create module mode', () => {
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-federation-settings"]').should('not.exist')
       cy.get('[data-test-id="button-discovery-settings"]').should('not.exist')
