@@ -9,34 +9,27 @@ describe('Test for creating a simple workflow and checking its functionalities',
     cy.login({ email, password })
   })
 
-  context('Test for creating a workflow with no info entered', () => {
-    it('should not be able to create a workflow', () => {
+  context('Test for creating a workflow without any data entered or misconfigured field', () => {
+    it('should not be able to create a workflow with no info entered', () => {
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="input-label"]').clear()
-      cy.get('[data-test-id="button-save-workflow"]').click()
-      cy.get('.b-toast-warning') // We check if the warning toast appears
+      cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
     })
-  })
 
-  context('Test for creating a workflow with missing handle', () => {
     it('should not be able to create a workflow with missing handle', () => {
       cy.visit(baseURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
-      cy.get('[data-test-id="button-save-workflow"]').click()
-      cy.get('.b-toast-warning') // We check if the warning toast appears
+      cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
     })
-  })
 
-  context('Test for creating a workflow with invalid handle', () => {
     it('should not be able to create a workflow with invalid handle', () => {
       cy.visit(baseURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="input-label"]').clear().type('Cypress workflow')
       cy.get('[data-test-id="input-handle"]').type('_')
       cy.get('[data-test-id="input-description"]').type('This is a simple workflow created by an automated cypress test.')
-      cy.get('[data-test-id="button-save-workflow"]').click()
+      cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
       cy.get('[data-test-id="input-handle-invalid-state"]')
-      cy.get('.b-toast-warning') // We check if the warning toast appears
     })
   })
 

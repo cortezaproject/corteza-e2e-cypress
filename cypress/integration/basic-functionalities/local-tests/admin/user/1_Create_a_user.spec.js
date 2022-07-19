@@ -9,7 +9,7 @@ describe('Test for creating a user', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a user without any data entered', () => {
+  context('Test for creating a user without any data entered or misconfigured field', () => {
     it('should not be able to create a user', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
@@ -20,10 +20,8 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a user with missing email', () => {
-    it('should not be able to create a user', () => {
+    it('should not be able to create a user with missing email', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Name')
         cy.get('[data-test-id="input-handle"]').type('Handle')
@@ -31,39 +29,31 @@ describe('Test for creating a user', () => {
       })
       cy.get('.b-toast-danger') // We check if the danger toast appears
     })
-  })
 
-  context('Test for creating a user with misconfigured email', () => {
-    it('should not be able to create a user', () => {
+    it('should not be able to create a user with misconfigured email', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').type('email')
         cy.get('[data-test-id="button-submit"]').click()
       })
       cy.get('.b-toast-danger') // We check if the danger toast appears
     })
-  })
 
-  context('Test for creating a user with misconfigured handle', () => {
-    it('should not be able to create a user', () => {
+    it('should not be able to create a user with misconfigured handle', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').clear().type('email@test.com')
         cy.get('[data-test-id="input-handle"]').clear().type('H')
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a user with missing handle', () => {
-    it('should not be able to create a user', () => {
+    it('should not be able to create a user with missing handle', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').clear()
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a user with only name entered', () => {
-    it('should not be able to create a user', () => {
+    it('should not be able to create a user with only a name entered', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').clear()
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
@@ -111,7 +101,7 @@ describe('Test for creating a user', () => {
     })
   })
 
-  context('Test for creating a user with same email as previous user', () => {
+  context('Test for creating a user with same email and handle as previous user', () => {
     it('should not be able to create a user with identical email', () => {
       cy.get('.nav-sidebar').contains('Users').click()
       cy.get('[data-test-id="button-new-user"]').click()
@@ -123,9 +113,7 @@ describe('Test for creating a user', () => {
       })
       cy.get('.b-toast-danger') // We check if the danger toast appears
     })
-  })
 
-  context('Test for creating a user with same handle as previous user', () => {
     it('should not be able to create a user with identical handle', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').clear().type('duplicate@email.com')

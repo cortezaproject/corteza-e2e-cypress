@@ -9,14 +9,29 @@ describe('Test for creating a template', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a template without any data entered', () => {
-    it('should not be able to create a template', () => {
+  context('Test for creating a template without any data entered or misconfigured field', () => {
+    it('should not be able to create a template without any data entered', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
       cy.wait(3000) // We wait for 3s in order the page to be fully loaded/rendered
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
+        cy.get('[data-test-id="button-submit"].disabled').should('exist')
+      })
+    })
+
+    it('should not be able to create a template with missing handle', () => {
+      cy.get('[data-test-id="card-template-info"]').within(() => {
+        cy.get('[data-test-id="input-short-name"]').type('automated template')
+        cy.get('[data-test-id="textarea-description"]').type('automated description')
+        cy.get('[data-test-id="button-submit"].disabled').should('exist')
+      })
+    })
+
+    it('should not be able to create a template with misconfigured handle', () => {
+      cy.get('[data-test-id="card-template-info"]').within(() => {
+        cy.get('[data-test-id="input-handle"]').type('H')
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
@@ -34,25 +49,6 @@ describe('Test for creating a template', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="select-template-type"]').contains('HTML')
         cy.get('[data-test-id="checkbox-is-partial-template"]').should('exist')
-      })
-    })
-  })
-
-  context('Test for creating a template with missing handle', () => {
-    it('should not be able to create a template', () => {
-      cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-short-name"]').type('automated template')
-        cy.get('[data-test-id="textarea-description"]').type('automated description')
-        cy.get('[data-test-id="button-submit"].disabled').should('exist')
-      })
-    })
-  })
-
-  context('Test for creating a template with misconfigured handle', () => {
-    it('should not be able to create a template', () => {
-      cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-handle"]').type('H')
-        cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
   })
@@ -102,7 +98,7 @@ describe('Test for creating a template', () => {
       cy.get('.b-toast-success') // We confirm that the action was completed successfully
     })
   })
-  
+
   context('Test for checking if the created template exists', () => {
     it('should exist', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
@@ -120,7 +116,7 @@ describe('Test for creating a template', () => {
     })
   })
 
-  context('Test for creating a template with same name as another one', () => {
+  context('Test for creating a template with same name and handle as another one', () => {
     it('should be able to create a template with identical name', () => {
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="button-new-template"]').click()
@@ -131,9 +127,7 @@ describe('Test for creating a template', () => {
       })
       cy.get('.b-toast-success') // We confirm that the action was completed successfully
     })
-  })
 
-  context('Test for creating a template with same handle as previous one', () => {
     it('should not be able to create a template with identical handle', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').clear().type('automated template')

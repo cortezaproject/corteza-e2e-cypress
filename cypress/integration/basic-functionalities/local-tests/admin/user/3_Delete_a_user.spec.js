@@ -3,7 +3,7 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up and create a user
+// Before running this test first sign up
 describe('Test for deleting a user', () => {
   before(() => {
     cy.login({ email, password })

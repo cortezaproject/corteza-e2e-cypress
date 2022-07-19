@@ -9,8 +9,8 @@ describe('Test for creating a role', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a role without any data entered', () => {
-    it('should not be able to create a role', () => {
+  context('Test for creating a role without any data entered or misconfigured field', () => {
+    it('should not be able to create a role without any data entered', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
       cy.wait(3000) // We wait for 3s in order the page to be fully loaded/rendered
@@ -20,29 +20,23 @@ describe('Test for creating a role', () => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a role with missing role name', () => {
-    it('should not be able to create a role', () => {
+    it('should not be able to create a role with missing role name', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').type('Handle')
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a role with missing handle', () => {
-    it('should not be able to create a role', () => {
+    it('should not be able to create a role with missing handle', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Name')
         cy.get('[data-test-id="input-handle"]').clear()
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
-  })
 
-  context('Test for creating a role with misconfigured handle', () => {
-    it('should not be able to create a role', () => {
+    it('should not be able to create a role with misconfigured handle', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').clear().type('H')
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
@@ -90,7 +84,7 @@ describe('Test for creating a role', () => {
     })
   })
 
-  context('Test for creating a role with same name as another role', () => {
+  context('Test for creating a role with same name and handle as another role', () => {
     it('should not be able to create a role with identical name', () => {
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="button-new-role"]').click()
@@ -101,9 +95,7 @@ describe('Test for creating a role', () => {
       })
       cy.get('.b-toast-danger') // We check if the danger toast appears
     })
-  })
-
-  context('Test for creating a role with same handle as previous role', () => {
+    
     it('should not be able to create a role with identical handle', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').clear().type('Duplicate role')

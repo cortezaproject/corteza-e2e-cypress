@@ -9,14 +9,12 @@ describe('Test for creating a namespace', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a namespace without any data entered', () => {
+  context('Test for creating a namespace without any data entered or a misconfigured field', () => {
     it('should not be able to create a namespace', () => {
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-save-and-close"].disabled').should('exist')
     })
-  })
 
-  context('Test for creating a namespace with missing name', () => {
     it('should not be able to create a namespace with missing name', () => {
       cy.get('[data-test-id="input-slug"]').type('short_name')
       cy.get('[data-test-id="button-save"].disabled').should('exist')
@@ -27,10 +25,8 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-name"]').type('Name')
       cy.get('[data-test-id="button-save"].disabled').should('exist')
     })
-  })
 
-  context('Test for creating a namespace with misconfigured handle', () => {
-    it('should not be able to create a report with incorrect handle', () => {
+    it('should not be able to create a namespace with incorrect handle', () => {
       cy.get('[data-test-id="input-slug"]').type('h')
       cy.get('[data-test-id="button-save"].disabled').should('exist')
     })

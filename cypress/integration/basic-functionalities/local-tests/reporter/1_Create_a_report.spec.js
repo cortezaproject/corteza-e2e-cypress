@@ -9,14 +9,12 @@ describe('Test for creating a report', () => {
     cy.login({ email, password })
   })
 
-  context('Test for creating a report without any data entered', () => {
-    it('should not be able to create a report', () => {
+  context('Test for creating a report without any data entered or misconfigured field', () => {
+    it('should not be able to create a report without any data entered', () => {
       cy.get('[data-test-id="button-create-report"]').click()
       cy.get('[data-test-id="button-save"].disabled')
     })
-  })
 
-  context('Test for creating a report with one missing required field', () => {
     it('should not be able to create a report with missing name', () => {
       cy.get('[data-test-id="input-handle"]').type('handle')
       cy.get('[data-test-id="button-save"].disabled')
@@ -27,9 +25,7 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="input-name"]').type('Name')
       cy.get('[data-test-id="button-save"].disabled')
     })
-  })
 
-  context('Test for creating a report with misconfigured handle', () => {
     it('should not be able to create a report with incorrect handle', () => {
       cy.get('[data-test-id="input-handle"]').type('h')
       cy.get('[data-test-id="button-save"].disabled')
