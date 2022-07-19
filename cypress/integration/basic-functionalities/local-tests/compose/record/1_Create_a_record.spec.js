@@ -102,6 +102,7 @@ describe('Test for creating a record', () => {
   })
 
   context('Adding couple more records for the need of delete tests', () => {
+// This test has been added so we can cover all of the delete a record cases for the needs of the delete tests
     it('should add couple more records', () => {
       cy.get('input:nth-child(1)').eq(0).type('37')
       cy.get('input:nth-child(1)').eq(1).type('Peter')
