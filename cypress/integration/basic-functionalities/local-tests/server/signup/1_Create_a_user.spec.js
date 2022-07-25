@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 const baseURL = Cypress.env('baseURL')
+const email = Cypress.env('user').email
+const password = Cypress.env('user').password
 
-describe('Test for creating a user with misconfigured parameter', () => {
-  context('Test for creating a user with misconfigured email', () => {
+describe('Test for creating a user', () => {
+  context('Test for creating a user with misconfigured parameter', () => {
     it('should not be able to create an account with just an email entered', () => {
       // When running this test make sure that the base url is set to localhost:3000
       cy.visit(baseURL + '/')
@@ -22,9 +24,7 @@ describe('Test for creating a user with misconfigured parameter', () => {
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
-  })
 
-  context('Test for creating a user with misconfigured password', () => {
     it('should not be able to create an account due to a misconfigured password', () => {
       cy.visit(baseURL + '/auth/signup')
       cy.get('[data-test-id="input-email"]').type('cypress@test.com')
@@ -40,31 +40,39 @@ describe('Test for creating a user with misconfigured parameter', () => {
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
-  })
 
-  context('Test for creating a user with no info entered', () => {
-    it('should not be able to create an account due to a missing information', () => {
+    it('should not be able to create an account without an info entered', () => {
       cy.visit(baseURL + '/auth/signup')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
-  })
 
-  context('Test for creating a user with just a name entered', () => {
     it('should not be able to create an account with just a name entered', () => {
       cy.visit(baseURL + '/auth/signup')
       cy.get('[data-test-id="input-name"]').type('Cypress Test')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
-  })
 
-  context('Test for creating a user with just a handle entered', () => {
     it('should not be able to create an account with just a handle entered', () => {
       cy.visit(baseURL + '/auth/signup')
       cy.get('[data-test-id="input-handle"]').type('cypress_handle')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
+    })
+  })
+
+  context('Test for creating a user in corteza', () => {
+    it('should be able to write signup credentials, create an account and log in', () => {
+      cy.visit(baseURL + '/') 
+      cy.get('[data-test-id="link-signup"]').click()
+      cy.get('[data-test-id="input-email"]').type(email)
+      cy.get('[data-test-id="input-password"]').type(password)
+      cy.get('[data-test-id="input-name"]').type('Cypress test account')
+      cy.get('[data-test-id="input-handle"]').type('cypress_test_account')
+      cy.get('[data-test-id="button-submit"]').click()
+      // We check if the success toast appears
+      cy.get('.border-primary') 
     })
   })
 })
