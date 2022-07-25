@@ -9,21 +9,24 @@ describe('Test for checking the change password functionality', () => {
   context('Test for changing the password of the user', () => {
     it('should be able to change the password of the user', () => {
       cy.login({ email, password })
-      cy.get('.border-primary') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.border-primary') 
       
       cy.get('[data-test-id="link-tab-security"]').click()
       cy.get('[data-test-id="link-change-password"]').click()
       cy.get('[data-test-id="input-old-password"]').type(password)
       cy.get('[data-test-id="input-new-password"]').type(newPassword)
       cy.get('[data-test-id="button-change-password"]').click()
-      cy.get('.border-primary') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.border-primary') 
     })
   })
 
   context('Test for changing the password of the user with entering just the old password', () => {
     it('should not be able to change the password of the user', () => {
       cy.login({ email, password: newPassword })
-      cy.get('.border-primary') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.border-primary') 
 
       cy.get('[data-test-id="link-tab-security"]').click()
       cy.get('[data-test-id="link-change-password"]').click()
@@ -36,7 +39,8 @@ describe('Test for checking the change password functionality', () => {
   context('Test for changing the password of the user with entering just the new password', () => {
     it('should not be able to change the password of the user', () => {
       cy.login({ email, password: newPassword })
-      cy.get('.border-primary') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.border-primary') 
 
       cy.get('[data-test-id="link-tab-security"]').click()
       cy.get('[data-test-id="link-change-password"]').click()

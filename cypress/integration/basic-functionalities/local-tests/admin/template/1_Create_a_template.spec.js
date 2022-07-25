@@ -13,7 +13,8 @@ describe('Test for creating a template', () => {
     it('should not be able to create a template without any data entered', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
-      cy.wait(3000) // We wait for 3s in order the page to be fully loaded/rendered
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
@@ -58,11 +59,14 @@ describe('Test for creating a template', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').clear().type('automated_template')
         cy.get('[data-test-id="button-submit"]').click()
-        cy.get('[data-icon="check"]') // we checked if the submit button's content changed to a check icon
-        cy.wait(2000) // We wait 2s in order the button to be switched from check to submit
+        // We check if the submit button's content changed to a check icon
+        cy.get('[data-icon="check"]')
+        // We wait 2s in order the button to be switched from check to submit
+        cy.wait(2000)
         cy.get('[data-test-id="button-submit"]').should('exist')
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -75,7 +79,8 @@ describe('Test for creating a template', () => {
       })
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
@@ -91,11 +96,14 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="input-handle"]').type('missing_short_name')
         cy.get('[data-test-id="textarea-description"]').type('description')
         cy.get('[data-test-id="button-submit"]').click()
-        cy.get('[data-icon="check"]') // we checked if the submit button's content changed to a check icon
-        cy.wait(2000) // We wait 2s in order the button to be switched from check to submit
+        // We check if the submit button's content changed to a check icon
+        cy.get('[data-icon="check"]')
+        // We wait 2s in order the button to be switched from check to submit
+        cy.wait(2000)
         cy.get('[data-test-id="button-submit"]').should('exist')
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -108,7 +116,8 @@ describe('Test for creating a template', () => {
       })
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('missing')
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
@@ -125,7 +134,8 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="input-handle"]').type('duplicate_template')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
 
     it('should not be able to create a template with identical handle', () => {
@@ -134,7 +144,8 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="input-handle"]').clear().type('automated_template')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-danger') // We check if the danger toast appears
+      // We check if the danger toast appears
+      cy.get('.b-toast-danger')
     })
   })
 })

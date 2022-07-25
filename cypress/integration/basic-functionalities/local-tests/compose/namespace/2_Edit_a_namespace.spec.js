@@ -17,9 +17,11 @@ describe('Test for editing a namespace', () => {
       cy.get('[data-test-id="input-subtitle"]').clear().type('Edited subtitle')
       cy.get('[data-test-id="input-description"]').clear().type('Edited description')
       cy.get('[data-test-id="button-save"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success')
       cy.get('[data-test-id="button-save-and-close"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success')
 
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
       cy.get('[data-test-id="input-name"]').should('have.value', 'Edited namespace')
@@ -41,7 +43,7 @@ describe('Test for editing a namespace', () => {
       cy.get('[data-test-id="button-delete"]').should('exist')
     })
   })
-  
+
   context('Test for creating a namespace through edit mode', () => {
     it('should be able to create a new namespace', () => {
       cy.visit(baseURL + '/namespaces')

@@ -51,7 +51,8 @@ describe('Test for creating a simple workflow and checking its functionalities',
       cy.get('[data-test-id="input-handle"]').type('cypress_workflow')
       cy.get('[data-test-id="input-description"]').type('This is a simple workflow created by an automated cypress test.')
       cy.get('[data-test-id="button-save-workflow"]').click()
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success') 
     })
   })
 })

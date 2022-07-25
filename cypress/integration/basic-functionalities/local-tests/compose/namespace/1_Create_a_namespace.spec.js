@@ -63,7 +63,8 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked') 
       cy.get('[data-test-id="button-save"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success') 
       cy.url().should('exist', baseURL + '/namespaces/edit')
 
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress namespace')

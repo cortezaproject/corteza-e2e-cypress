@@ -13,7 +13,8 @@ describe('Test for creating a user', () => {
     it('should not be able to create a user', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
-      cy.wait(3000) // We wait for 3s in order the page to be fully loaded/rendered
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Users').click()
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
@@ -27,7 +28,8 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-handle"]').type('Handle')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-danger') // We check if the danger toast appears
+      // We check if the danger toast appears
+      cy.get('.b-toast-danger')
     })
 
     it('should not be able to create a user with misconfigured email', () => {
@@ -35,7 +37,8 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-email"]').type('email')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-danger') // We check if the danger toast appears
+      // We check if the danger toast appears
+      cy.get('.b-toast-danger')
     })
 
     it('should not be able to create a user with misconfigured handle', () => {
@@ -79,9 +82,11 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-name"]').clear().type('Automated account')
         cy.get('[data-test-id="input-handle"]').clear().type('automated_account')
         cy.get('[data-test-id="button-submit"]').click()
-        cy.get('[data-icon="check"]') // we checked if the submit button's content changed to a check icon
+        // We check if the submit button's content changed to a check icon
+        cy.get('[data-icon="check"]')
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -111,7 +116,8 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-handle"]').type('duplicate_account')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-danger') // We check if the danger toast appears
+      // We check if the danger toast appears
+      cy.get('.b-toast-danger')
     })
 
     it('should not be able to create a user with identical handle', () => {
@@ -120,7 +126,8 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-handle"]').clear().type('automated_account')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-danger') // We check if the danger toast appears
+      // We check if the danger toast appears
+      cy.get('.b-toast-danger')
     })
   })
 })
