@@ -11,7 +11,8 @@ describe('Test for editing a user', () => {
 
   context('Test for checking that delete, suspend, revoke and new buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a user', () => {
-      cy.wait(2000) // We wait for 2s in order the page to be fully loaded/rendered
+      // We wait for 2s in order the page to be fully loaded/rendered
+      cy.wait(2000)
       cy.get('.nav-sidebar').contains('Users').click()
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-user"]').should('exist')
@@ -31,7 +32,8 @@ describe('Test for editing a user', () => {
         cy.get('[data-test-id="input-handle"]').clear().type('edited_handle')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 

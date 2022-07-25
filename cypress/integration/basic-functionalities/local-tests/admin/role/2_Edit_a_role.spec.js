@@ -11,10 +11,12 @@ describe('Test for editing a role', () => {
 
   context('Test for checking that delete, archive, and new buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a role', () => {
-      cy.wait(2000) // We wait for 2s in order the page to be fully loaded/rendered
+      // We wait for 2s in order the page to be fully loaded/rendered
+      cy.wait(2000) 
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000) 
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-role"]').should('exist')
       cy.get('[data-test-id="card-role-info"]').within(() => {
@@ -32,7 +34,8 @@ describe('Test for editing a role', () => {
         cy.get('[data-test-id="textarea-description"]').type('Automated description')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success') 
     })
   })
 

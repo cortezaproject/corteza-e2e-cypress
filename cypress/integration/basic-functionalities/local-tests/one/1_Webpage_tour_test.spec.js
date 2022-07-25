@@ -11,9 +11,11 @@ describe('Test webpage tour', () => {
 
   context('This is a function for testing the webpage tour', () => {
     it('should be able to go through the webpage tour', () => {
-      cy.get('.modal-footer > :last-child()').click() // We click on the start tour button
+      // We click on the start tour button
+      cy.get('.modal-footer > :last-child()').click() 
       Cypress._.times(5, () => {
-        cy.get('[data-test-id="button-next"]').click() // With this function we click 5 times on the next button in order to go through the tour modals
+        // With this function we click 5 times on the next button in order to go through the tour modals
+        cy.get('[data-test-id="button-next"]').click() 
       })
       cy.get('[data-test-id="button-stop-tour"]').click()
     })

@@ -18,7 +18,8 @@ describe('Test for editing a module', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('[data-test-id="button-delete-confirm"]').click()
       })
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success') 
       cy.contains('cypress_module').should('not.exist')
     })
   })

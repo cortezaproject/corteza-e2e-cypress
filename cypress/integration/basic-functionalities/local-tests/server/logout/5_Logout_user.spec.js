@@ -7,7 +7,8 @@ const newPassword = Cypress.env('user').newPassword
 describe('Test for logging out the user', () => {
   before(() => {
     cy.login({ email, password: newPassword, buttonLoginID: 'button-login-and-remember' })
-    cy.get('.border-primary') // We check if the success toast appears
+    // We check if the success toast appears
+    cy.get('.border-primary') 
   })
 
   context('Test for logging out the logged in user', () => {

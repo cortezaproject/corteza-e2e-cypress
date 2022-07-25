@@ -19,6 +19,7 @@ describe('Test for creating a record', () => {
       cy.get('input:nth-child(1)').eq(1).type('John')
       cy.get('input:nth-child(1)').eq(2).type('Doe')
       cy.get('[data-test-id="button-submit"]').click()
+      // We wait half a second in order the page content to be fully loaded
       cy.wait(500)
       cy.get('.card-body').contains('28').should('exist')
       cy.get('.card-body').contains('John').should('exist')
@@ -36,6 +37,7 @@ describe('Test for creating a record', () => {
       cy.get('input:nth-child(1)').eq(1).type('Dave')
       cy.get('input:nth-child(1)').eq(2).type('Smith')
       cy.get('[data-test-id="button-submit"]').click()
+      // We wait half a second in order the page content to be fully loaded
       cy.wait(500)
       cy.get('.card-body').contains('26').should('exist')
       cy.get('.card-body').contains('Dave').should('exist')
@@ -52,6 +54,7 @@ describe('Test for creating a record', () => {
       cy.get('input:nth-child(1)').eq(1).type('Eddie')
       cy.get('input:nth-child(1)').eq(2).type('Turner')
       cy.get('[data-test-id="button-submit"]').click()
+      // We wait half a second in order the page content to be fully loaded
       cy.wait(500)
       cy.get('.card-body').contains('23').should('exist')
       cy.get('.card-body').contains('Eddie').should('exist')
@@ -67,6 +70,7 @@ describe('Test for creating a record', () => {
       cy.get('input:nth-child(1)').eq(1).type('Mark')
       cy.get('input:nth-child(1)').eq(2).type('Fritz')
       cy.get('[data-test-id="button-submit"]').click()
+      // We wait half a second in order the page content to be fully loaded
       cy.wait(500)
       cy.get('.card-body').contains('30').should('exist')
       cy.get('.card-body').contains('Mark').should('exist')

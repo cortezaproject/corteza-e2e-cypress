@@ -66,7 +66,8 @@ describe('Test for creating a module', () => {
           cy.get('select').select('Number input')
         })
       cy.get('[data-test-id="button-save-and-close"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success') 
       cy.contains('Cypress module').should('exist')
     })
   })
@@ -81,7 +82,8 @@ describe('Test for creating a module', () => {
         cy.get('input:eq(1)').type('Name')
       })
       cy.get('[data-test-id="button-save-and-close"]').click()
-      cy.get('.b-toast-danger') // We check if the error toast appears
+      // We check if the error toast appears
+      cy.get('.b-toast-danger') 
       cy.get('[data-test-id="button-back-without-save"]').click()
     })
   })

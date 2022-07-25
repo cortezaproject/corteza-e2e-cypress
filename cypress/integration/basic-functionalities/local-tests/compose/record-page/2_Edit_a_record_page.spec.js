@@ -18,9 +18,12 @@ describe('Test for editing a record page', () => {
       cy.get('[data-test-id="input-title"]').clear().type('Cypress page')
       cy.get('[data-test-id="input-handle"]').type('cypress_page')
       cy.get('[data-test-id="input-description"]').type('Page description')
-      cy.get('[data-test-id="checkbox-page-visibility"]').check({force: true}) // Toggling page visibility
+      // Toggling page visibility
+      cy.get('[data-test-id="checkbox-page-visibility"]').check({force: true}) 
       cy.get('[data-test-id="button-save-and-close"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+       // We check if the success toast appears
+      cy.get('.b-toast-success')
+      // We wait half a second in order the page content to be fully loaded
       cy.wait(500)
       cy.contains('Edit page').click()
       cy.get('[data-test-id="input-title"]').should('have.value', 'Cypress page')

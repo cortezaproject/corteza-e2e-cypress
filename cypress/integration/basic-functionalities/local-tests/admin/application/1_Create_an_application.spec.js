@@ -13,7 +13,8 @@ describe('Test for creating a role', () => {
     it('should not be able to create an application', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
-      cy.wait(3000) // We wait for 3s in order the page to be fully loaded/rendered
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
@@ -21,7 +22,7 @@ describe('Test for creating a role', () => {
       })
     })
   })
-  
+
   context('Test for checking that delete and new buttons are not displayed when in create mode', () => {
     it('should not be displayed when creating an application', () => {
       cy.get('[data-test-id="button-new-application"]').should('not.exist')
@@ -35,13 +36,16 @@ describe('Test for creating a role', () => {
     it('should be able to create an application', () => {
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('automated application')
-        cy.get('[data-test-id="checkbox-enabled"]').check({force: true})
+        cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
-        cy.get('[data-icon="check"]') // we checked if the submit button's content changed to a check icon
-        cy.wait(2000) // We wait 2s in order the button to be switched from check to submit
+        // We check if the submit button's content changed to a check icon
+        cy.get('[data-icon="check"]')
+        // We wait 2s in order the button to be switched from check to submit
+        cy.wait(2000)
         cy.get('[data-test-id="button-submit"]').should('exist')
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -52,7 +56,8 @@ describe('Test for creating a role', () => {
       })
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-application-id"]').should('exist')
@@ -70,7 +75,8 @@ describe('Test for creating a role', () => {
         cy.get('[data-test-id="input-name"]').type('automated application')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-created-at"]').should('exist')
     })
   })

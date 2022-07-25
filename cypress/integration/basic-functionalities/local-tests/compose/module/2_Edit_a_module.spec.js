@@ -20,9 +20,11 @@ describe('Test for editing a module', () => {
         cy.get('input:first').clear().type('name')
       })    
       cy.get('[data-test-id="button-save"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success') 
       cy.get('[data-test-id="button-save-and-close"]').click()
-      cy.get('.b-toast-success') // We check if the success toast appears
+      // We check if the success toast appears
+      cy.get('.b-toast-success') 
       cy.get('[data-test-id="table-modules-list"] > tbody').find(':first').click()
       cy.get('[data-test-id="input-module-name"]').should('have.value', 'Cypress module edited')
       cy.get('[data-test-id="input-module-handle"]').should('have.value', 'cypress_module_edited')

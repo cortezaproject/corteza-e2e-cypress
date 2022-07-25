@@ -11,10 +11,12 @@ describe('Test for editing a template', () => {
 
   context('Test for checking that new, delete and submit buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a template', () => {
-      cy.wait(2000) // We wait for 2s in order the page to be fully loaded/rendered
+      // We wait for 2s in order the page to be fully loaded/rendered
+      cy.wait(2000)
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-template"]').should('exist')
       cy.get('[data-test-id="card-template-info"]').within(() => {
@@ -32,7 +34,8 @@ describe('Test for editing a template', () => {
         cy.get('[data-test-id="textarea-description"]').type(' edited')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.get('.b-toast-success') // We confirm that the action was completed successfully
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -52,7 +55,8 @@ describe('Test for editing a template', () => {
 
   context('Test for checking if you can create a template through edit mode', () => {
     it('should be able to create a template', () => {
-      cy.wait(2000) // We wait 2s in order the search to be completed
+      // We wait 2s in order the search to be completed
+      cy.wait(2000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.url().should('contain', '/new')
