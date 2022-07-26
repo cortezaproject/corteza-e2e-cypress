@@ -14,7 +14,7 @@ describe('Test for logging out the user', () => {
   context('Test for logging out the logged in user', () => {
     it('should be able log out the user', () => {
       cy.get('[data-test-id="link-logout"]').click()
-      cy.get('[data-test-id="message-logout-successful"]')
+      cy.contains('Logout successful.').should('exist')
     })
   })
 })
