@@ -3,7 +3,6 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up, create a namespace, a module and a record page
 describe('Test for editing a record page', () => {
   before(() => {
     cy.login({ email, password })

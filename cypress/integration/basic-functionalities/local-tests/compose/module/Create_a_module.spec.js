@@ -3,13 +3,12 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up and create a namespace so you can create a module,
-// also make sure that federation and discovery settings are enabled, otherwise the test will fail
 describe('Test for creating a module', () => {
   before(() => {
     cy.login({ email, password })
   })
-
+  
+// Before running this test make sure that federation and discovery settings are enabled, otherwise the test will fail
   context('Test for creating a module without any data or misconfigured field', () => {
     it('should not be able to create a module without nay data entered', () => {
       cy.get('[data-test-id="button-visit-namespace"]:last').click()

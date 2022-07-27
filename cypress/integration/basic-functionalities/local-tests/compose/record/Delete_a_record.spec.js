@@ -3,7 +3,6 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up, create a namespace, module (also edit it), a record page and a record
 describe('Test for deleting a record', () => {
   before(() => {
     cy.login({ email, password })

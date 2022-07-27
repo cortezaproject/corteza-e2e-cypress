@@ -3,7 +3,6 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up so you can log in
 describe('Test for creating a namespace', () => {
   before(() => {
     cy.login({ email, password })
