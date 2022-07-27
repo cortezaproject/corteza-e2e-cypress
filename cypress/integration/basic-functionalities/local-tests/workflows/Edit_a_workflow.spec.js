@@ -3,7 +3,6 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first run the Server signup test 2 in order to create a user so you can log in.
 describe('Test for editing a workflow', () => {
   before(() => {
     cy.login({ email, password })

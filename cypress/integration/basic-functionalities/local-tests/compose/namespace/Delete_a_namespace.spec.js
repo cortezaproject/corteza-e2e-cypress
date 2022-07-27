@@ -3,7 +3,6 @@ const baseURL = Cypress.env('baseURL')
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-// Before running this test first sign up, after that create a namespace, and edit it so it can be used
 describe('Test for deleting a namespace', () => {
   before(() => {
     cy.login({ email, password })
