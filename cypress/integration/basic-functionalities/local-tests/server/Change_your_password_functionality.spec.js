@@ -8,7 +8,7 @@ const newPassword = Cypress.env('user').newPassword
 describe('Test for checking the change password functionality', () => {
   context('Test for changing the password of the user with misconfiguration or missing data', () => {
     it('should not be able to change the password of the user with no password entered', () => {
-      cy.login({ email, password}) 
+      cy.login({ email, password }) 
       // We check if the success toast appears
       cy.get('.border-primary')
 
@@ -19,7 +19,7 @@ describe('Test for checking the change password functionality', () => {
     })
 
     it('should not be able to change the password of the user with entering just the old password', () => {
-      cy.login({ email, password}) //      cy.login({ email, password: newPassword })
+      cy.login({ email, password })
       // We check if the success toast appears
       cy.get('.border-primary')
 
