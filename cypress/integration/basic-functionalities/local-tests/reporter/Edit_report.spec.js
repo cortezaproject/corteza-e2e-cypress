@@ -9,16 +9,24 @@ describe('Test for editing a report', () => {
   })
 
   context('Test for editing a report', () => {
-    it('should be able to edit the name, the handle and the description', () => {
+    it('should be able to edit the name', () => {
       // We click on the Edit button on the created report
       cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
       cy.get('[data-test-id="input-name"]').clear().type('Edited cypress report')
+    })
+
+    it('should be able to edit the handle', () => {
       cy.get('[data-test-id="input-handle"]').clear().type('cypress_handle_edited')
+    })
+
+    it('should be able to edit the description', () => {
       cy.get('[data-test-id="input-description"]').clear().type('This is an edited automated description.')
       cy.get('[data-test-id="button-save"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
+    })
 
+    it('should be edited', () => {
       cy.get('[data-test-id="input-name"]').should('have.value', 'Edited cypress report')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_handle_edited')
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is an edited automated description.')

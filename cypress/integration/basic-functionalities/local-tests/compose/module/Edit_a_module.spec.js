@@ -24,6 +24,9 @@ describe('Test for editing a module', () => {
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success') 
+    })
+
+    it('should be edited', () => {
       cy.get('[data-test-id="table-modules-list"] > tbody').find(':first').click()
       cy.get('[data-test-id="input-module-name"]').should('have.value', 'Cypress module edited')
       cy.get('[data-test-id="input-module-handle"]').should('have.value', 'cypress_module_edited')

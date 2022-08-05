@@ -68,6 +68,9 @@ describe('Test for creating a module', () => {
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success') 
+    })
+      
+    it('should exist', () => {
       cy.contains('Cypress module').should('exist')
     })
   })

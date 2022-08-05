@@ -30,7 +30,7 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="button-save"].disabled').should('exist')
     })
   })
-          
+
   context('Test if create new namespace, export, permissions, clone and delete buttons are not displayed when in create mode', () => {
     it('should not be displayed when into the create a new namespace view', () => {
       cy.visit(baseURL + '/namespaces')
@@ -60,18 +60,19 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-slug"]').type('cypress_namespace')
       cy.get('[data-test-id="input-subtitle"]').type('Testing namespace')
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
-      cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked') 
+      cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save"]').click()
       // We check if the success toast appears
-      cy.get('.b-toast-success') 
+      cy.get('.b-toast-success')
+    })
+    
+    it('should exist', () => {
       cy.url().should('exist', baseURL + '/namespaces/edit')
-
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress namespace')
       cy.get('[data-test-id="input-slug"]').should('have.value', 'cypress_namespace')
       cy.get('[data-test-id="input-subtitle"]').should('have.value', 'Testing namespace')
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is the description of the namespace')
       cy.get('[data-test-id="button-back-without-save"]').click()
-      
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.url().should('be.equal', baseURL + '/ns/cypress_namespace/pages')
     })
@@ -85,8 +86,9 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-slug"]').type('cypress_namespace')
       cy.get('[data-test-id="input-subtitle"]').type('Testing namespace')
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
-      cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked') 
+      cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save"]').click()
+      // We check if the danger toast appears
       cy.get('.b-toast-danger').should('exist')
     })
   })
