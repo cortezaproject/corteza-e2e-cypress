@@ -49,7 +49,9 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="button-save"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
+    })
 
+    it('should exist', () => {
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress report')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_handle')
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is an automated description.')

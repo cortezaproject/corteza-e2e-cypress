@@ -8,6 +8,18 @@ describe('Test for editing a namespace', () => {
     cy.login({ email, password })
   })
 
+  context('Test if create new namespace, export, permissions, clone and delete buttons are displayed when in edit mode', () => {
+    it('should be displayed when into edit mode', () => {
+      cy.visit(baseURL + '/namespaces')
+      cy.get('[data-test-id="button-edit-namespace"]:last').click()
+      cy.get('[data-test-id="button-create-namespace"]').should('exist')
+      cy.get('[data-test-id="button-export-namespace"]').should('exist')
+      cy.get('[data-test-id="button-permissions"]').should('exist')
+      cy.get('[data-test-id="button-clone"]').should('exist')
+      cy.get('[data-test-id="button-delete"]').should('exist')
+    })
+  })
+
   context('Test for editing a namespace', () => {
     it('should be able to edit the name, the handle and the description', () => {
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
@@ -21,25 +33,15 @@ describe('Test for editing a namespace', () => {
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
+    })
 
+    it('should be edited', () => {
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
       cy.get('[data-test-id="input-name"]').should('have.value', 'Edited namespace')
       cy.get('[data-test-id="input-slug"]').should('have.value', 'edited_namespace')
       cy.get('[data-test-id="input-subtitle"]').should('have.value', 'Edited subtitle')
       cy.get('[data-test-id="input-description"]').should('have.value', 'Edited description')
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
-    })
-  })
-
-  context('Test if create new namespace, export, permissions, clone and delete buttons are displayed when in edit mode', () => {
-    it('should be displayed when into edit mode', () => {
-      cy.visit(baseURL + '/namespaces')
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
-      cy.get('[data-test-id="button-create-namespace"]').should('exist')
-      cy.get('[data-test-id="button-export-namespace"]').should('exist')
-      cy.get('[data-test-id="button-permissions"]').should('exist')
-      cy.get('[data-test-id="button-clone"]').should('exist')
-      cy.get('[data-test-id="button-delete"]').should('exist')
     })
   })
 

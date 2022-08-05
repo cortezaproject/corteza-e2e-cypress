@@ -7,6 +7,7 @@ describe('Test for editing a workflow', () => {
   before(() => {
     cy.login({ email, password })
   })
+
   context('Test for checking if export, import and permissions buttons are present when editing a workflow', () => {
     it('should be able to see the buttons', () => {
       cy.contains('Cypress workflow').click()
@@ -24,9 +25,11 @@ describe('Test for editing a workflow', () => {
       cy.get('[data-test-id="input-description"]').clear().type('Edited description.')
       cy.get('[data-test-id="button-save-workflow"]').click()
       // We confirm that the action was completed successfully
-      cy.get('.b-toast-success') 
+      cy.get('.b-toast-success')
       cy.get('.close').click({ multiple: true })
-
+    })
+    
+    it('should be edited', () => {
       // We check below if the fields were really edited/changed
       cy.get('[data-test-id="button-configure-workflow"]').click()
       cy.get('[data-test-id="input-label"]').should('have.value', 'Cypress workflow edited')

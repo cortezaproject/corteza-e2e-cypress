@@ -93,7 +93,6 @@ describe('Test for creating a template', () => {
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').type('missing_short_name')
-        cy.get('[data-test-id="textarea-description"]').type('description')
         cy.get('[data-test-id="button-submit"]').click()
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
@@ -109,9 +108,7 @@ describe('Test for creating a template', () => {
   context('Test for checking if the created template exists', () => {
     it('should exist', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-short-name"]').should('have.value', '')
         cy.get('[data-test-id="input-handle"]').should('have.value', 'missing_short_name')
-        cy.get('[data-test-id="textarea-description"]').should('have.value', 'description')
       })
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('missing')

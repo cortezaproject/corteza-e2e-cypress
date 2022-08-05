@@ -17,6 +17,7 @@ describe('Test for creating a record page', () => {
       cy.get('[data-test-id="dropdown-link-record-list-page-create"]').click({ force: true })
       cy.get('.nav-sidebar').contains('Pages').click()
       cy.get('[data-test-id="button-page-view"]:first').click()
+      // We check if the danger toast does not appear
       cy.get('.b-toast-danger').should('not.exist')
     })
   })
