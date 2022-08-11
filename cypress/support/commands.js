@@ -1,4 +1,4 @@
-const baseURL = Cypress.env('webappLink').baseURL
+const baseURL = Cypress.env('baseURL')
 const adminURL = Cypress.env('webappLink').adminURL
 const composeURL = Cypress.env('webappLink').composeURL
 const workflowURL = Cypress.env('webappLink').workflowURL

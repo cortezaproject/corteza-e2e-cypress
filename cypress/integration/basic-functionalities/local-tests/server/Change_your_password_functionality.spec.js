@@ -69,6 +69,8 @@ describe('Test for checking the change password functionality', () => {
       cy.get('[data-test-id="input-old-password"]').type(password)
       cy.get('[data-test-id="input-new-password"]').type(newPassword)
       cy.get('[data-test-id="button-change-password"]').click()
+      // We wait three seconds in order the page content to be fully loaded
+      cy.wait(3000)
       // We check if the success toast appears
       cy.get('.border-primary')
     })
