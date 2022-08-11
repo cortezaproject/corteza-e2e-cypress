@@ -1,15 +1,18 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a record', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
 
   context('Test for editing a record through the all records button', () => {
     it('should be able to edit the record by viewing it', () => {
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
@@ -20,7 +23,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Taker')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('35').should('exist')
       cy.get('.card-body').contains('Steve').should('exist')
       cy.get('.card-body').contains('Taker').should('exist')
@@ -39,7 +42,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Fuller')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('33').should('exist')
       cy.get('.card-body').contains('Angela').should('exist')
       cy.get('.card-body').contains('Fuller').should('exist')
@@ -55,7 +58,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Wiser')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('31').should('exist')
       cy.get('.card-body').contains('Bob').should('exist')
       cy.get('.card-body').contains('Wiser').should('exist')
@@ -74,7 +77,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Morris')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('29').should('exist')
       cy.get('.card-body').contains('Rick').should('exist')
       cy.get('.card-body').contains('Morris').should('exist')
@@ -92,7 +95,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Burner')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('38').should('exist')
       cy.get('.card-body').contains('Jack').should('exist')
       cy.get('.card-body').contains('Burner').should('exist')
@@ -110,7 +113,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Harris')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('21').should('exist')
       cy.get('.card-body').contains('Nill').should('exist')
       cy.get('.card-body').contains('Harris').should('exist')
@@ -127,7 +130,7 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(2).clear().type('Van')
       cy.get('[data-test-id="button-submit"]').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('.card-body').contains('19').should('exist')
       cy.get('.card-body').contains('Philip').should('exist')
       cy.get('.card-body').contains('Van').should('exist')

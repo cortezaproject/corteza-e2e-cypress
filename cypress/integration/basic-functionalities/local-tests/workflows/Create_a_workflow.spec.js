@@ -1,28 +1,31 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const workflowURL = Cypress.env('webappLink').workflowURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for creating a simple workflow and checking its functionalities', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: workflowURL })
+    }
   })
 
   context('Test for creating a workflow without any data entered or misconfigured field', () => {
     it('should not be able to create a workflow with no info entered', () => {
+      cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="input-label"]').clear()
       cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
     })
 
     it('should not be able to create a workflow with missing handle', () => {
-      cy.visit(baseURL + '/list')
+      cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
     })
 
     it('should not be able to create a workflow with invalid handle', () => {
-      cy.visit(baseURL + '/list')
+      cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="input-label"]').clear().type('Cypress workflow')
       cy.get('[data-test-id="input-handle"]').type('_')
@@ -34,7 +37,7 @@ describe('Test for creating a simple workflow and checking its functionalities',
 
   context('Test for checking if export, import and permissions buttons are present when creating a workflow', () => {
     it('should not be able to see the buttons present', () => {
-      cy.visit(baseURL + '/list')
+      cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="button-import-workflow"]').should('not.exist')
       cy.get('[data-test-id="button-export-workflow"]').should('not.exist')
@@ -44,7 +47,7 @@ describe('Test for creating a simple workflow and checking its functionalities',
 
   context('Test for creating a new workflow', () => {
     it('should be able to create a new workflow', () => {
-      cy.visit(baseURL + '/list')
+      cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
       cy.get('[data-test-id="input-label"]').clear().type('Cypress workflow')
       cy.get('[data-test-id="input-handle"]').type('cypress_workflow')

@@ -1,16 +1,18 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a namespace', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
 
   context('Test if create new namespace, export, permissions, clone and delete buttons are displayed when in edit mode', () => {
     it('should be displayed when into edit mode', () => {
-      cy.visit(baseURL + '/namespaces')
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
       cy.get('[data-test-id="button-create-namespace"]').should('exist')
       cy.get('[data-test-id="button-export-namespace"]').should('exist')
@@ -22,6 +24,7 @@ describe('Test for editing a namespace', () => {
 
   context('Test for editing a namespace', () => {
     it('should be able to edit the name, the handle and the description', () => {
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
       cy.get('[data-test-id="input-name"]').clear().type('Edited namespace')
       cy.get('[data-test-id="input-slug"]').clear().type('edited_namespace')
@@ -47,10 +50,10 @@ describe('Test for editing a namespace', () => {
 
   context('Test for creating a namespace through edit mode', () => {
     it('should be able to create a new namespace', () => {
-      cy.visit(baseURL + '/namespaces')
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-edit-namespace"]:last').click()
       cy.get('[data-test-id="button-create-namespace"]').click()
-      cy.url().should('be.equal', baseURL + '/admin/namespace/create')
+      cy.url().should('be.equal', composeURL + '/admin/namespace/create')
     })
   })
 })

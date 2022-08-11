@@ -1,15 +1,18 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a module', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
 
   context('Test for editing the module data and a record field', () => {
     it('should be able to edit the module', () => {
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="table-modules-list"] > tbody').find(':first').click()

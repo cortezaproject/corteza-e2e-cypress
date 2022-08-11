@@ -5,6 +5,6 @@
 
   "watchForFileChanges": false,
   "chromeWebSecurity": false,
-  "video":true
+  "video":false
 }
 

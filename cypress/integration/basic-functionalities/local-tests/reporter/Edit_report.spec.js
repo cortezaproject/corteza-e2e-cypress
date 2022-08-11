@@ -1,15 +1,18 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const reporterURL = Cypress.env('webappLink').reporterURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a report', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: reporterURL })
+    }
   })
 
   context('Test for editing a report', () => {
     it('should be able to edit the name', () => {
+      cy.visit(reporterURL + '/list')
       // We click on the Edit button on the created report
       cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
       cy.get('[data-test-id="input-name"]').clear().type('Edited cypress report')
@@ -41,7 +44,7 @@ describe('Test for editing a report', () => {
       // We check that an error toast doesn't appear
       cy.get('.b-toast-danger').should('not.exist')
       // Visiting main page of Reporter
-      cy.visit(baseURL + '/list')
+      cy.visit(reporterURL + '/list')
     })
   })
 })

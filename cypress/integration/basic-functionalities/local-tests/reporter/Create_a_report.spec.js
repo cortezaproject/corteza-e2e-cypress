@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const reporterURL = Cypress.env('webappLink').reporterURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for creating a report', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: reporterURL })
+    }
   })
 
   context('Test for creating a report without any data entered or misconfigured field', () => {
@@ -64,7 +66,7 @@ describe('Test for creating a report', () => {
       // We check that an error toast doesn't appear
       cy.get('.b-toast-danger').should('not.exist')
       // Visiting main page of Reporter
-      cy.visit(baseURL + '/list')
+      cy.visit(reporterURL + '/list')
     })
   })
 
