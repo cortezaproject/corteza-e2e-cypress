@@ -80,7 +80,7 @@ describe('Test for deleting a record', () => {
   context('Test for deleting a record by selecting', () => {
     it('should be able to delete a record by check-marking it', () => {
       cy.get('.nav-sidebar').contains('Cypress page').click()
-      // We wait half a second in order the page content to be fully loaded
+      // We wait three seconds in order the page content to be fully loaded
       cy.wait(3000)
       cy.get('[type="checkbox"]:last').check({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
