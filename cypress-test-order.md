@@ -22,8 +22,6 @@ Cypress tests should be executed in the following order:
 4) Topbar admin tests
   - 4.1 Helper dropdown button functionalities
   - 4.2 Avatar button functionalities
-
-[//]: # (All compose tests will be run excluding delete tests because we'll need the resources for future tests.)
 5) Compose tests
   - 5.1 Create a namespace
   - 5.2 Create a module
@@ -33,6 +31,10 @@ Cypress tests should be executed in the following order:
   - 5.6 Edit a record page
   - 5.7 Edit a module
   - 5.8 Edit a namespace
+  - 5.9 Delete a record
+  - 5.10 Delete a record page
+  - 5.11 Delete a module
+  - 5.12 Delete a namespace
 6) Topbar compose tests
   - 6.1 Helper dropdown button functionalities
   - 6.2 Avatar button functionalities
@@ -50,19 +52,14 @@ Cypress tests should be executed in the following order:
 10) Topbar reporter tests
   - 10.1 Helper dropdown button functionalities
   - 10.2 Avatar button functionalities
-11) Compose delete tests
-  - 11.1 Delete a record
-  - 11.2 Delete a record page
-  - 11.3 Delete a module
-  - 11.4 Delete a namespace
-12) Webapp ONE tests
+11) Webapp ONE tests
   - 12.1 Webpage tour test
   - 12.2 Search bar functionality
   - 12.3 App redirection
-13) Topbar one tests
+12) Topbar one tests
   - 13.1 Helper dropdown button functionalities
   - 13.2 Avatar button functionalities
-14) Remaining server tests
+13) Remaining server tests
   - 14.1 Change your password functionality
   - 14.2 Logout user
   - 14.3 Logout from everywhere
