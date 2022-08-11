@@ -14,10 +14,10 @@ describe('Test for editing a record page', () => {
     it('should be able to edit a record page', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
-      // We wait one second in order the page content to be fully loaded
+      // We wait three seconds in order the page content to be fully loaded
       cy.wait(3000)
       cy.get('[data-test-id="button-admin"]').click({ force: true })
-      // We wait one second in order the page content to be fully loaded
+      // We wait three seconds in order the page content to be fully loaded
       cy.wait(3000)
       cy.get('.nav-sidebar').contains('Pages').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
@@ -29,7 +29,7 @@ describe('Test for editing a record page', () => {
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
-      // We wait half a second in order the page content to be fully loaded
+      // We wait three seconds in order the page content to be fully loaded
       cy.wait(3000)
     })
 
