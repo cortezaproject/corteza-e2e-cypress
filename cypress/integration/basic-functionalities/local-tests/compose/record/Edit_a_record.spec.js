@@ -14,7 +14,11 @@ describe('Test for editing a record', () => {
     it('should be able to edit the record by viewing it', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      // We wait four seconds in order the page content to be fully loaded
+      cy.wait(4000)
       cy.get('[data-test-id="button-admin"]').click()
+      // We wait four seconds in order the page content to be fully loaded
+      cy.wait(4000)
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').click()
       cy.get('[data-test-id="button-edit"]').click()
@@ -33,6 +37,8 @@ describe('Test for editing a record', () => {
     it('should be able to edit the record by clicking on the edit button in the all records view', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
       cy.get('[data-test-id="button-back-without-save"]').click()
+      // We wait four seconds in order the page content to be fully loaded
+      cy.wait(4000)
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').within(() => {
         cy.get('td').find('a').click()

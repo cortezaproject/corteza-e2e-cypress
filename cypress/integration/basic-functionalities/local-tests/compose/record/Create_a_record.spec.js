@@ -14,6 +14,8 @@ describe('Test for creating a record', () => {
     it('should be able to create a record ', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      // We wait four seconds in order the page content to be fully loaded
+      cy.wait(4000)
       cy.get('[data-test-id="button-admin"]').click()
       // We wait four seconds in order the page content to be fully loaded
       cy.wait(4000)
@@ -37,6 +39,8 @@ describe('Test for creating a record', () => {
   context('Test for creating a record through the module all records button', () => {
     it('should be able to create a record ', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
+      // We wait four seconds in order the page content to be fully loaded
+      cy.wait(4000)
       cy.get('.header-navigation').contains('All records').click()
       cy.get('[data-test-id="button-add-record"]').click()
       cy.get('input:nth-child(1)').eq(0).type('26')

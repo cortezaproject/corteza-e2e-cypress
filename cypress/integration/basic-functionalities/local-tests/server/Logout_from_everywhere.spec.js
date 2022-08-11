@@ -7,16 +7,20 @@ const newPassword = Cypress.env('user').newPassword
 describe('Testing the log out from everywhere feature', () => {
   before(() => {
     cy.login({ email, password: newPassword, buttonLoginID: 'button-login-and-remember' })
+    // We wait three seconds in order the page content to be fully loaded
+    cy.wait(3000)
     // We check if the success toast appears
-    cy.get('.border-primary') 
+    cy.get('.border-primary')
   })
 
   context('Test for logging out the user from everywhere', () => {
     it('should be able to login and go to login sessions tab and use the log out from everywhere feature ', () => {
       cy.get('[data-test-id="link-tab-login-session"]').click()
       cy.get('[data-test-id="button-logout-from-everywhere"]').click()
+      // We wait three seconds in order the page content to be fully loaded
+      cy.wait(3000)
       // We check if the success toast appears
-      cy.get('.border-primary') 
+      cy.get('.border-primary')
     })
   })
 })
