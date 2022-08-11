@@ -1,15 +1,18 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for deleting a record', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
 
   context('Test for deleting a record through the all records button', () => {
     it('should be able to delete the record through the record viewer', () => {
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
@@ -78,7 +81,7 @@ describe('Test for deleting a record', () => {
     it('should be able to delete a record by check-marking it', () => {
       cy.get('.nav-sidebar').contains('Cypress page').click()
       // We wait half a second in order the page content to be fully loaded
-      cy.wait(500)
+      cy.wait(3000)
       cy.get('[type="checkbox"]:last').check({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()

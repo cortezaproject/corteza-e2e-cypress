@@ -1,16 +1,19 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for creating a module', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
   
 // Before running this test make sure that federation and discovery settings are enabled, otherwise the test will fail
   context('Test for creating a module without any data or misconfigured field', () => {
-    it('should not be able to create a module without nay data entered', () => {
+    it('should not be able to create a module without any data entered', () => {
+      cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-create"]').click()
@@ -32,7 +35,7 @@ describe('Test for creating a module', () => {
   context('Test for checking if buttons in the toolbar or component should/should not be displayed', () => {
     it('should be able to press the back button and be redirected to the list of modules page', () => {
       cy.get('[data-test-id="button-back-without-save"]').should('exist').click()
-      cy.url().should('be.equal', baseURL + '/ns/cypress_namespace/admin/modules')
+      cy.url().should('be.equal', composeURL + '/ns/cypress_namespace/admin/modules')
     })
   
     it('should not display federation, discovery settings, export and permissions buttons when in create module mode', () => {

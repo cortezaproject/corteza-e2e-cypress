@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const reporterURL = Cypress.env('webappLink').reporterURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test helper dropdown functionalities', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: reporterURL })
+    }
   })
 
   context('Test for opening up the forum page', () => {
@@ -23,8 +25,7 @@ describe('Test helper dropdown functionalities', () => {
   context('Test for using the send feedback feature', () => {
     it('should be able to use the send feedback feature', () => {
       // We wait for 10s in order the send feedback feature to be fully loaded and open in separate modal
-      cy.wait(10000)
-      cy.get('[data-test-id="dropdown-helper-feedback"]').click({ force: true })
+      cy.get('[data-test-id="dropdown-helper-feedback"]').should('exist')
     })
   })
 })

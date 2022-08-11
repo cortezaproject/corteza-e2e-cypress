@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const oneURL = Cypress.env('webappLink').oneURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test avatar functionalities', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: oneURL })
+    }
   })
 
   context('Test for checking which user is logged in', () => {

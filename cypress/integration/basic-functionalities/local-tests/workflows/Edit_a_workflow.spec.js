@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const workflowURL = Cypress.env('webappLink').workflowURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a workflow', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: workflowURL })
+    }
   })
 
   context('Test for checking if export, import and permissions buttons are present when editing a workflow', () => {

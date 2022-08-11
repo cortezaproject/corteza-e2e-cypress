@@ -1,22 +1,24 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const composeURL = Cypress.env('webappLink').composeURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test avatar functionalities', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: composeURL })
+    }
   })
 
   context('Test for checking which user is logged in', () => {
     it('should be able to see which user is logged in', () => {
-      cy.get('[data-test-id="dropdown-profile"]').click()
+      cy.get('[data-test-id="dropdown-profile"]').click({ force: true })
     })
   })
 
   context('Test for redirecting the user to the auth page', () => {
     it('should be able to click on the profile button and be redirected to the auth page', () => {
-      cy.get('[data-test-id="dropdown-profile-user"]').click()
+      cy.get('[data-test-id="dropdown-profile-user"]').click({ force: true })
     })
   })
 

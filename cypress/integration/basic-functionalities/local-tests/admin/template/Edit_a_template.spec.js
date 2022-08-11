@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
+const adminURL = Cypress.env('webappLink').adminURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
 describe('Test for editing a template', () => {
   before(() => {
-    cy.login({ email, password })
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email, password, webappLink: adminURL })
+    }
   })
 
   context('Test for checking that new, delete and submit buttons are displayed when in edit mode', () => {
