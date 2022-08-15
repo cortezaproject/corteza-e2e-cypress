@@ -100,6 +100,8 @@ describe('Test for creating a user', () => {
       })
       cy.get('.nav-sidebar').contains('Users').click()
       cy.contains('Automated account').should('exist')
+      // We wait for 1s in order the resource to be loaded
+      cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')

@@ -14,11 +14,7 @@ describe('Test for editing a record', () => {
     it('should be able to edit the record by viewing it', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-visit-namespace"]:last').click()
-      // We wait four seconds in order the page content to be fully loaded
-      cy.wait(4000)
       cy.get('[data-test-id="button-admin"]').click()
-      // We wait four seconds in order the page content to be fully loaded
-      cy.wait(4000)
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').click()
       cy.get('[data-test-id="button-edit"]').click()
@@ -26,8 +22,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Steve')
       cy.get('input:nth-child(1)').eq(2).clear().type('Taker')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('35').should('exist')
       cy.get('.card-body').contains('Steve').should('exist')
       cy.get('.card-body').contains('Taker').should('exist')
@@ -37,8 +33,6 @@ describe('Test for editing a record', () => {
     it('should be able to edit the record by clicking on the edit button in the all records view', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
       cy.get('[data-test-id="button-back-without-save"]').click()
-      // We wait four seconds in order the page content to be fully loaded
-      cy.wait(4000)
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').within(() => {
         cy.get('td').find('a').click()
@@ -47,8 +41,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Angela')
       cy.get('input:nth-child(1)').eq(2).clear().type('Fuller')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('33').should('exist')
       cy.get('.card-body').contains('Angela').should('exist')
       cy.get('.card-body').contains('Fuller').should('exist')
@@ -63,8 +57,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Bob')
       cy.get('input:nth-child(1)').eq(2).clear().type('Wiser')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('31').should('exist')
       cy.get('.card-body').contains('Bob').should('exist')
       cy.get('.card-body').contains('Wiser').should('exist')
@@ -82,8 +76,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Rick')
       cy.get('input:nth-child(1)').eq(2).clear().type('Morris')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('29').should('exist')
       cy.get('.card-body').contains('Rick').should('exist')
       cy.get('.card-body').contains('Morris').should('exist')
@@ -100,8 +94,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Jack')
       cy.get('input:nth-child(1)').eq(2).clear().type('Burner')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('38').should('exist')
       cy.get('.card-body').contains('Jack').should('exist')
       cy.get('.card-body').contains('Burner').should('exist')
@@ -118,8 +112,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Nill')
       cy.get('input:nth-child(1)').eq(2).clear().type('Harris')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('21').should('exist')
       cy.get('.card-body').contains('Nill').should('exist')
       cy.get('.card-body').contains('Harris').should('exist')
@@ -135,8 +129,8 @@ describe('Test for editing a record', () => {
       cy.get('input:nth-child(1)').eq(1).clear().type('Philip')
       cy.get('input:nth-child(1)').eq(2).clear().type('Van')
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait three seconds in order the page content to be fully loaded
-      cy.wait(3000)
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.card-body').contains('19').should('exist')
       cy.get('.card-body').contains('Philip').should('exist')
       cy.get('.card-body').contains('Van').should('exist')

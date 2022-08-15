@@ -16,8 +16,8 @@ describe('Test for editing a template', () => {
       cy.wait(2000)
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      // We wait 1s in order the search to be completed
+      cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-template"]').should('exist')
       cy.get('[data-test-id="card-template-info"]').within(() => {
@@ -56,8 +56,8 @@ describe('Test for editing a template', () => {
 
   context('Test for checking if you can create a template through edit mode', () => {
     it('should be able to create a template', () => {
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      // We wait 1s in order the search to be completed
+      cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.url().should('contain', '/new')

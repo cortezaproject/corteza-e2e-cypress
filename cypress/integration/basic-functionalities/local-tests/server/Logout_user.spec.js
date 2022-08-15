@@ -8,7 +8,7 @@ describe('Test for logging out the user', () => {
   before(() => {
     cy.login({ email, password: newPassword, buttonLoginID: 'button-login-and-remember' })
     // We wait three seconds in order the page content to be fully loaded
-    cy.wait(3000)
+    // cy.wait(3000)
     // We check if the success toast appears
     cy.get('.border-primary') 
   })
