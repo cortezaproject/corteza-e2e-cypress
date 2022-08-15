@@ -14,8 +14,8 @@ describe('Test for creating an application', () => {
     it('should not be able to create an application', () => {
       // This test might fail sometimes with an uncaught:error exception
       // so just try to rerun the test or increase the wait time below
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
+      // We wait for 2s in order the page to be fully loaded/rendered
+      cy.wait(2000)
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
@@ -41,8 +41,8 @@ describe('Test for creating an application', () => {
         cy.get('[data-test-id="button-submit"]').click()
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
-        // We wait 2s in order the button to be switched from check to submit
-        cy.wait(2000)
+        // We wait 1s in order the button to be switched from check to submit
+        cy.wait(1000)
         cy.get('[data-test-id="button-submit"]').should('exist')
       })
       // We confirm that the action was completed successfully
@@ -57,8 +57,8 @@ describe('Test for creating an application', () => {
       })
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      // We wait 1s in order the search to be completed
+      cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-application-id"]').should('exist')
