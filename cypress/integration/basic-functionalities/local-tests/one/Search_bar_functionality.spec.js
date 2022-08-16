@@ -12,8 +12,8 @@ describe('Test for checking the search bar functionality', () => {
 
   context('Test for searching a non existing app', () => {
     it('should not be able to search for a non existing app', () => {
-      // Here we close the start tour pop up (This won't be needed if we are already logged in)
-      //cy.get('.modal-header > :last-child()').click()
+      // Here we close the start tour pop up (This won't be needed if we are already logged in/running the index file)
+      // cy.get('.modal-header > :last-child()').click()
       cy.get('[data-test-id="input-search"]').type('xw')
       cy.get('[data-test-id="heading-no-apps"]').should('exist')
     })

@@ -12,8 +12,6 @@ describe('Test for creating a user', () => {
 
   context('Test for creating a user without any data entered or misconfigured field', () => {
     it('should not be able to create a user', () => {
-      // This test might fail sometimes with an uncaught:error exception
-      // so just try to rerun the test or increase the wait time below
       // We wait for 3s in order the page to be fully loaded/rendered
       cy.wait(3000)
       cy.get('.nav-sidebar').contains('Users').click()

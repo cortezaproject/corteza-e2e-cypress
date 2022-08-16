@@ -12,8 +12,6 @@ describe('Test for creating a role', () => {
 
   context('Test for creating a role without any data entered or misconfigured field', () => {
     it('should not be able to create a role without any data entered', () => {
-      // This test might fail sometimes with an uncaught:error exception
-      // so just try to rerun the test or increase the wait time below
       // We wait for 2s in order the page to be fully loaded/rendered
       cy.wait(2000) 
       cy.get('.nav-sidebar').contains('Roles').click()
