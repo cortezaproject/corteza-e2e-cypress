@@ -1,4 +1,5 @@
-import './server'
+import './server/Create_a_user.spec'
+import './server/Login_tests.spec'
 import './admin'
 import './topbar/admin'
 import './compose'

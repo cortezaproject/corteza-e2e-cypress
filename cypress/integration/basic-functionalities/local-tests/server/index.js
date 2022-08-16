@@ -1,2 +1,5 @@
 import './Create_a_user.spec'
 import './Login_tests.spec'
+import './Change_your_password_functionality.spec'
+import './Logout_user.spec'
+import './Logout_from_everywhere.spec'
