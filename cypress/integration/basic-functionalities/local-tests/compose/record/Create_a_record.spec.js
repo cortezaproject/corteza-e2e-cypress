@@ -17,6 +17,8 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('[data-test-id="button-add-record"]').click()
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('input:nth-child(1)').eq(0).type('28')
       cy.get('input:nth-child(1)').eq(1).type('John')
       cy.get('input:nth-child(1)').eq(2).type('Doe')
