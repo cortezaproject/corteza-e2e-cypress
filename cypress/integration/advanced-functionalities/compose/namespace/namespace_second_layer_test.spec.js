@@ -26,10 +26,10 @@ describe('Testing second layer of namespace', () => {
     })
   })
 
-  //These tests are passing (we just need to figure out how to visit ONE so we can check if the app was enabled there)
-  context('Test for checking the enable namespace checkbox', () => {
+  context('Testing the enable namespace checkbox functionality', () => {
     it('should be able to uncheck the checkbox and NS to be disabled', () => {
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
+      cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      cy.get('[data-test-id="button-edit-namespace"]').click()
       cy.get('[data-test-id="checkbox-enable-namespace"]').uncheck({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('not.be.checked')
       cy.get('[data-test-id="button-save-and-close"]').click()
