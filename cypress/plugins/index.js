@@ -16,11 +16,11 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  return {
-    ...config,
-    // allow time travel in run mode
-    isTextTerminal: true,
-    numTestsKeptInMemory: 50,
-  }
-}
+ module.exports = (on, config) => {
+//   return {
+//     ...config,
+//     // allow time travel in run mode
+//     isTextTerminal: true,
+//     //numTestsKeptInMemory: 50,
+//   }
+ }
