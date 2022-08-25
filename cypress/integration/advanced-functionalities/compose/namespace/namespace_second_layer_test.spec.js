@@ -74,7 +74,7 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="file-logo-upload"]').should('not.have.value', 'yin_yang.png')
       cy.get('[data-test-id="checkbox-show-logo"]').uncheck({ force: true })
       cy.get('[data-test-id="checkbox-show-logo"]').should('not.be.checked')
-      // We wait 1s in order the checkbox to be marked
+      // We wait 1s so the checkbox data is fetched
       cy.wait(1000)
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Cypress namespace')
@@ -89,7 +89,7 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="button-edit-namespace"]').click()
       cy.get('[data-test-id="checkbox-toggle-application"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
-      // We wait 2s in order the checkbox to be marked
+      // We wait 2s so the checkbox data is fetched
       cy.wait(2000)
       cy.get('[data-test-id="button-save"]').click()
       cy.get('[data-test-id="button-save-and-close"]').click()
