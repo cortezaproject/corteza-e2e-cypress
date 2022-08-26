@@ -3,14 +3,14 @@ const oneURL = Cypress.env('webappLink').oneURL
 const email = Cypress.env('user').email
 const password = Cypress.env('user').password
 
-describe('Testing second layer of namespace', () => {
+describe('Testing the enable on application list functionality', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
       cy.login({ email, password, webappLink: oneURL })
     }
   })
 
-  context('Test for checking if application is enabled in ONE', () => {
+  context('Test for checking if application is enabled', () => {
     it('should be enabled', () => {
       cy.visit(oneURL)
       // Here we close the start tour pop up
