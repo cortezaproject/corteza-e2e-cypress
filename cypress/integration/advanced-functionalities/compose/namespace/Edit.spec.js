@@ -143,62 +143,6 @@ describe('Testing second layer of namespace', () => {
     })
   })
 
-  context('Testing reminders', () => {
-    it('should be able to create a reminder and snooze it', () => {
-      cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-item-reminders"]').click()
-      cy.get('[data-test-id="button-add-reminder"]').click()
-      cy.get('[data-test-id="input-title"]').type('Test reminder')
-      cy.get('[data-test-id="textarea-notes"]').type('This is a test reminder.')
-      cy.get('[data-test-id="select-remind-at"]').select('1min')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.get('[data-test-id="span-reminder-title"]').should('exist', 'Test reminder')
-      // We wait 1m in order the reminder to show up
-      cy.wait(61000)
-      cy.get('.toast-body').should('exist', 'This is a test reminder.')
-      cy.get('.custom-select').select('5min')
-      // We wait 5m in order the snooze to show up
-      cy.wait(301000)
-      cy.get('.toast-body').should('exist', 'This is a test reminder.')
-      // Clicking on Dismiss button
-      cy.get('.card-body > button').click()
-      cy.get('[data-test-id="checkbox-dismiss-reminder"]').should('be.checked')
-    })
-
-    it('should be able to edit a reminder', () => {
-      cy.get('[data-test-id="button-edit-reminder"]').click()
-      cy.get('[data-test-id="input-title"]').type(' edit')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.get('[data-test-id="span-reminder-title"]').should('exist', 'Test reminder edit')
-    })
-
-    it('should be able to delete a reminder', () => {
-      cy.get('[data-test-id="button-delete-reminder"]').click()
-      cy.get('[data-test-id="span-reminder-title"]').should('not.exist', 'Test reminder')
-    })
-  })
-
-  context('Testing permissions', () => {
-    it('should be able to log in with the limited permissions account and check if it has restrictions', () => {
-      cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-permissions"]').click()
-      cy.get('.list-group').contains('Test').click()
-      // We select Deny for delete any namespace permission
-      cy.get('.modal-content > .modal-body > form > div > .rule-list > .container > :nth-child(3)').contains('Deny').click()
-      cy.get('[data-test-id="button-save"]').click({ force: true })
-      cy.get('.close').click()
-      cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-profile-logout"]').click()
-      cy.get('[data-test-id="link-login"]').click()
-      cy.get('[data-test-id="input-email"]').type(newEmail)
-      cy.get('[data-test-id="input-password"]').type(newPassword)
-      cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We check with this that the edit button is missing, hence the profile doesn't have permissions
-      cy.get('[data-test-id="button-edit-namespace"]').should('not.exist')
-    })
-  })
-
   context('Testing export namespace functionality', () => {
     it('should be able to export a namespace', () => {
       cy.visit(composeURL + '/namespaces')
