@@ -26,7 +26,8 @@
   "user": {
     "email": "cypress@test.com",
     "password": "cypress123",
-    "newPassword": "newcypress123"
+    "newPassword": "newcypress123",
+    "newEmail": "permissions@email.com"
   }
 ```
 
