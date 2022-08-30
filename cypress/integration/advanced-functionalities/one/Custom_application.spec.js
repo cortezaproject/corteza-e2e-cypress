@@ -17,7 +17,7 @@ describe('Testing the enable on application list functionality', () => {
       if (!window.sessionStorage.getItem('auth.refresh-token')) {
         cy.get('.modal-header > :last-child()').click()
       }
-      cy.get('[data-test-id="input-search"]').type('Cypress')
+      cy.get('[data-test-id="input-search"]').type('Cypress', { force: true })
       cy.get('.overflow-auto').contains('Cypress namespace').click({ force: true })
       cy.url().should('exist', oneURL + '/compose/ns/cypress_namespace/pages')
     })
