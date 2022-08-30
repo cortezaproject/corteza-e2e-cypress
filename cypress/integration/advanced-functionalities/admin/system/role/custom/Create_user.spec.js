@@ -14,6 +14,7 @@ describe('Test for creating a user with limited permissions', () => {
 
   context('Test for creating additional user', () => {
     it('should create a user that will have limited permissions', () => {
+      cy.visit(adminURL + '/')
       // We wait for 2s in order the page to be fully loaded/rendered
       cy.wait(2000)
       cy.get('.nav-sidebar').contains('Users').click()

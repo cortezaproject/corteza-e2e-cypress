@@ -14,6 +14,7 @@ describe('Test for assigning a role to a user', () => {
 
   context('Test for assigning a role to a user', () => {
     it('should be able to assign a role to a user', () => {
+      cy.visit(adminURL + '/')
       // We wait for 2s in order the page to be fully loaded/rendered
       cy.wait(2000)
       cy.get('.nav-sidebar').contains('Users').click()

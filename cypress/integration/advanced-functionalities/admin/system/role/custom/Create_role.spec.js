@@ -14,6 +14,7 @@ describe('Test for creating a role with limited permissions', () => {
 
   context('Test for creating additional role', () => {
     it('should create a role that will have limited permissions', () => {
+      cy.visit(adminURL + '/')
       // We wait for 2s in order the page to be fully loaded/rendered
       cy.wait(2000)
       cy.get('.nav-sidebar').contains('Roles').click()
