@@ -1,0 +1,41 @@
+name: test
+
+on:
+  push:
+    branches:
+      - feature-e2e-gh
+
+jobs:
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-latest
+    env:
+      CORTEZA_VERSION: 2022.3.4
+      CYPRESS_VERSION: 9.5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Pull corteza
+        run: docker pull cortezaproject/corteza:${CORTEZA_VERSION}
+
+      - uses: actions/checkout@v3
+        with:
+          repository: cortezaproject/corteza-e2e-cypress
+          path: ./cypress
+
+      - name: Run corteza
+        run: docker-compose -f cypress/docker-compose.yaml --project-directory cypress up -d corteza
+
+      - name: Run dockerized Cypress
+        run: docker-compose -f cypress/docker-compose.yaml --project-directory cypress up --exit-code-from cypress
+
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
+
+        # uses: cypress-io/github-action@v4
+        # with:
+        #   project: ./some/nested/folder
+        #   spec: cypress/integration/basic-functionalities/local-tests/server/index.js
+        #   config: baseUrl=http://localhost:8088
+
