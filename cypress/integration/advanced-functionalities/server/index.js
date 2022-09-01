@@ -1,0 +1,7 @@
+import './admin'
+import './Mfa.spec'
+import './Profile_tab.spec'
+import './Corteza_logo.spec'
+import './Authorized_clients.spec'
+import './links'
+import './Password_reset.spec'

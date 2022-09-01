@@ -1,0 +1,21 @@
+/// <reference types="cypress" />
+const baseURL = Cypress.env('baseURL')
+const newEmail = Cypress.env('user').newEmail
+const newPassword = Cypress.env('user').newPassword
+
+describe('Testing Corteza logo', () => {
+  before(() => {
+    if (!window.sessionStorage.getItem('auth.refresh-token')) {
+      cy.login({ email: newEmail, password: newPassword, webappLink: baseURL })
+    }
+  })
+
+  context('Testing Corteza logo', () => {
+    it('should be able to click on Corteza logo and be redirected to log in screen', () => {
+      // We wait 1s in order the page to be loaded
+      cy.wait(1000)
+      cy.get('[data-test-id="img-corteza-logo"]').click()
+      cy.url().should('exist', baseURL + '/auth/')
+    })
+  })
+})
