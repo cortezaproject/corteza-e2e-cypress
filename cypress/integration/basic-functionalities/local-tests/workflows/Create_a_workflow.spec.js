@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
-const workflowURL = Cypress.env('webappLink').workflowURL
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
+const workflowURL = Cypress.env('WORKFLOW_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a simple workflow and checking its functionalities', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, webappLink: workflowURL })
+      cy.login({ email, password, url: workflowURL })
     }
   })
 

@@ -1,13 +1,12 @@
 /// <reference types="cypress" />
-const adminURL = Cypress.env('webappLink').adminURL
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
-const oneURL = Cypress.env('webappLink').oneURL
+const adminURL = Cypress.env('ADMIN_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for enabling admin application', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, webappLink: adminURL })
+      cy.login({ email, password, url: adminURL })
     }
   })
 

@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
+const baseURL = Cypress.env('BASE_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Testing multi-factor authentication', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, baseURL })
+      cy.login({ email, password, url: baseURL })
     }
   })
   

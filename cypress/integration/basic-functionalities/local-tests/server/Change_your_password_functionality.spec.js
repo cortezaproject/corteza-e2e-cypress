@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
-const newPassword = Cypress.env('user').newPassword
+const baseURL = Cypress.env('BASE_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
+const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 // When running this test make sure that the base url is set to localhost:3000
 describe('Test for checking the change password functionality', () => {

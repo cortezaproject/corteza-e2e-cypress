@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
+const baseURL = Cypress.env('BASE_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for checking the log in and be remembered button functionality', () => {
   context('Test for logging in and be remembered with missing data or misconfiguration', () => {

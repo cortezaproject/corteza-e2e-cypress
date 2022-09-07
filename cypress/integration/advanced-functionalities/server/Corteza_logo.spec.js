@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('baseURL')
-const newEmail = Cypress.env('user').newEmail
-const newPassword = Cypress.env('user').newPassword
+const baseURL = Cypress.env('BASE_URL')
+const newEmail = Cypress.env('USER_EMAIL_NEW')
+const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Testing Corteza logo', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email: newEmail, password: newPassword, webappLink: baseURL })
+      cy.login({ email: newEmail, password: newPassword, url: baseURL })
     }
   })
 

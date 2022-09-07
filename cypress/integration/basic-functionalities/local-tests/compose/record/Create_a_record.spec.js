@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
-const composeURL = Cypress.env('webappLink').composeURL
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
+const composeURL = Cypress.env('COMPOSE_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a record', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, webappLink: composeURL })
+      cy.login({ email, password, url: composeURL })
     }
   })
 

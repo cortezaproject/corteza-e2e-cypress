@@ -1,19 +1,6 @@
-const baseURL = Cypress.env('baseURL')
-const adminURL = Cypress.env('webappLink').adminURL
-const composeURL = Cypress.env('webappLink').composeURL
-const workflowURL = Cypress.env('webappLink').workflowURL
-const reporterURL = Cypress.env('webappLink').reporterURL
-const oneURL = Cypress.env('webappLink').oneURL
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
-
-Cypress.Commands.add('login', ({ email, password, buttonLoginID = 'button-login-and-remember', webappLink } = {}) => {
-  if (webappLink) {
-    cy.visit(webappLink + '/auth/login')
-  } 
-  
-  else {
-    cy.visit(baseURL + '/auth/login')
+Cypress.Commands.add('login', ({ email, password, buttonLoginID = 'button-login-and-remember', url } = {}) => {
+  if (url) {
+    cy.visit(url + '/auth/login')
   }
 
   if (email) {

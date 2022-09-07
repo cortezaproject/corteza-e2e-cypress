@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
-const adminURL = Cypress.env('webappLink').adminURL
-const email = Cypress.env('user').email
-const newEmail = Cypress.env('user').newEmail
-const password = Cypress.env('user').password
-const newPassword = Cypress.env('user').newPassword
+const adminURL = Cypress.env('ADMIN_URL')
+const email = Cypress.env('USER_EMAIL')
+const newEmail = Cypress.env('USER_EMAIL_NEW')
+const password = Cypress.env('USER_PASSWORD')
+const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Test for creating a role with limited permissions', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, webappLink: adminURL })
+      cy.login({ email, password, url: adminURL })
     }
   })
 

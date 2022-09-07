@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
-const oneURL = Cypress.env('webappLink').oneURL
-const email = Cypress.env('user').email
-const password = Cypress.env('user').password
+const oneURL = Cypress.env('ONE_URL')
+const email = Cypress.env('USER_EMAIL')
+const password = Cypress.env('USER_PASSWORD')
 
 describe('Testing whether the app is listed in webapp one and enabled', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, webappLink: oneURL })
+      cy.login({ email, password, url: oneURL })
     }
   })
 

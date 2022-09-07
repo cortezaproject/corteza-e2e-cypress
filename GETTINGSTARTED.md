@@ -2,33 +2,29 @@
 
 ## Add environmental variables
 
-### Set server API as baseURL
+### Set server API as BASE_URL
 
 ```shell
-  "baseURL": "http://localhost:3000",
+  "BASE_URL": "http://localhost:3000",
 ```
 
 ### Set webapp APIs
 
 ```shell
-  "webappLink": {
-    "adminURL": "http://localhost:8080",
-    "composeURL": "http://localhost:8081",
-    "workflowURL": "http://localhost:8082",
-    "reporterURL": "http://localhost:8083",
-    "oneURL": "http://localhost:8084"
-  },
+  "ADMIN_URL": "http://localhost:8080",
+  "COMPOSE_URL": "http://localhost:8081",
+  "WORKFLOW_URL": "http://localhost:8082",
+  "REPORTER_URL": "http://localhost:8083",
+  "ONE_URL": "http://localhost:8084",
 ```
 
 ### Set user credentials
 
 ```shell
-  "user": {
-    "email": "cypress@test.com",
-    "password": "cypress123",
-    "newPassword": "newcypress123",
-    "newEmail": "permissions@email.com"
-  }
+  "USER_EMAIL": "cypress@test.com",
+  "USER_PASSWORD": "cypress123",
+  "USER_PASSWORD_NEW": "newcypress123",
+  "USER_EMAIL_NEW": "permissions@email.com"
 ```
 
 # Running
