@@ -1,12 +1,11 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('BASE_URL')
+const baseURL = Cypress.env('HOST')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
   context('Test for creating a user with misconfigured parameter', () => {
     it('should not be able to create an account with just an email entered', () => {
-      // When running this test make sure that the base url is set to localhost:3000
       cy.visit(baseURL + '/')
       cy.get('[data-test-id="link-signup"]').click()
       cy.get('[data-test-id="input-email"]').type('cypress@test.com')
