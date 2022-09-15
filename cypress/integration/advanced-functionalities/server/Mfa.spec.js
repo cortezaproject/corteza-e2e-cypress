@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-const baseURL = Cypress.env('BASE_URL')
+const baseURL = Cypress.env('HOST')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
 

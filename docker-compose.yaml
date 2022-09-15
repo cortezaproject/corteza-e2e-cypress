@@ -1,23 +1,16 @@
-# e2e/docker-compose.yml from repo
-# https://github.com/bahmutov/cypress-open-from-docker-compose
 version: '3.2'
 
 services:
-  # this is the web application we are going to test
   corteza:
-    image: "cortezaproject/corteza-server:2022.3.0-dev.1"
-
-  # Cypress container
-  cypress:
-    # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
-    image: "cypress/included:3.2.0"
-    depends_on: [ corteza ]
-
+    image: cortezaproject/corteza:${CORTEZA_VERSION}
     environment:
-      # pass base url to test pointing at the web application
-      CYPRESS_baseUrl: http://corteza
+      DOMAIN: corteza
 
-    # share the current folder as volume to avoid copying
+  cypress:
+    image: cypress/included:${CYPRESS_VERSION}
+    depends_on: [ corteza ]
+    entrypoint: cypress run
+    ipc: host # does not work in docker without it
     working_dir: /e2e
     volumes:
       - ./:/e2e

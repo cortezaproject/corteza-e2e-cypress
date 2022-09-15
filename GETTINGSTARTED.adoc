@@ -1,0 +1,102 @@
+== Add environmental variables
+
+=== Set basic host settings
+
+The generic host and user settings are in the `cypress.env.json` file.
+
+[NOTE]
+====
+The main configuration file is the `cypress.json`, but do try to separate the host settings and main configuration settings for cypress.
+====
+
+[source,json]
+----
+{
+  "HOST": "http://localhost:3000",
+  "BASE_URL": "http://localhost:3000",
+  "ADMIN_URL": "http://localhost:8080",
+  "COMPOSE_URL": "http://localhost:8081",
+  "WORKFLOW_URL": "http://localhost:8082",
+  "REPORTER_URL": "http://localhost:8083",
+  "ONE_URL": "http://localhost:8084",
+  "USER_EMAIL": "cypress@test.com",
+  "USER_PASSWORD": "cypress123",
+  "USER_PASSWORD_NEW": "newcypress123",
+  "USER_EMAIL_NEW": "permissions@email.com"
+}
+----
+
+== Running the tests
+
+[source,bash]
+----
+$ yarn cypress open
+----
+
+or
+
+[source,bash]
+----
+$ yarn run cy:open
+----
+
+== Running specific cypress tests using CLI
+
+[source,bash]
+----
+$ yarn cypress run --spec '<path-to-spec-file>'
+----
+
+.Example:
+[source,bash]
+----
+$ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+----
+
+
+== Running the tests dockerized
+
+=== Set versions
+
+Create an `.env` file and specify the Corteza and Cypress versions.
+The host configuration should be specified either via `cypress.env.json` or by environment variables in the `docker-compose.yaml` configuration.
+
+[NOTE]
+====
+Refer to the `.env.example` file for an idea.
+====
+
+
+=== Run headless
+
+[source,bash]
+----
+$ docker-compose up --exit-code-from cypress
+----
+
+=== Run Cypress with screen
+
+[source,bash]
+----
+$ docker-compose -f docker-compose.yaml -f docker-compose.screen.yaml up --exit-code-from cypress
+----
+
+== Custom commands
+
+This project also adds several custom commands in cypress/support/commands.js. They are useful to create one or more default todos from the tests.
+
+[source,bash]
+----
+Cypress.Commands.add('login', (params) => {
+  // custom login function
+})
+----
+
+== Troubleshooting
+
+=== Use in case of a CSRF token issue
+
+[source,json]
+----
+{ "AUTH_CSRF_ENABLED": false }
+----
