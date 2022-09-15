@@ -11,22 +11,6 @@ services:
     depends_on: [ corteza ]
     entrypoint: cypress run
     ipc: host # does not work in docker without it
-
-    environment:
-      # pass base url to test pointing at the web application
-      CYPRESS_HOST: http://corteza
-      CYPRESS_BASE_URL: http://corteza
-      CYPRESS_ADMIN_URL: http://corteza/admin
-      CYPRESS_COMPOSE_URL: http://corteza/compose
-      CYPRESS_WORKFLOW_URL: http://corteza/workflow
-      CYPRESS_REPORTER_URL: http://corteza/reporter
-      CYPRESS_ONE_URL: http://corteza/one
-      CYPRESS_USER_EMAIL: cypress@test.com
-      CYPRESS_USER_EMAIL_NEW: permissions@email.com
-      CYPRESS_USER_PASSWORD: cypress123
-      CYPRESS_USER_PASSWORD_NEW: newcypress123
-
-    # share the current folder as volume to avoid copying
     working_dir: /e2e
     volumes:
       - ./:/e2e

@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  corteza:
+    image: cortezaproject/corteza:${CORTEZA_VERSION}
+    environment:
+      DOMAIN: corteza
+
+  cypress:
+    image: cypress/included:${CYPRESS_VERSION}
+    depends_on: [ corteza ]
+    environment:
+      - CYPRESS_HOST=${CYPRESS_HOST}
+      - CYPRESS_BASE_URL=${CYPRESS_BASE_URL}
+      - CYPRESS_ADMIN_URL=${CYPRESS_ADMIN_URL}
+      - CYPRESS_COMPOSE_URL=${CYPRESS_COMPOSE_URL}
+      - CYPRESS_WORKFLOW_URL=${CYPRESS_WORKFLOW_URL}
+      - CYPRESS_REPORTER_URL=${CYPRESS_REPORTER_URL}
+      - CYPRESS_ONE_URL=${CYPRESS_ONE_URL}
+      - CYPRESS_USER_EMAIL=${CYPRESS_USER_EMAIL}
+      - CYPRESS_USER_EMAIL_NEW=${CYPRESS_USER_EMAIL_NEW}
+      - CYPRESS_USER_PASSWORD=${CYPRESS_USER_PASSWORD}
+      - CYPRESS_USER_PASSWORD_NEW=${CYPRESS_USER_PASSWORD_NEW}
+    entrypoint: cypress run
+    ipc: host # does not work in docker without it
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
