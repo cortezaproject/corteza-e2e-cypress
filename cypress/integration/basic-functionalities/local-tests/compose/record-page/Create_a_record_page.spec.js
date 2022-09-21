@@ -13,7 +13,8 @@ describe('Test for creating a record page', () => {
   context('Test for creating a record page', () => {
     it('should be able to create a record page', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-record-page-create"]').click()
       cy.get('.related-pages-dropdown').click()

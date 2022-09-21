@@ -12,8 +12,8 @@ describe('Test for deleting an application', () => {
 
   context('Test for deleting an application', () => {
     it('should be able to delete it', () => {
-      // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000)
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated application')
       // We wait 1s in order the search to be completed

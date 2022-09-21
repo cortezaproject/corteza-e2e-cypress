@@ -12,7 +12,7 @@ describe('Testing whether the app name is edited', () => {
 
   context('Testing whether the app name is edited', () => {
     it('should be edited', () => {
-      cy.visit(oneURL)
+      cy.visit(oneURL + '/')
       // Here we close the start tour pop up
       if (!window.sessionStorage.getItem('auth.refresh-token')) {
         cy.get('.modal-header > :last-child()').click()

@@ -1,7 +1,12 @@
 {
   "env": {
-    "BASE_URL": "http://localhost:3000"
+    "HOST": "http://localhost:3000"
   },
+
+  "requestTimeout": 30000,
+  "numTestsKeptInMemory": 0,
+  "responseTimeout": 50000,
+  "pageLoadTimeout": 100000,
 
   "watchForFileChanges": false,
   "chromeWebSecurity": false,

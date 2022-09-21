@@ -10,11 +10,12 @@ describe('Test for editing a namespace', () => {
     }
   })
 
-  context('Test if create new namespace, export, permissions, clone and delete buttons are displayed when in edit mode', () => {
+  context('Test if export, permissions, clone and delete buttons are displayed when in edit mode', () => {
     it('should be displayed when into edit mode', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
-      cy.get('[data-test-id="button-create-namespace"]').should('exist')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('tbody').click()
       cy.get('[data-test-id="button-export-namespace"]').should('exist')
       cy.get('[data-test-id="button-permissions"]').should('exist')
       cy.get('[data-test-id="button-clone"]').should('exist')
@@ -25,7 +26,9 @@ describe('Test for editing a namespace', () => {
   context('Test for editing a namespace', () => {
     it('should be able to edit the name, the handle and the description', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('tbody').click()
       cy.get('[data-test-id="input-name"]').clear().type('Edited namespace')
       cy.get('[data-test-id="input-slug"]').clear().type('edited_namespace')
       cy.get('[data-test-id="input-subtitle"]').clear().type('Edited subtitle')
@@ -39,7 +42,9 @@ describe('Test for editing a namespace', () => {
     })
 
     it('should be edited', () => {
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('edited')
+      cy.get('tbody').click()
       cy.get('[data-test-id="input-name"]').should('have.value', 'Edited namespace')
       cy.get('[data-test-id="input-slug"]').should('have.value', 'edited_namespace')
       cy.get('[data-test-id="input-subtitle"]').should('have.value', 'Edited subtitle')
@@ -48,12 +53,14 @@ describe('Test for editing a namespace', () => {
     })
   })
 
-  context('Test for creating a namespace through edit mode', () => {
-    it('should be able to create a new namespace', () => {
+  context('Test for cloning a namespace', () => {
+    it('should be able to clone a namespace', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
-      cy.get('[data-test-id="button-create-namespace"]').click()
-      cy.url().should('be.equal', composeURL + '/admin/namespace/create')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('edited')
+      cy.get('tbody').click()
+      cy.get('[data-test-id="button-clone"]').click()
+      cy.url().should('exist', '/clone/')
     })
   })
 })

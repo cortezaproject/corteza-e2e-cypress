@@ -15,6 +15,7 @@ describe('Testing second layer of namespace', () => {
   context('Test for creating a namespace', () => {
     it('should be able to create a namespace', () => {
       cy.visit(composeURL + '/namespaces')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="input-name"]').type('Cypress namespace')
       cy.get('[data-test-id="input-slug"]').type('cypress_namespace')
@@ -28,30 +29,34 @@ describe('Testing second layer of namespace', () => {
 
   context('Testing the enable namespace checkbox functionality', () => {
     it('should be able to uncheck the checkbox and NS to be disabled', () => {
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-enable-namespace"]').uncheck({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('not.be.checked')
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-visit-namespace"]').should('not.exist')
+      cy.get('[data-test-id="link-visit-namespace"]').should('not.exist')
     })
 
     it('should be able to check the checkbox and NS to be enabled', () => {
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-enable-namespace"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-visit-namespace"]').should('exist')
+      cy.get('[data-test-id="link-visit-namespace"]').should('exist')
     })
   })
 
   context('Test for checking the show logo checkbox', () => {
     it('should be able to enable the show logo checkbox and view the pre-used logo', () => {
       cy.visit(composeURL + '/namespaces')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-show-logo"]').check({ force: true })
       cy.get('[data-test-id="button-logo-preview"]').click()
       // We check if the logo is displayed
@@ -65,11 +70,13 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="file-logo-upload"]').should('exist', 'yin_yang.png')
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Cypress namespace')
-      cy.get('.card > img').should('exist')
+      cy.get('.circled-avatar').should('exist')
     })
 
     it('should be able to reset the logo', () => {
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      cy.get('tbody').click()
       cy.get('[data-test-id="button-logo-reset"]').click()
       cy.get('[data-test-id="file-logo-upload"]').should('not.have.value', 'yin_yang.png')
       cy.get('[data-test-id="checkbox-show-logo"]').uncheck({ force: true })
@@ -78,15 +85,16 @@ describe('Testing second layer of namespace', () => {
       cy.wait(1000)
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Cypress namespace')
-      cy.get('.card > img').should('not.exist')
+      cy.get('.circled-avatar > .ns-initial').should('exist')
     })
   })
 
   context('Test for checking the enable on application list checkbox', () => {
     it('should be able to check the checkbox and NS to be enabled on application list', () => {
       cy.visit(composeURL + '/namespaces')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-toggle-application"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       // We wait 2s so the checkbox data is fetched
@@ -99,6 +107,7 @@ describe('Testing second layer of namespace', () => {
   context('Testing import namespace functionality', () => {
     it('should be able to import a namespace', () => {
       cy.visit(composeURL + '/namespaces')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-import"]').click().get('#dropzone').selectFile('cypress/fixtures/files/test.zip', { action: 'drag-drop', force: true })
       cy.get('[data-test-id="input-name"]').type('Test')
       cy.get('[data-test-id="input-handle"]').type('Test')
@@ -113,7 +122,7 @@ describe('Testing second layer of namespace', () => {
   context('Testing translations', () => {
     it('should be able to enter translations for another language', () => {
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('tbody').click()
       // We wait 1s in order all the settings to be loaded
       cy.wait(1000)
       cy.get('.header').within(() => {
@@ -146,8 +155,9 @@ describe('Testing second layer of namespace', () => {
   context('Testing export namespace functionality', () => {
     it('should be able to export a namespace', () => {
       cy.visit(composeURL + '/namespaces')
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="button-edit-namespace"]').click()
+      cy.get('tbody').click()
       cy.get('[data-test-id="button-export-namespace"]').click()
     })
 

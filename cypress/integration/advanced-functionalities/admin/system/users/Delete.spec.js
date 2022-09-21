@@ -19,13 +19,17 @@ describe('Test for deleting a user', () => {
       // We wait 2s in order the page to be fully loaded
       cy.wait(2000)
       cy.get('[data-test-id="input-search"]').type('Permissions')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      // We wait 2s for the search to finish
+      cy.wait(2000)
       cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('.confirmation-confirm').click()
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')
+      // We wait 2s for the search to finish
+      cy.wait(2000)
+      cy.get('[data-test-id="dropdown-profile"]').click()
+      cy.get('[data-test-id="dropdown-profile-logout"]').click({ force: true })
     })
   })
 })

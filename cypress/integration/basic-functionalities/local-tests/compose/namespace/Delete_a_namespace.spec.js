@@ -9,11 +9,13 @@ describe('Test for deleting a namespace', () => {
       cy.login({ email, password, url: composeURL })
     }
   })
-  
+
   context('Test for deleting the created namespaces', () => {
     it('should be able to delete the namespace successfully', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-edit-namespace"]:last').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
+      cy.get('[data-test-id="input-search"]').type('edited')
+      cy.get('tbody').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       cy.contains('Edited namespace').should('not.exist')

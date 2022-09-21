@@ -12,8 +12,8 @@ describe('Test for creating a role', () => {
 
   context('Test for creating a role without any data entered or misconfigured field', () => {
     it('should not be able to create a role without any data entered', () => {
-      // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000) 
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000) 
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="button-new-role"]').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {

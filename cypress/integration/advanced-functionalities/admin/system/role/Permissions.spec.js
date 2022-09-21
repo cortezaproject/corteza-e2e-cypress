@@ -47,7 +47,7 @@ describe('Testing permissions of a role', () => {
       cy.get('[data-test-id="button-permissions"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('[data-test-id="select-user-list-roles"]').type('Administrator{enter}')
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
       cy.get('.modal-footer').contains('Save & Close').click()
@@ -59,6 +59,8 @@ describe('Testing permissions of a role', () => {
       // We wait 2s in order the page to be fully loaded
       cy.wait(2000)
       cy.get('[data-test-id="button-permissions"]').click()
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
+      // We select Deny for read any namespace permission
       cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
       cy.get('footer').contains('Save changes').click()
     })

@@ -13,13 +13,14 @@ describe('Test for editing a module', () => {
   context('Test for editing the module data and a record field', () => {
     it('should be able to edit the module', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="table-modules-list"] > tbody').find(':first').click()
       cy.get('[data-test-id="input-module-name"]').type(' edited')
       cy.get('[data-test-id="input-module-handle"]').type('_edited')
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(0).within(() => {
-        cy.get('input:first').clear().type('name')
+        cy.get('input:first').clear({ force: true }).type('name', { force: true })
       })    
       cy.get('[data-test-id="button-save"]').click()
       // We check if the success toast appears

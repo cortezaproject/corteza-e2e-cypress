@@ -12,7 +12,7 @@ describe('Testing room creation in Jitsi Bridge', () => {
 
   context('Test for creating a room in Jitsi Bridge', () => {
     it('should not be able to create a room without a name', () => {
-      cy.visit(oneURL)
+      cy.visit(oneURL + '/')
       // Here we close the start tour pop up
       if (!window.sessionStorage.getItem('auth.refresh-token')) {
         cy.get('.modal-header > :last-child()').click()

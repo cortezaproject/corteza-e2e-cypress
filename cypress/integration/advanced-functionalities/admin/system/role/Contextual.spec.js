@@ -13,6 +13,28 @@ describe('Testing contextual role', () => {
   })
 
   context('Testing contextual role', () => {
+    it('should be able to assign a role to a user', () => {
+      cy.visit(adminURL + '/')
+      // We wait for 3s in order the page to be fully loaded
+      cy.wait(3000)
+      cy.get('.nav-sidebar').contains('Users').click()
+      cy.get('[data-test-id="input-search"]').type('Permissions account')
+      // We wait for 2s in order the page to be fully loaded
+      cy.wait(2000)
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.get('.input-group').type('Security administrator')
+      cy.get('.filtered-role').click()
+      // We wait for 2s in order the page to be fully loaded
+      cy.wait(2000)
+      cy.get('.card-footer:eq(1)').within(() => {
+        // We wait for 1s in order the page to be fully loaded
+        cy.wait(1000)
+        cy.get('[data-test-id="button-submit"]').click()
+        // We wait for 2s in order the page to be fully loaded
+        cy.wait(2000)
+      })
+    })
+
     it('should create a contextual role and set it to true', () => {
       cy.visit(adminURL + '/')
       // We wait 3s in order the page to be fully loaded
@@ -39,7 +61,7 @@ describe('Testing contextual role', () => {
     it('should adjust the permissions of the role', () => {
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="button-permissions"]').click()
-      cy.get('[data-test-id="select-user-list-roles"]').type('Administrator{enter}')
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
       cy.get('footer').contains('Save changes').click({ force: true })
     })
@@ -85,7 +107,7 @@ describe('Testing contextual role', () => {
     it('should adjust the permissions of the role', () => {
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="button-permissions"]').click()
-      cy.get('[data-test-id="select-user-list-roles"]').type('Administrator{enter}')
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Allow').click()
       cy.get('footer').contains('Save changes').click({ force: true })
     })

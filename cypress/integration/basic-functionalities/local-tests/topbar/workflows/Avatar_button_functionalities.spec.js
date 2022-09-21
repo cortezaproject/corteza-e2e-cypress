@@ -18,7 +18,7 @@ describe('Test avatar functionalities', () => {
 
   context('Test for redirecting the user to the auth page', () => {
     it('should be able to click on the profile button and be redirected to the auth page', () => {
-      cy.get('[data-test-id="dropdown-profile-user"]').click()
+      cy.get('[data-test-id="dropdown-profile-user"]').click({ force: true })
     })
   })
 

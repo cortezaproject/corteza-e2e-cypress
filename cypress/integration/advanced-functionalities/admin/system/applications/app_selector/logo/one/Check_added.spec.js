@@ -12,7 +12,7 @@ describe('Testing whether the logo is applied in webapp one', () => {
 
   context('Testing whether the logo is applied in webapp one', () => {
     it('should be displayed', () => {
-      cy.visit(oneURL)
+      cy.visit(oneURL + '/')
       // Here we close the start tour pop up
       if (!window.sessionStorage.getItem('auth.refresh-token')) {
         cy.get('.modal-header > :last-child()').click()

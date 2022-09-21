@@ -9,12 +9,13 @@ describe('Test for creating a module', () => {
       cy.login({ email, password, url: composeURL })
     }
   })
-  
-// Before running this test make sure that federation and discovery settings are enabled, otherwise the test will fail
+
+  // Before running this test make sure that federation and discovery settings are enabled, otherwise the test will fail
   context('Test for creating a module without any data or misconfigured field', () => {
     it('should not be able to create a module without any data entered', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-save-and-close"].disabled').should('exist')
@@ -37,7 +38,7 @@ describe('Test for creating a module', () => {
       cy.get('[data-test-id="button-back-without-save"]').should('exist').click()
       cy.url().should('be.equal', composeURL + '/ns/cypress_namespace/admin/modules')
     })
-  
+
     it('should not display federation, discovery settings, export and permissions buttons when in create module mode', () => {
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-federation-settings"]').should('not.exist')
@@ -54,25 +55,25 @@ describe('Test for creating a module', () => {
       cy.get('[data-test-id="input-module-name"]').type('Cypress module')
       cy.get('[data-test-id="input-module-handle"]').type('cypress_module')
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(0).within(() => {
-          cy.get('input:first').clear().type('name')
-          cy.get('input:eq(1)').type('Name')
-        })
+        cy.get('input:first').clear().type('name')
+        cy.get('input:eq(1)').type('Name')
+      })
       cy.get('[data-test-id="button-field-add"]').click()
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(1).within(() => {
-          cy.get('input:first').type('surname')
-          cy.get('input:eq(1)').type('Surname')
-        })
+        cy.get('input:first').type('surname')
+        cy.get('input:eq(1)').type('Surname')
+      })
       cy.get('[data-test-id="button-field-add"]').click()
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(2).within(() => {
-          cy.get('input:first').type('age')
-          cy.get('input:eq(1)').type('Age')
-          cy.get('select').select('Number input')
-        })
+        cy.get('input:first').type('age')
+        cy.get('input:eq(1)').type('Age')
+        cy.get('select').select('Number input')
+      })
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the success toast appears
-      cy.get('.b-toast-success') 
+      cy.get('.b-toast-success')
     })
-      
+
     it('should exist', () => {
       cy.contains('Cypress module').should('exist')
     })
@@ -89,7 +90,7 @@ describe('Test for creating a module', () => {
       })
       cy.get('[data-test-id="button-save-and-close"]').click()
       // We check if the error toast appears
-      cy.get('.b-toast-danger') 
+      cy.get('.b-toast-danger')
       cy.get('[data-test-id="button-back-without-save"]').click()
     })
   })

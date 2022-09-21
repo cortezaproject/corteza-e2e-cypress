@@ -17,6 +17,8 @@ describe('Test for creating a role for testing advanced functionalities', () => 
       cy.wait(3000)
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="button-new-role"]').click()
+      // We wait 2s in order the page to be fully loaded
+      cy.wait(2000)
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Advanced functionalities')
         cy.get('[data-test-id="input-handle"]').type('advanced_functionalities')

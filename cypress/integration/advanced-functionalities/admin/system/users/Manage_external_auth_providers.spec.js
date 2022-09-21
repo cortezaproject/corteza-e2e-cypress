@@ -13,8 +13,8 @@ describe('Test for managing external providers of a user', () => {
   context('Test for managing external providers of a user', () => {
     it('should be able to have external provider of type password', () => {
       cy.visit(adminURL + '/')
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
+      // We wait for 3s in order the page to be fully loaded
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Users').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)

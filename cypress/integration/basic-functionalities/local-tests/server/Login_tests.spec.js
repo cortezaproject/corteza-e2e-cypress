@@ -6,13 +6,13 @@ const password = Cypress.env('USER_PASSWORD')
 describe('Test for checking the log in and be remembered button functionality', () => {
   context('Test for logging in and be remembered with missing data or misconfiguration', () => {
     it('should not be able to log in and be remembered with not registered email', () => {
-      cy.login({ email: 'email@email.com', password })
+      cy.login({ email: 'email@email.com', password, url: baseURL })
       // We check if the error toast appears
       cy.get('[data-test-id="error"]')
     })
 
     it('should not be able to log in and be remembered with not registered password', () => {
-      cy.login({ email, password: 'password' })
+      cy.login({ email, password: 'password', url: baseURL })
       // We check if the error toast appears
       cy.get('[data-test-id="error"]')
     })
@@ -23,19 +23,19 @@ describe('Test for checking the log in and be remembered button functionality', 
     })
 
     it('should not be able to log in and be remembered with just an email entered', () => {
-      cy.login({ email })
+      cy.login({ email, url: baseURL  })
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
 
     it('should not be able to log in and be remembered with just a password entered', () => {
-      cy.login({ password })
+      cy.login({ password, url: baseURL  })
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
   })
 
   context('Test for logging in and be remembered successfully', () => {
     it('should be able to log in and be remembered successfully when correct password and email are entered', () => {
-      cy.login({ email, password })
+      cy.login({ email, password, url: baseURL  })
       // We check if the success toast appears
       cy.get('.border-primary')
     })
@@ -45,36 +45,38 @@ describe('Test for checking the log in and be remembered button functionality', 
 describe('Test for checking the log in button functionality', () => {
   context('Test for logging in with missing data or misconfiguration', () => {
     it('should not be able to log in with not registered email', () => {
-      cy.login({ email: 'email@email.com', password, buttonLoginID: 'button-login' })
+      cy.login({ email: 'email@email.com', password, buttonLoginID: 'button-login', url: baseURL  })
       // We check if the error toast appears
       cy.get('[data-test-id="error"]')
     })
 
     it('should not be able to log in with not registered password', () => {
-      cy.login({ email, password: 'password', buttonLoginID: 'button-login' })
+      cy.login({ email, password: 'password', buttonLoginID: 'button-login', url: baseURL  })
       // We check if the error toast appears
       cy.get('[data-test-id="error"]')
     })
 
     it('should not be able to log in with no data entered', () => {
-      cy.login({ buttonLoginID: 'button-login' })
+      cy.login({ buttonLoginID: 'button-login', url: baseURL  })
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
 
     it('should not be able to log in with just an email entered', () => {
-      cy.login({ email, buttonLoginID: 'button-login' })
+      cy.login({ email, buttonLoginID: 'button-login', url: baseURL  })
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
 
     it('should not be able to log in with just a password entered', () => {
-      cy.login({ password, buttonLoginID: 'button-login' })
+      cy.login({ password, buttonLoginID: 'button-login', url: baseURL })
+      // We wait 2s in order the page to be fully loaded
+      cy.wait(2000)
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
   })
   
   context('Test for logging in successfully', () => {
     it('should be able to log in successfully when correct password and email are entered', () => {
-      cy.login({ email, password, buttonLoginID: 'button-login' })
+      cy.login({ email, password, buttonLoginID: 'button-login', url: baseURL  })
       // We check if the success toast appears
       cy.get('.border-primary')
     })

@@ -1,5 +1,4 @@
-import './system/role/custom'
+import './system/role'
 import './system/applications'
 import './system/users'
-import './system/role'
 import './system/templates'

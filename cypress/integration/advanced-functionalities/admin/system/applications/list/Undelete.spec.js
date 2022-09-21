@@ -56,6 +56,8 @@ describe('Test for un-deleting admin application', () => {
 
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('Test un-delete application').should('exist')
+      cy.get('[data-test-id="dropdown-profile"]').click()
+      cy.get('[data-test-id="dropdown-profile-logout"]').click()
     })
   })
 })

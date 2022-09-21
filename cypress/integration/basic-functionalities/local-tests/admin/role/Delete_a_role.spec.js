@@ -12,10 +12,10 @@ describe('Test for deleting a role', () => {
 
   context('Test for deleting a role', () => {
     it('should be able to delete it', () => {
-      // // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000) 
+      // // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000) 
       cy.get('.nav-sidebar').contains('Roles').click()
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.get('[data-test-id="input-search"]').clear().type('automated')
       // We wait 1s in order the search to be completed
       cy.wait(1000) 
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
@@ -25,7 +25,10 @@ describe('Test for deleting a role', () => {
       })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success') 
+      cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
+      // We wait 1s in order the search to be completed
+      cy.wait(1000)
       cy.contains('automated').should('not.exist')
     })
   })

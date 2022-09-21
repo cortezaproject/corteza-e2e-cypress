@@ -37,6 +37,8 @@ describe('Test for editing the name of the application', () => {
 
     it('should be able to edit the name in app selector', () => {
       cy.get('[data-test-id="card-application-selector"]').within(() => {
+        // We wait 2s in order the page to be completely loaded
+        cy.wait(2000)
         cy.get('[data-test-id="input-name"]').clear().type('Edited testing application')
         cy.get('[data-test-id="button-submit"]').click()
       })

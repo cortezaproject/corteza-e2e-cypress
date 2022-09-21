@@ -15,20 +15,24 @@ describe('Testing compose permissions', () => {
   context('Testing permissions', () => {
     it('should be able to log in with the limited permissions account and check if it has restrictions', () => {
       cy.visit(composeURL + '/namespaces')
+      // We wait for 3s in order the page to be fully loaded
+      cy.wait(3000)
+      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-permissions"]').click()
-      cy.get('.list-group').contains('Test').click()
-      // We select Deny for delete any namespace permission
-      cy.get('.modal-content > .modal-body > form > div > .rule-list > .container > :nth-child(3)').contains('Deny').click()
-      cy.get('[data-test-id="button-save"]').click({ force: true })
-      cy.get('.close').click()
+      cy.get('[data-test-id="select-user-list-roles"]').type('Test{enter}')
+      // We select Deny for read any namespace permission
+      cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
+      cy.contains('Save changes').click({ force: true })
       cy.get('[data-test-id="dropdown-profile"]').click()
       cy.get('[data-test-id="dropdown-profile-logout"]').click()
       cy.get('[data-test-id="link-login"]').click()
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We check with this that the edit button is missing, hence the profile doesn't have permissions
+      // We check with this that there are no namespaces present, hence the profile doesn't have permissions
+      cy.get('[data-test-id="button-manage-namespaces"]').should('not.exist')
       cy.get('[data-test-id="button-edit-namespace"]').should('not.exist')
+      cy.contains('No namespaces found').should('not.exist')
     })
   })
 })

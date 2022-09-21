@@ -27,7 +27,7 @@ describe('Testing permissions of a template', () => {
       cy.get('[data-test-id="button-permissions"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('[data-test-id="select-user-list-roles"]').type('Administrator{enter}')
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
       cy.get('.modal-footer').contains('Save & Close').click()

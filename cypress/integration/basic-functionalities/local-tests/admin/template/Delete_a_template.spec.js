@@ -12,8 +12,8 @@ describe('Test for deleting a template', () => {
 
   context('Test for deleting a template', () => {
     it('should be able to delete a template', () => {
-      // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000)
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
       // We wait 2s in order the search to be completed

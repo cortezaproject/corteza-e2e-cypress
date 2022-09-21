@@ -12,7 +12,7 @@ describe('Testing whether the app is listed in webapp one and enabled', () => {
 
   context('Testing whether the app is listed in webapp one and enabled', () => {
     it('should be listed and enabled', () => {
-      cy.visit(oneURL)
+      cy.visit(oneURL + '/')
       // Here we close the start tour pop up
       if (!window.sessionStorage.getItem('auth.refresh-token')) {
         cy.get('.modal-header > :last-child()').click()

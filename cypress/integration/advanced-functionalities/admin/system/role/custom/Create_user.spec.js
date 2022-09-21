@@ -15,9 +15,11 @@ describe('Test for creating a user with limited permissions', () => {
   context('Test for creating additional user', () => {
     it('should create a user that will have limited permissions', () => {
       cy.visit(adminURL + '/')
-      // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000)
+      // We wait for 4s in order the page to be fully loaded/rendered
+      cy.wait(4000)
       cy.get('.nav-sidebar').contains('Users').click()
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-name"]').type('Permissions account')

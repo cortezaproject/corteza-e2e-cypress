@@ -13,8 +13,8 @@ describe('Test for importing users', () => {
   context('Test for importing users', () => {
     it('should be able to import users', () => {
       cy.visit(adminURL + '/')
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
+      // We wait for 3s in order the page to be fully loaded
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Users').click()
       // We wait 2s in order the page to be fully loaded
       cy.wait(2000)

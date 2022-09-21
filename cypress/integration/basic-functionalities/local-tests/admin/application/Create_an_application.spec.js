@@ -12,8 +12,8 @@ describe('Test for creating an application', () => {
 
   context('Test for creating an application without a name entered', () => {
     it('should not be able to create an application', () => {
-      // We wait for 2s in order the page to be fully loaded/rendered
-      cy.wait(2000)
+      // We wait for 3s in order the page to be fully loaded/rendered
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {

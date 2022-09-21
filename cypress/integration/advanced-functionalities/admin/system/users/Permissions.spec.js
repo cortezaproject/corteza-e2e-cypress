@@ -27,15 +27,15 @@ describe('Test user permissions', () => {
       cy.get('[data-test-id="button-permissions"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('[data-test-id="select-user-list-roles"]').type('Administrator{enter}')
+      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
       cy.get('.modal-footer').contains('Save & Close').click()
       cy.contains('Cancel').click()
 
       cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      // We wait 3s in order the page to be fully loaded
+      cy.wait(3000)
       cy.get('[data-test-id="button-permissions"]').click()
       cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
       cy.get('footer').contains('Save changes').click()
@@ -50,6 +50,8 @@ describe('Test user permissions', () => {
       cy.get('[data-test-id="button-login-and-remember"]').click()
       // Users should not be displayed hence the message "No matches for your search"
       cy.get('#resource-list').contains('No matches for your search')
+      cy.get('[data-test-id="dropdown-profile"]').click()
+      cy.get('[data-test-id="dropdown-profile-logout"]').click()
     })
   })
 })

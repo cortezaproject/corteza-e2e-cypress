@@ -13,9 +13,12 @@ describe('Test for deleting a record', () => {
   context('Test for deleting a record through the all records button', () => {
     it('should be able to delete the record through the record viewer', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-visit-namespace"]:last').click()
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
+      // We wait ss in order the page to be fully loaded
+      cy.wait(2000)
       cy.get('table > tbody').find('tr:first').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
@@ -24,6 +27,8 @@ describe('Test for deleting a record', () => {
 
     it('should be able to delete the record by clicking on the edit button in the all records view', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
+      // We wait ss in order the page to be fully loaded
+      cy.wait(2000)
       cy.get('[data-test-id="button-back-without-save"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').within(() => {
