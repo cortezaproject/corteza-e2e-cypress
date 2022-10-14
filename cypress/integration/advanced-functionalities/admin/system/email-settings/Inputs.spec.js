@@ -27,6 +27,8 @@ describe('Test for SMTP server functionalities', () => {
     })
 
     it('should be able to enter a server port', () => {
+      cy.get('[data-test-id="input-server-port"]').clear().type('one')
+      cy.get('[data-test-id="input-server-port"]').should('not.have.value', 'one')
       cy.get('[data-test-id="input-server-port"]').clear().type('25')
       cy.get('[data-test-id="button-submit"]').click()
       // We confirm that the action was completed successfully
