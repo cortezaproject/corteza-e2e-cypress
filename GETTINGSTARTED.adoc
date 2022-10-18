@@ -44,7 +44,7 @@ $ yarn run cy:open
 
 [source,bash]
 ----
-$ yarn cypress run --spec '<path-to-spec-file>'
+$ yarn cypress run --spec <path-to-spec-file>
 ----
 
 .Example:
@@ -52,6 +52,35 @@ $ yarn cypress run --spec '<path-to-spec-file>'
 ----
 $ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
 ----
+
+== SMTP support
+
+The SMTP testing is done via https://github.com/mailhog/MailHog[mailhog].
+
+.Running the mailhog in background
+[source,bash]
+----
+$ docker-compose up -d mailhog
+----
+
+[NOTE]
+====
+The mailhog container is ephemeral, so all the emails will NOT be persisted in the container (you will lose emails when the mailhog is stopped).
+====
+
+You can preview all the emails manually by visiting `http://localhost:8025`
+
+.SMTP server settings
+[Attributes]
+|===
+|Setting |Value
+
+|**Server**|localhost
+|**Port**|1025
+|**User**|<empty>
+|**Password**|<empty>
+|===
+
 
 == Running the tests dockerized
 

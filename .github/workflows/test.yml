@@ -29,6 +29,9 @@ jobs:
 
       - name: Pull docker images
         run: docker-compose -f .github/docker-compose.yaml pull
+      
+      - name: Run mailhog
+        run: docker-compose -f cypress/.github/docker-compose.yaml --project-directory cypress up -d mailhog
 
       - name: Prepare npm packages
         run: yarn
@@ -153,5 +156,4 @@ jobs:
           channel: ${{ secrets.MATRIX_ROOM_ID }}
           message: |
             ❌ E2e tests did not pass
-
             🔗 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/
