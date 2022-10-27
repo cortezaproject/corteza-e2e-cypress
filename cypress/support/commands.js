@@ -1,3 +1,5 @@
+import 'cypress-mailhog'
+
 Cypress.Commands.add('login', ({ email, password, buttonLoginID = 'button-login-and-remember', url } = {}) => {
   if (url) {
     cy.visit(url + '/auth/login')

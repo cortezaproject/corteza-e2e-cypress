@@ -1,6 +1,7 @@
 {
   "env": {
-    "HOST": "http://localhost:3000"
+    "HOST": "http://localhost:3000",
+    "mailHogUrl": "http://localhost:8025"
   },
 
   "requestTimeout": 30000,
