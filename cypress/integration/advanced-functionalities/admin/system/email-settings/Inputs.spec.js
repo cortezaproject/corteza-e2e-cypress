@@ -13,7 +13,7 @@ describe('Test for SMTP server functionalities', () => {
   })
 
   context('Testing SMTP server inputs', () => {
-    it('should be able to enter a server name', () => {
+    it('should be able to enter an info into the fields', () => {
       cy.visit(adminURL + '/')
       // We wait 3s in order the page to be fully loaded
       cy.wait(3000)
@@ -21,49 +21,27 @@ describe('Test for SMTP server functionalities', () => {
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
       cy.get('[data-test-id="input-server"]').clear({ force: true }).type('default.host.domain.ltd', { force: true })
-      cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-    })
-
-    it('should be able to enter a server port', () => {
       cy.get('[data-test-id="input-server-port"]').clear().type('one')
       cy.get('[data-test-id="input-server-port"]').should('not.have.value', 'one')
       cy.get('[data-test-id="input-server-port"]').clear().type('25')
-      cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-    })
-
-    it('should be able to enter user and password', () => {
       cy.get('[data-test-id="input-user"]').clear().type(newEmail)
       cy.get('[data-test-id="input-password"]').clear().type(newPassword)
-      cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-    })
-
-    it('should be able to enter sender address', () => {
       cy.get('[data-test-id="input-sender-address"]').clear().type('sender@address.com')
-      cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-    })
-
-    it('should be able to enter sender address', () => {
       cy.get('[data-test-id="checkbox-allow-invalid-certificates"]').check({ force: true })
-      cy.get('[data-test-id="button-submit"]').click()
+      cy.get('[data-test-id="input-tls-server-name"]').clear({ force: true }).type('default.domain.ltd', { force: true })
+      cy.get('[data-test-id="button-submit"]').click({ force: true })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')
     })
 
-    it('should be able to enter TLS server name', () => {
-      cy.get('[data-test-id="input-tls-server-name"]').clear({ force: true }).type('default.domain.ltd', { force: true })
-      cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+    it('should check whether the entered info is saved', () => {
+      cy.get('[data-test-id="input-server"]').should('have.value', 'default.host.domain.ltd')
+      cy.get('[data-test-id="input-server-port"]').should('have.value', '25')
+      cy.get('[data-test-id="input-user"]').should('have.value', newEmail)
+      cy.get('[data-test-id="input-password"]').should('have.value', newPassword)
+      cy.get('[data-test-id="input-sender-address"]').should('have.value', 'sender@address.com')
+      cy.get('[data-test-id="checkbox-allow-invalid-certificates"]').should('be.checked')
+      cy.get('[data-test-id="input-tls-server-name"]').should('have.value', 'default.domain.ltd')
     })
   })
 })
