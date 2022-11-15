@@ -24,8 +24,6 @@ describe('Testing archived filter', () => {
       cy.get('[data-test-id="input-search"]').type('advanced')
       // We wait 1s for the search to finish
       cy.wait(1000)
-      // We check if the state is Suspended
-      cy.contains('Advanced functionalities').get('#resource-list > tbody').contains('Archived').should('exist')
       // We check if the text is gray
       cy.contains('Advanced functionalities').get('.text-secondary').should('exist')
       cy.contains('Advanced functionalities').get('#resource-list > tbody > tr:last > td:last > a').click()
