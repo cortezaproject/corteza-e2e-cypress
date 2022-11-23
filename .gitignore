@@ -20,5 +20,6 @@ coverage
 /workflow
 /cypress-docker-images
 /cypress/videos/*
+/cypress/reports
 cypress.env.json
 .env

@@ -9,7 +9,6 @@ services:
   cypress:
     image: cypress/included:${CYPRESS_VERSION}
     depends_on: [ corteza ]
-    entrypoint: cypress run
     ipc: host # does not work in docker without it
     working_dir: /e2e
     volumes:

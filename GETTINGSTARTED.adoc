@@ -53,7 +53,6 @@ $ yarn cypress run --spec '<path-to-spec-file>'
 $ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
 ----
 
-
 == Running the tests dockerized
 
 === Set versions
@@ -66,12 +65,11 @@ The host configuration should be specified either via `cypress.env.json` or by e
 Refer to the `.env.example` file for an idea.
 ====
 
-
 === Run headless
 
 [source,bash]
 ----
-$ docker-compose up --exit-code-from cypress
+$ docker-compose run --entrypoint='cypress run --spec cypress/integration/basic-functionalities/local-tests/server/index.js cypress' cypress
 ----
 
 === Run Cypress with screen

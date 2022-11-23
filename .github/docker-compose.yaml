@@ -21,7 +21,6 @@ services:
       - CYPRESS_USER_EMAIL_NEW=${CYPRESS_USER_EMAIL_NEW}
       - CYPRESS_USER_PASSWORD=${CYPRESS_USER_PASSWORD}
       - CYPRESS_USER_PASSWORD_NEW=${CYPRESS_USER_PASSWORD_NEW}
-    entrypoint: cypress run
     ipc: host # does not work in docker without it
     working_dir: /e2e
     volumes:

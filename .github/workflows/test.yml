@@ -1,16 +1,15 @@
 name: test
 
 on:
-  push:
-    branches:
-      - feature-e2e-gh
+  schedule:
+    - cron: "30 9 * * *"
 
 jobs:
   cypress-run:
     name: Cypress run
     runs-on: ubuntu-latest
     env:
-      CORTEZA_VERSION: 2022.3.4
+      CORTEZA_VERSION: 2022.3.6
       CYPRESS_VERSION: 9.5.1
       CYPRESS_HOST: http://corteza
       CYPRESS_BASE_URL: http://corteza
@@ -28,19 +27,131 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Pull corteza
-        run: docker pull cortezaproject/corteza:${CORTEZA_VERSION}
+      - name: Pull docker images
+        run: docker-compose -f .github/docker-compose.yaml pull
 
-      - uses: actions/checkout@v3
+      - name: Prepare npm packages
+        run: yarn
+
+      - name: Run Admin tests
+        # specs cannot be inserted as --spec=file1.js,file2.js because cypress randomizes the list
+        run: |
+          docker-compose -f .github/docker-compose.yaml up -d corteza && \
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+             --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+             --reporter mochawesome
+             --browser chrome' \
+            cypress && \
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+             --spec cypress/integration/basic-functionalities/local-tests/admin/index.js
+             --reporter mochawesome
+             --browser chrome' \
+            cypress
+
+      - name: Run Compose tests
+        if: success() || failure()
+        run: |
+          docker-compose -f .github/docker-compose.yaml restart corteza && \
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+            --reporter mochawesome
+            --browser chrome' \
+            cypress
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/compose/index.js
+            --reporter mochawesome
+            --browser chrome' \
+            cypress
+
+      - name: Run One tests
+        if: success() || failure()
+        run: |
+          docker-compose -f .github/docker-compose.yaml restart corteza && \
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+            --reporter mochawesome
+            --browser chrome' \
+            cypress
+
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/one/index.js
+            --reporter mochawesome
+            --browser chrome'\
+            cypress
+
+      - name: Run Reporter, topbar, Workflows tests
+        if: success() || failure()
+        run: |
+          docker-compose -f .github/docker-compose.yaml restart corteza && \
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/reporter/index.js,cypress/integration/basic-functionalities/local-tests/topbar/index.js,cypress/integration/basic-functionalities/local-tests/workflows/index.js
+            --reporter mochawesome
+            --browser chrome' \
+            cypress
+
+      - name: Run Server tests
+        if: success() || failure()
+        run: |
+          docker-compose -f .github/docker-compose.yaml restart corteza && \
+          docker-compose -f .github/docker-compose.yaml --project-directory . run \
+            --entrypoint='cypress run 
+            --spec cypress/integration/basic-functionalities/local-tests/server/index.js
+            --reporter mochawesome
+            --browser chrome' \
+            cypress
+
+      - name: Publish results
+        # always() runs the step even when canceled manually
+        if: success() || failure()
+        env:
+          RELEASE_CRUST_SFTP_KEY: ${{ secrets.RELEASE_CRUST_SFTP_KEY }}
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+        run: |
+          ls -l cypress/reports && \
+          npx mochawesome-merge "cypress/reports/*.json" > cypress/report.json && \
+          npx marge -o cypress/reports-build -f index.html -i cypress/report.json && \
+          export TMP_KEY=$(mktemp) && \
+          echo ${RELEASE_CRUST_SFTP_KEY} | base64 -d > ${TMP_KEY} && \
+          echo "put cypress/reports-build/index.html" | sftp -q -o "StrictHostKeyChecking no" -i ${TMP_KEY} ${RELEASE_CRUST_SFTP_URI}
+
+      - name: Send message on successful testing results
+        if: success()
+        uses: fadenb/matrix-chat-message@v0.0.6
+        env:
+          E2E_REPORTS_USER: ${{ secrets.E2E_REPORTS_USER }}
+          E2E_REPORTS_PASS: ${{ secrets.E2E_REPORTS_PASS }}
         with:
-          repository: cortezaproject/corteza-e2e-cypress
-          path: ./cypress
+          homeserver: ${{ secrets.MATRIX_HOME_SERVER }}
+          token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
+          channel: ${{ secrets.MATRIX_ROOM_ID }}
+          message: |
+            ✅ E2e tests passed 🙌 🎉
 
-      - name: Run corteza
-        run: docker-compose -f cypress/.github/docker-compose.yaml --project-directory cypress up -d corteza
+            🔗 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/
 
-      - name: Run dockerized Cypress
-        run: docker-compose -f cypress/.github/docker-compose.yaml --project-directory cypress up --exit-code-from cypress
+      - name: Send message on failed testing results
+        if: failure()
+        uses: fadenb/matrix-chat-message@v0.0.6
+        env:
+          E2E_REPORTS_USER: ${{ secrets.E2E_REPORTS_USER }}
+          E2E_REPORTS_PASS: ${{ secrets.E2E_REPORTS_PASS }}
+        with:
+          homeserver: ${{ secrets.MATRIX_HOME_SERVER }}
+          token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
+          channel: ${{ secrets.MATRIX_ROOM_ID }}
+          message: |
+            ❌ E2e tests did not pass
 
-      # - name: Setup upterm session
-      #   uses: lhotari/action-upterm@v1
+            🔗 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/

@@ -11,5 +11,14 @@
   "watchForFileChanges": false,
   "chromeWebSecurity": false,
   "video": false,
-  "screenshotOnRunFailure": false
+  "screenshotOnRunFailure": false,
+
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/reports",
+    "reportFilename": "index.html",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
 }
