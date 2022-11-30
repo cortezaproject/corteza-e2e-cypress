@@ -15,7 +15,7 @@ describe('Testing your profile tab in server', () => {
       cy.visit(baseURL + '/auth/login')
       cy.get('[data-test-id="input-name"]').type(' edited')
       cy.get('[data-test-id="input-handle"]').type('_edited')
-      cy.get('[data-test-id="select-language"]').select('German (German)')
+      cy.get('[data-test-id="select-language"]').select('German (Deutsch)')
       cy.get('[data-test-id="button-submit"]').click()
       // We check if the success toast appears
       cy.get('.border-primary')
@@ -24,7 +24,7 @@ describe('Testing your profile tab in server', () => {
     it('should save the changes and check whether the values has been changed', () => {
       cy.get('[data-test-id="input-name"]').should('have.value', 'Permissions account edited')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'permissions_account_edited')
-      cy.get('[data-test-id="select-language"]').should('exist', 'German (German)')
+      cy.get('[data-test-id="select-language"]').should('exist', 'German (Deutshc)')
     })
   })
 })

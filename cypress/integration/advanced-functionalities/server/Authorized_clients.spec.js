@@ -13,7 +13,7 @@ describe('Testing authorized clients tab', () => {
   context('Testing authorized clients tab', () => {
     it('should be able to revoke access', () => {
       // We first visit webapp compose in order to make sure that we will have data under authorized clients
-      cy.visit(baseURL + '/compose/namespaces')
+      cy.visit(baseURL)
       // We wait 2s in order the page to be loaded
       cy.wait(2000)
       cy.visit(baseURL + '/auth')

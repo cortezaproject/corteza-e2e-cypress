@@ -33,7 +33,7 @@ describe('Test for checking role inputs', () => {
     it('should be able to include a prohibited role', () => {
       cy.get('[data-test-id="prohibited-roles"]').within(() => {
         cy.get('[data-test-id="input-role"]').type('Developer{enter}')
-        cy.get('[data-test-id="button-add-role"]').click()
+        cy.get('[data-test-id="button-add-role"]').click({ force: true })
       })
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
       // We confirm that the action was completed successfully

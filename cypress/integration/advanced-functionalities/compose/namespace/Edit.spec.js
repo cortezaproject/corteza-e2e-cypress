@@ -29,25 +29,29 @@ describe('Testing second layer of namespace', () => {
 
   context('Testing the enable namespace checkbox functionality', () => {
     it('should be able to uncheck the checkbox and NS to be disabled', () => {
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-enable-namespace"]').uncheck({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('not.be.checked')
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="link-visit-namespace"]').should('not.exist')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('tbody').click()
+      cy.get('[data-test-id="button-visit-namespace"].disabled').should('exist')
     })
 
     it('should be able to check the checkbox and NS to be enabled', () => {
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
-      cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-enable-namespace"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save-and-close"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
-      cy.get('[data-test-id="link-visit-namespace"]').should('exist')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('tbody').click()
+      cy.get('[data-test-id="button-visit-namespace"]').should('exist')
     })
   })
 
@@ -56,6 +60,8 @@ describe('Testing second layer of namespace', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-show-logo"]').check({ force: true })
       cy.get('[data-test-id="button-logo-preview"]').click()
@@ -69,13 +75,18 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="file-logo-upload"]').selectFile('cypress/fixtures/images/yin_yang.png', { force: true })
       cy.get('[data-test-id="file-logo-upload"]').should('exist', 'yin_yang.png')
       cy.get('[data-test-id="button-save-and-close"]').click()
+      cy.get('[data-test-id="button-namespace-list"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Cypress namespace')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.circled-avatar').should('exist')
     })
 
     it('should be able to reset the logo', () => {
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       cy.get('[data-test-id="button-logo-reset"]').click()
       cy.get('[data-test-id="file-logo-upload"]').should('not.have.value', 'yin_yang.png')
@@ -84,7 +95,10 @@ describe('Testing second layer of namespace', () => {
       // We wait 1s so the checkbox data is fetched
       cy.wait(1000)
       cy.get('[data-test-id="button-save-and-close"]').click()
+      cy.get('[data-test-id="button-namespace-list"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Cypress namespace')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
       cy.get('.circled-avatar > .ns-initial').should('exist')
     })
   })
@@ -94,6 +108,8 @@ describe('Testing second layer of namespace', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order all the settings to be loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       cy.get('[data-test-id="checkbox-toggle-application"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
@@ -122,33 +138,35 @@ describe('Testing second layer of namespace', () => {
   context('Testing translations', () => {
     it('should be able to enter translations for another language', () => {
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order all the settings to be loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       // We wait 1s in order all the settings to be loaded
       cy.wait(1000)
-      cy.get('.header').within(() => {
+      cy.get('.header-navigation').within(() => {
         cy.get('[data-test-id="button-translation"]').click()
       })
       cy.get('[data-test-id="dropdown-add-language"]').click()
       cy.get('[data-test-id="dropdown-language-item-Slovenian"]').click()
-      cy.get('[data-test-id="translation-value-Name-language-Slovenian"]').type('Slovenian name translation')
+      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').type('Slovenian name translation')
       cy.get('[data-test-id="button-submit"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
-      cy.get('.header').within(() => {
+      cy.get('.header-navigation').within(() => {
         cy.get('[data-test-id="button-translation"]').click()
       })
-      cy.get('[data-test-id="translation-value-Name-language-Slovenian"]').should('exist', 'Slovenian name translation')
+      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').should('exist', 'Slovenian name translation')
     })
 
     it('should be able to delete a translation', () => {
-      cy.get('[data-test-id="translation-value-Name-language-Slovenian"]').clear()
+      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').clear()
       cy.get('[data-test-id="button-submit"]').click({ force: true })
       // We check if the success toast appears
       cy.get('.b-toast-success')
-      cy.get('.header').within(() => {
+      cy.get('.header-navigation').within(() => {
         cy.get('[data-test-id="button-translation"]').click()
       })
-      cy.get('[data-test-id="translation-value-Name-language-Slovenian"]').should('not.exist', 'Slovenian name translation')
+      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').should('not.exist', 'Slovenian name translation')
     })
   })
 
@@ -157,6 +175,8 @@ describe('Testing second layer of namespace', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('Cypress namespace')
+      // We wait 1s in order all the settings to be loaded
+      cy.wait(1000)
       cy.get('tbody').click()
       cy.get('[data-test-id="button-export-namespace"]').click()
     })
