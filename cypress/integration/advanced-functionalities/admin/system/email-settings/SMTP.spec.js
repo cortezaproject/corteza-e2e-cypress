@@ -13,7 +13,7 @@ describe('Test for SMTP server functionalities', () => {
   })
 
   context('Testing SMTP server inputs', () => {
-    it('should be able to enter an info into the fields', () => {
+    it('should be able to enter info into the fields', () => {
       cy.visit(adminURL + '/')
       // We wait 3s in order the page to be fully loaded
       cy.wait(3000)
