@@ -44,4 +44,28 @@ describe('Test for SMTP server functionalities', () => {
       cy.get('[data-test-id="input-tls-server-name"]').should('have.value', 'default.domain.ltd')
     })
   })
+
+  context('Sending an email through SMTP button', () => {
+    it('should be able to configure the server for sending an email', () => {
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('[data-test-id="input-server"]').clear({ force: true }).type('localhost', { force: true })
+      cy.get('[data-test-id="input-server-port"]').clear().type('1025')
+      cy.get('[data-test-id="button-submit"]').click({ force: true })
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
+    })
+
+    it('should be able to send and receive the mail', () => {
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('[data-test-id="button-smtp"]').click({ force: true })
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
+      // We wait 1s in order the mail to be sent
+      cy.wait(1000)
+      // We check if the mail is received in MailHog
+      cy.mhGetAllMails().should('have.length', 1)
+    })
+  })
 })
