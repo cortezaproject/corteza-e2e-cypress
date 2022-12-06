@@ -31,7 +31,7 @@ jobs:
         run: docker-compose -f .github/docker-compose.yaml pull
       
       - name: Run mailhog
-        run: docker-compose -f cypress/.github/docker-compose.yaml --project-directory cypress up -d mailhog
+        run: docker-compose -f .github/docker-compose.yaml --project-directory cypress up -d mailhog
 
       - name: Prepare npm packages
         run: yarn
@@ -43,14 +43,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-             --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+             --spec cypress/integration/basic-functionalities/server/Create_a_user.spec.js
              --reporter mochawesome
              --browser chrome' \
             cypress && \
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-             --spec cypress/integration/basic-functionalities/local-tests/admin/index.js
+             --spec cypress/integration/basic-functionalities/admin/index.js
              --reporter mochawesome
              --browser chrome' \
             cypress
@@ -62,14 +62,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+            --spec cypress/integration/basic-functionalities/server/Create_a_user.spec.js
             --reporter mochawesome
             --browser chrome' \
             cypress
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/compose/index.js
+            --spec cypress/integration/basic-functionalities/compose/index.js
             --reporter mochawesome
             --browser chrome' \
             cypress
@@ -81,14 +81,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+            --spec cypress/integration/basic-functionalities/server/Create_a_user.spec.js
             --reporter mochawesome
             --browser chrome' \
             cypress
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/one/index.js
+            --spec cypress/integration/basic-functionalities/one/index.js
             --reporter mochawesome
             --browser chrome'\
             cypress
@@ -99,7 +99,7 @@ jobs:
           docker-compose -f .github/docker-compose.yaml restart corteza && \
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/reporter/index.js,cypress/integration/basic-functionalities/local-tests/topbar/index.js,cypress/integration/basic-functionalities/local-tests/workflows/index.js
+            --spec cypress/integration/basic-functionalities/reporter/index.js,cypress/integration/basic-functionalities/topbar/index.js,cypress/integration/basic-functionalities/workflows/index.js
             --reporter mochawesome
             --browser chrome' \
             cypress
@@ -110,7 +110,7 @@ jobs:
           docker-compose -f .github/docker-compose.yaml restart corteza && \
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/local-tests/server/index.js
+            --spec cypress/integration/basic-functionalities/server/index.js
             --reporter mochawesome
             --browser chrome' \
             cypress
