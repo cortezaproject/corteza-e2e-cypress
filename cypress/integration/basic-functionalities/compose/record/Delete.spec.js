@@ -14,7 +14,7 @@ describe('Test for deleting a record', () => {
     it('should be able to delete the record through the record viewer', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       // We wait 1s in order the page to be loaded
       cy.wait(1000)
       cy.get('[data-test-id="button-admin"]').click()

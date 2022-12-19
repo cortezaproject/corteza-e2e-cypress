@@ -19,7 +19,7 @@ describe('Testing the sidebar custom logo', () => {
       // We wait for 1s in order the search to be finished
       cy.wait(1000)
       // We need to visit a namespace so that the sidebar will be present
-      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
       cy.get('[data-test-id="img-main-logo"]').should('have.attr', 'src').should('include','attachment')
     })
   })

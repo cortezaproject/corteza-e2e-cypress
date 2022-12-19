@@ -19,7 +19,7 @@ describe('Testing the toggle functionality of the sidebar', () => {
       // We wait for 1s in order the search to be finished
       cy.wait(1000)
       // We need to visit a namespace so that the sidebar will be present
-      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
       cy.get('[data-test-id="button-pin-icon"]').click()
       // We click on the center of the page to move the focus away from the sidebar so it can hide
       cy.get('body').click('center')

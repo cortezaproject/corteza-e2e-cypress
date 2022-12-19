@@ -14,7 +14,7 @@ describe('Test for editing a record page', () => {
     it('should be able to edit a record page', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click({ force: true })
       cy.get('.nav-sidebar').contains('Pages').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()

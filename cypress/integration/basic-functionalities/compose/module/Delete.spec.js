@@ -14,7 +14,7 @@ describe('Test for deleting a module', () => {
     it('should be able to delete the module', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.get('[data-test-id="link-visit-namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       // We wait 1s in order the page to be loaded
       cy.wait(1000)
