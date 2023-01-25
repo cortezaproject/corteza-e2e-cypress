@@ -12,12 +12,14 @@
   "watchForFileChanges": false,
   "chromeWebSecurity": false,
   "video": false,
-  "screenshotOnRunFailure": false,
+  "screenshotOnRunFailure": true,
+  "screenshotsFolder": "cypress/screenshots",
 
   "reporter": "mochawesome",
   "reporterOptions": {
     "reportDir": "cypress/reports",
     "reportFilename": "index.html",
+    "reportPageTitle": "Corteza e2e tests",
     "overwrite": false,
     "html": false,
     "json": true

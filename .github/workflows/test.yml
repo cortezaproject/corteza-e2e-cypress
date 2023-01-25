@@ -1,4 +1,4 @@
-name: test
+name: Test webapps
 
 on:
   schedule:
@@ -22,6 +22,10 @@ jobs:
       CYPRESS_USER_EMAIL_NEW: permissions@email.com
       CYPRESS_USER_PASSWORD: cypress123
       CYPRESS_USER_PASSWORD_NEW: newcypress123
+      AUTH_REQUEST_RATE_LIMIT: 0
+      FEDERATION_ENABLED: 'true'
+      FEDERATION_HOST: http://corteza
+      FEDERATION_LABEL: 'Corteza e2e federation host'
 
     steps:
       - name: Checkout
@@ -122,12 +126,14 @@ jobs:
           RELEASE_CRUST_SFTP_KEY: ${{ secrets.RELEASE_CRUST_SFTP_KEY }}
           RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
         run: |
-          ls -l cypress/reports && \
+          export TMP_KEY=$(mktemp) && \
+          export DT=$(date +"%Y%m%d%H%M%S") && \
+          echo "SCREENSHOTS_GEN_FOLDER=${DT}" >> $GITHUB_ENV && \
           npx mochawesome-merge "cypress/reports/*.json" > cypress/report.json && \
           npx marge -o cypress/reports-build -f index.html -i cypress/report.json && \
-          export TMP_KEY=$(mktemp) && \
           echo ${RELEASE_CRUST_SFTP_KEY} | base64 -d > ${TMP_KEY} && \
-          echo "put cypress/reports-build/index.html" | sftp -q -o "StrictHostKeyChecking no" -i ${TMP_KEY} ${RELEASE_CRUST_SFTP_URI}
+          echo "put cypress/reports-build/index.html" | sftp -q -o "StrictHostKeyChecking no" -i ${TMP_KEY} ${RELEASE_CRUST_SFTP_URI} && \
+          printf '%s\n' 'cd screenshots' "mkdir $DT" "cd $DT" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${TMP_KEY} ${RELEASE_CRUST_SFTP_URI}
 
       - name: Send message on successful testing results
         if: success()
@@ -155,5 +161,8 @@ jobs:
           token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
           channel: ${{ secrets.MATRIX_ROOM_ID }}
           message: |
-            ❌ E2e tests did not pass
+            ❌ E2e tests did not pass, screenshots provided
+
             🔗 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/
+
+            📷 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/screenshots/${{ env.SCREENSHOTS_GEN_FOLDER }}/
