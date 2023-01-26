@@ -16,7 +16,7 @@ describe('Test for logging out the user', () => {
       // We wait 2s in order the page to be fully loaded
       cy.wait(2000)
       cy.get('[data-test-id="link-logout"]').click()
-      cy.contains('Logout successful.').should('exist')
+      cy.contains('Logout successful').should('exist')
     })
   })
 })

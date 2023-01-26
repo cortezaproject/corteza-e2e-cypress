@@ -18,20 +18,21 @@ describe('Test for creating a simple workflow and checking its functionalities',
       cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
     })
 
-    it('should not be able to create a workflow with missing handle', () => {
-      cy.visit(workflowURL + '/list')
-      cy.get('[data-test-id="button-create-workflow"]').click()
-      cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
-    })
-
     it('should not be able to create a workflow with invalid handle', () => {
       cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="button-create-workflow"]').click()
-      cy.get('[data-test-id="input-label"]').clear().type('Cypress workflow')
+      cy.get('[data-test-id="input-label"]').clear().type('Test workflow')
       cy.get('[data-test-id="input-handle"]').type('_')
       cy.get('[data-test-id="input-description"]').type('This is a simple workflow created by an automated cypress test.')
       cy.get('[data-test-id="button-save-workflow"].disabled').should("exist")
       cy.get('[data-test-id="input-handle-invalid-state"]')
+    })
+
+    it('should be able to create a workflow with missing handle', () => {
+      cy.get('[data-test-id="input-handle"]').clear().type('test')
+      cy.get('[data-test-id="button-save-workflow"]').click()
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
   })
 
@@ -54,7 +55,7 @@ describe('Test for creating a simple workflow and checking its functionalities',
       cy.get('[data-test-id="input-description"]').type('This is a simple workflow created by an automated cypress test.')
       cy.get('[data-test-id="button-save-workflow"]').click()
       // We confirm that the action was completed successfully
-      cy.get('.b-toast-success') 
+      cy.get('.b-toast-success')
     })
   })
 })

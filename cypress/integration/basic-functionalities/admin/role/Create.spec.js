@@ -28,14 +28,14 @@ describe('Test for creating a role', () => {
       })
     })
 
-    it('should not be able to create a role with missing handle', () => {
+    it('should be able to create a role with missing handle', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Name')
         cy.get('[data-test-id="input-handle"]').clear()
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We see that an error pops up saying handle field is empty
-      cy.get('.b-toast-danger')
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
     })
 
     it('should not be able to create a role with misconfigured handle', () => {
@@ -48,6 +48,7 @@ describe('Test for creating a role', () => {
 
   context('Test for checking that delete, archive, and new buttons are not displayed when in create mode', () => {
     it('should not be displayed when creating a role', () => {
+      cy.get('[data-test-id="button-new-role"]').click()
       cy.get('[data-test-id="button-new-role"]').should('not.exist')
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('not.exist')

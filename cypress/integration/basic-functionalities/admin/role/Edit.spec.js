@@ -13,7 +13,7 @@ describe('Test for editing a role', () => {
   context('Test for checking that delete, archive, and new buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a role', () => {
       // // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000) 
+      cy.wait(3000)
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       // We wait 1s in order the search to be completed

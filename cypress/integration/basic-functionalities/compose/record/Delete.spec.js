@@ -34,7 +34,7 @@ describe('Test for deleting a record', () => {
       cy.get('[data-test-id="button-back-without-save"]').click()
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').within(() => {
-        cy.get('td').find('a:eq(1)').click()
+        cy.get('td').find('a:eq(0)').click()
       })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
@@ -56,7 +56,7 @@ describe('Test for deleting a record', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
       cy.get('.header-navigation').contains('All records').click()
       cy.get('table > tbody').find('tr:first').within(() => {
-        cy.get('td').find('a:eq(1)').click()
+        cy.get('td').find('a:eq(0)').click()
       })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()

@@ -39,9 +39,7 @@ describe('Test for creating an application', () => {
         cy.get('[data-test-id="button-submit"]').click()
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
-        // We wait 1s in order the button to be switched from check to submit
-        cy.wait(1000)
-        cy.get('[data-test-id="button-submit"]').should('exist')
+        cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
       })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')

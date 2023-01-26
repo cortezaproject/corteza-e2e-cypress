@@ -1,4 +1,4 @@
-import './admin'
+import './admin/enable'
 import './Mfa.spec'
 import './Profile_tab.spec'
 import './Corteza_logo.spec'

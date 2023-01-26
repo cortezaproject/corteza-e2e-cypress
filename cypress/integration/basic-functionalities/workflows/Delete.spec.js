@@ -24,6 +24,18 @@ describe('Test for deleting a workflow', () => {
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')
       cy.contains('Cypress workflow').should('not.exist')
+      
+      cy.get('[data-test-id="input-search"]').type('test')
+      // We wait 1s in order the search to be finished
+      cy.wait(1000)
+      cy.get('tbody > tr:last').click()
+      cy.contains('Test workflow').should('exist')
+      cy.get('[data-test-id="button-configure-workflow"]').click()
+      cy.get('[data-test-id="button-delete"]').click()
+      cy.get('[data-test-id="button-delete-confirm"]').click()
+      // We confirm that the action was completed successfully
+      cy.get('.b-toast-success')
+      cy.contains('Test workflow').should('not.exist')
     })
   })
 })

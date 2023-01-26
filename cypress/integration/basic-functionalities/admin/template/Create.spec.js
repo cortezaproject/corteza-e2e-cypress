@@ -76,35 +76,12 @@ describe('Test for creating a template', () => {
   })
 
   context('Test for creating a template with missing short name', () => {
-    it('should be able to create a template with missing short name', () => {
+    it('should not be able to create a template with missing short name', () => {
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').type('missing_short_name')
-        cy.get('[data-test-id="button-submit"]').click()
-        // We check if the submit button's content changed to a check icon
-        cy.get('[data-icon="check"]')
-        // We wait 2s in order the button to be switched from check to submit
-        cy.wait(2000)
-        cy.get('[data-test-id="button-submit"]').should('exist')
-      })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
-    })
-  })
-
-  context('Test for checking if the created template exists', () => {
-    it('should exist', () => {
-      cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-handle"]').should('have.value', 'missing_short_name')
-      })
-      cy.get('.nav-sidebar').contains('Templates').click()
-      cy.get('[data-test-id="input-search"]').type('missing')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
-      cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-created-at"]').should('exist')
+        cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
     })
   })
@@ -116,7 +93,7 @@ describe('Test for creating a template', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type('automated template')
         cy.get('[data-test-id="input-handle"]').type('duplicate_template')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')

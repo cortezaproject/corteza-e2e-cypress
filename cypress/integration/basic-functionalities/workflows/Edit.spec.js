@@ -12,7 +12,9 @@ describe('Test for editing a workflow', () => {
 
   context('Test for checking if export, import and permissions buttons are present when editing a workflow', () => {
     it('should be able to see the buttons', () => {
-      cy.contains('Cypress workflow').click()
+      cy.visit(workflowURL + '/list')
+      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.contains('Cypress workflow', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-configure-workflow"]').click()
       cy.get('[data-test-id="button-import-workflow"]')
       cy.get('[data-test-id="button-export-workflow"]')
@@ -30,7 +32,7 @@ describe('Test for editing a workflow', () => {
       cy.get('.b-toast-success')
       cy.get('.close').click({ multiple: true })
     })
-    
+
     it('should be edited', () => {
       // We check below if the fields were really edited/changed
       cy.get('[data-test-id="button-configure-workflow"]').click()

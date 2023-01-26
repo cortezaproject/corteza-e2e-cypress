@@ -16,6 +16,8 @@ describe('Test for editing a record page', () => {
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]').click({ force: true })
+      // We wait 2s in order the page to be fully loaded
+      cy.wait(2000)
       cy.get('.nav-sidebar').contains('Pages').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').clear().type('Cypress page')
