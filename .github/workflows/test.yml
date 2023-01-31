@@ -1,6 +1,9 @@
 name: Test webapps
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: "30 9 * * *"
 
