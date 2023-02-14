@@ -15,6 +15,9 @@
   "screenshotOnRunFailure": true,
   "screenshotsFolder": "cypress/screenshots",
 
+  "viewportWidth": 1520,
+  "viewportHeight": 1090,
+
   "reporter": "mochawesome",
   "reporterOptions": {
     "reportDir": "cypress/reports",
