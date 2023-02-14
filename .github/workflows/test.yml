@@ -1,6 +1,9 @@
-name: test
+name: Test webapps
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: "30 9 * * *"
 
@@ -9,7 +12,7 @@ jobs:
     name: Cypress run
     runs-on: ubuntu-latest
     env:
-      CORTEZA_VERSION: 2022.9.5
+      CORTEZA_VERSION: 2022.9.7
       CYPRESS_VERSION: 9.5.1
       CYPRESS_HOST: http://corteza
       CYPRESS_BASE_URL: http://corteza
@@ -22,6 +25,10 @@ jobs:
       CYPRESS_USER_EMAIL_NEW: permissions@email.com
       CYPRESS_USER_PASSWORD: cypress123
       CYPRESS_USER_PASSWORD_NEW: newcypress123
+      AUTH_REQUEST_RATE_LIMIT: 0
+      FEDERATION_ENABLED: 'true'
+      FEDERATION_HOST: http://corteza
+      FEDERATION_LABEL: 'Corteza e2e federation host'
 
     steps:
       - name: Checkout
@@ -35,6 +42,29 @@ jobs:
 
       - name: Prepare npm packages
         run: yarn
+
+      - name: Setup environment
+        env:
+          RELEASE_CRUST_SFTP_KEY: ${{ secrets.RELEASE_CRUST_SFTP_KEY }}
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+        run: |
+          echo "SCREENSHOTS_GEN_FOLDER=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV && \
+          echo "TMP_KEY=$(mktemp)" >> $GITHUB_ENV
+
+      - name: Create crust key
+        env:
+          RELEASE_CRUST_SFTP_KEY: ${{ secrets.RELEASE_CRUST_SFTP_KEY }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+        run: |
+          echo ${RELEASE_CRUST_SFTP_KEY} | base64 -d > ${RELEASE_CRUST_KEY_FILE}
+
+      - name: Make folder for uploaded screenshots
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' 'cd screenshots' "mkdir ${SCREENSHOTS_GEN_FOLDER}" | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
 
       - name: Run Admin tests
         # specs cannot be inserted as --spec=file1.js,file2.js because cypress randomizes the list
@@ -55,6 +85,17 @@ jobs:
              --browser chrome' \
             cypress
 
+      # Cypress overwrites the screenshots folder, we need to do this after
+      # each failed run
+      - name: Upload screenshots
+        if: failure()
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' "cd screenshots/${SCREENSHOTS_GEN_FOLDER}" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
+
       - name: Run Compose tests
         if: success() || failure()
         run: |
@@ -74,7 +115,16 @@ jobs:
             --browser chrome' \
             cypress
 
-      - name: Run One tests
+      - name: Upload screenshots
+        if: failure()
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' "cd screenshots/${SCREENSHOTS_GEN_FOLDER}" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
+
+      - name: Run Server tests
         if: success() || failure()
         run: |
           docker-compose -f .github/docker-compose.yaml restart corteza && \
@@ -93,6 +143,15 @@ jobs:
             --browser chrome'\
             cypress
 
+      - name: Upload screenshots
+        if: failure()
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' "cd screenshots/${SCREENSHOTS_GEN_FOLDER}" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
+
       - name: Run Reporter, topbar, Workflows tests
         if: success() || failure()
         run: |
@@ -103,6 +162,15 @@ jobs:
             --reporter mochawesome
             --browser chrome' \
             cypress
+
+      - name: Upload screenshots
+        if: failure()
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' "cd screenshots/${SCREENSHOTS_GEN_FOLDER}" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
 
       - name: Run Server tests
         if: success() || failure()
@@ -115,19 +183,25 @@ jobs:
             --browser chrome' \
             cypress
 
+      - name: Upload screenshots
+        if: failure()
+        env:
+          RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
+          SCREENSHOTS_GEN_FOLDER: ${{ env.SCREENSHOTS_GEN_FOLDER }}
+        run: |
+          printf '%s\n' "cd screenshots/${SCREENSHOTS_GEN_FOLDER}" 'put -r cypress/screenshots/*' | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
+
       - name: Publish results
         # always() runs the step even when canceled manually
         if: success() || failure()
         env:
-          RELEASE_CRUST_SFTP_KEY: ${{ secrets.RELEASE_CRUST_SFTP_KEY }}
           RELEASE_CRUST_SFTP_URI: ${{ secrets.RELEASE_CRUST_SFTP_URI }}
+          RELEASE_CRUST_KEY_FILE: ${{ env.TMP_KEY }}
         run: |
-          ls -l cypress/reports && \
           npx mochawesome-merge "cypress/reports/*.json" > cypress/report.json && \
           npx marge -o cypress/reports-build -f index.html -i cypress/report.json && \
-          export TMP_KEY=$(mktemp) && \
-          echo ${RELEASE_CRUST_SFTP_KEY} | base64 -d > ${TMP_KEY} && \
-          echo "put cypress/reports-build/index.html" | sftp -q -o "StrictHostKeyChecking no" -i ${TMP_KEY} ${RELEASE_CRUST_SFTP_URI}
+          echo "put cypress/reports-build/index.html" | sftp -q -o "StrictHostKeyChecking no" -i ${RELEASE_CRUST_KEY_FILE} ${RELEASE_CRUST_SFTP_URI}
 
       - name: Send message on successful testing results
         if: success()
@@ -155,5 +229,8 @@ jobs:
           token: ${{ secrets.MATRIX_ACCESS_TOKEN }}
           channel: ${{ secrets.MATRIX_ROOM_ID }}
           message: |
-            ❌ E2e tests did not pass
+            ❌ E2e tests did not pass, screenshots provided
+
             🔗 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/
+
+            📷 https://${{ secrets.E2E_REPORTS_USER }}:${{ secrets.E2E_REPORTS_PASS }}@releases.cortezaproject.org/e2e-reports/screenshots/${{ env.SCREENSHOTS_GEN_FOLDER }}/
