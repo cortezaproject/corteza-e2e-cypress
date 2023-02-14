@@ -29,6 +29,8 @@ describe('Test for checking the search bar functionality', () => {
     })
 
     it('should be able to search for the Low Code (Compose)', () => {
+      cy.visit(oneURL)
+      cy.login({ email, password })
       // Here we close the start tour pop up
       cy.get('.modal-header > :last-child()').click()
       cy.get('[data-test-id="input-search"]').clear().type('low code')
