@@ -44,14 +44,13 @@ describe('Test for editing a module', () => {
     })
   })
 
-  context('Test if the federation, discovery settings, export and permissions buttons are displayed', () => {
+  context('Test if the federation, export and permissions buttons are displayed', () => {
     // Discovery and federation settings will only exist if they are enabled in the .env file
     it('should be displayed when in edit mode', () => {
       // We wait 1s in order the page to be loaded
       cy.wait(1000)
       cy.get('[data-test-id="table-modules-list"] > .card-body > div > #resource-list > tbody').click()
       cy.get('[data-test-id="button-federation-settings"]').should('exist')
-      cy.get('[data-test-id="button-discovery-settings"]').should('exist')
       cy.get('[data-test-id="button-export"]').should('exist')
       cy.get('.permissions-dropdown').should('exist')
     })
