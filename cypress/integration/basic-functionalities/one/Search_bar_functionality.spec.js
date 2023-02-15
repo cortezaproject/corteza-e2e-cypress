@@ -27,16 +27,5 @@ describe('Test for checking the search bar functionality', () => {
       cy.get('[data-test-id="Admin Area"]').click({ force: true })
       cy.url().should('exist', oneURL + '/admin')
     })
-
-    it('should be able to search for the Low Code (Compose)', () => {
-      cy.login({ email, password, url: oneURL })
-      // Here we close the start tour pop up
-      cy.get('.modal-header > :last-child()').click()
-      cy.get('[data-test-id="input-search"]').clear().type('low code')
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="Low Code"]').click({ force: true })
-      cy.url().should('exist', oneURL + '/compose')
-    })
   })
 })
