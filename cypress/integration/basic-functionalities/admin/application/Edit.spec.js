@@ -12,13 +12,11 @@ describe('Test for editing an application', () => {
 
   context('Test for checking that new and delete buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a template', () => {
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Applications').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated application')
-      // We wait 1s in order the search to be completed
+      // We should wait in order the search to be completed
       cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-new-application"]').should('exist')
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('exist')
@@ -45,15 +43,15 @@ describe('Test for editing an application', () => {
       })
       cy.get('.nav-sidebar').contains('Application').click()
       cy.get('[data-test-id="input-search"]').type('edited application')
+      // We should wait in order the search to be completed
+      cy.wait(1000)
       cy.contains('edited application').should('exist')
     })
   })
 
   context('Test for checking if you can create a template through edit mode', () => {
     it('should be able to create a template', () => {
-      // We wait 1s in order the search to be completed
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-new-application"]').click()
       cy.url().should('contain', '/new')
     })

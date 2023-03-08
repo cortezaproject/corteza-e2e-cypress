@@ -15,22 +15,16 @@ describe('Test for creating a record', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-admin"]').click()
-      // We wait 4s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-all-records"]').click()
+      cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).click()
+      cy.get('[data-test-id="button-all-records"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-add-record"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('input:nth-child(1)').eq(1).type('28')
+      cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('28')
       cy.get('input:nth-child(1)').eq(2).type('John')
       cy.get('input:nth-child(1)').eq(3).type('Doe')
       cy.get('[data-test-id="button-save"]').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('.card-body').contains('28').should('exist')
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('.card-body', { timeout: 10000 }).contains('28', { timeout: 10000 }).should('exist')
       cy.get('.card-body').contains('John').should('exist')
       cy.get('.card-body').contains('Doe').should('exist')
       cy.url().should('contain', '/record')
@@ -48,7 +42,7 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="button-save"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('.card-body').contains('26').should('exist')
+      cy.get('.card-body', { timeout: 10000 }).contains('26').should('exist')
       cy.get('.card-body').contains('Dave').should('exist')
       cy.get('.card-body').contains('Smith').should('exist')
       cy.url().should('contain', '/record')
@@ -58,16 +52,14 @@ describe('Test for creating a record', () => {
   context('Test for creating a record through the public page', () => {
     it('should be able to create a record ', () => {
       cy.get('[data-test-id="button-public"]').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-add-record"]').click()
+      cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).click()
       cy.get('input:nth-child(1)').eq(1).type('23')
       cy.get('input:nth-child(1)').eq(2).type('Eddie')
       cy.get('input:nth-child(1)').eq(3).type('Turner')
       cy.get('[data-test-id="button-save"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('.card-body').contains('23').should('exist')
+      cy.get('.card-body', { timeout: 10000 }).contains('23').should('exist')
       cy.get('.card-body').contains('Eddie').should('exist')
       cy.get('.card-body').contains('Turner').should('exist')
       cy.url().should('contain', '/record')
@@ -83,7 +75,7 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="button-save"]').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('.card-body').contains('30').should('exist')
+      cy.get('.card-body', { timeout: 10000 }).contains('30').should('exist')
       cy.get('.card-body').contains('Mark').should('exist')
       cy.get('.card-body').contains('Fritz').should('exist')
       cy.url().should('contain', '/record')
@@ -103,9 +95,7 @@ describe('Test for creating a record', () => {
   context('Test for checking the back button functionality in record view', () => {
     it('should be able to go back', () => {
       cy.contains('Cypress page').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('tbody > tr:first').click()
+      cy.get('tbody > tr:first', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-back"]').click()
       cy.url().should('not.contain', '/record')
     })

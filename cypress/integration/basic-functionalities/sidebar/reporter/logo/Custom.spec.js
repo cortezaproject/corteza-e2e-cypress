@@ -13,10 +13,10 @@ describe('Testing the sidebar custom logo', () => {
   context('Testing the sidebar custom logo', () => {
     it('should be able to have a default logo', () => {
       cy.visit(reporterURL + '/list')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      // We wait for 1s in order the page to be fully loaded
+      cy.wait(1000)
       // We click on the created report
-      cy.get('table > tbody > :first-child()').click()
+      cy.get('table > tbody > :first-child()', { timeout: 10000 }).click()
       cy.get('[data-test-id="img-main-logo"]').should('have.attr', 'src').should('include','attachment')
     })
   })

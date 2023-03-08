@@ -13,13 +13,11 @@ describe('Testing the sidebar custom logo', () => {
   context('Testing the sidebar custom logo', () => {
     it('should be able to have a default logo', () => {
       cy.visit(composeURL + '/namespaces')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('[data-test-id="input-search"]').type('crm')
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('crm')
       // We wait for 1s in order the search to be finished
       cy.wait(1000)
       // We need to visit a namespace so that the sidebar will be present
-      cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-crm"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="img-main-logo"]').should('have.attr', 'src').should('include','attachment')
     })
   })

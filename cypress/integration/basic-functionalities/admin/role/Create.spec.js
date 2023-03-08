@@ -12,9 +12,7 @@ describe('Test for creating a role', () => {
 
   context('Test for creating a role without any data entered or misconfigured field', () => {
     it('should not be able to create a role without any data entered', () => {
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000) 
-      cy.get('.nav-sidebar').contains('Roles').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Roles').click()
       cy.get('[data-test-id="button-new-role"]').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
@@ -80,9 +78,9 @@ describe('Test for creating a role', () => {
       })
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We wait 1s in order the search to be completed
-      cy.wait(1000) 
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })

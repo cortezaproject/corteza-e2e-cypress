@@ -46,9 +46,7 @@ describe('Test for creating a namespace', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-create"]').click()
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="button-back-without-save"]').should('exist').click()
+      cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).should('exist').click()
       cy.url().should('contain', composeURL + '/namespaces/manage')
     })
   })
@@ -74,9 +72,7 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-slug"]').should('have.value', 'cypress_namespace')
       cy.get('[data-test-id="input-subtitle"]').should('have.value', 'Testing namespace')
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is the description of the namespace')
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="button-back-without-save"]').click()
+      cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('tbody').contains('cypress_namespace').should('exist')
     })
@@ -91,9 +87,7 @@ describe('Test for creating a namespace', () => {
       cy.url().should('exist', composeURL + '/namespaces/edit')
       cy.get('[data-test-id="input-name"]').should('have.value', 'Name')
       cy.get('[data-test-id="input-slug"]').should('have.value', '')
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="button-back-without-save"]').click()
+      cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('Name')
       cy.get('tbody').contains('Name').should('exist')
     })

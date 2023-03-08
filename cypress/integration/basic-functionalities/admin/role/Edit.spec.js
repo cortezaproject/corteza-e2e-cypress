@@ -12,13 +12,11 @@ describe('Test for editing a role', () => {
 
   context('Test for checking that delete, archive, and new buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a role', () => {
-      // // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Roles').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We wait 1s in order the search to be completed
-      cy.wait(1000) 
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-new-role"]').should('exist')
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('exist')
@@ -57,9 +55,9 @@ describe('Test for editing a role', () => {
   context('Test for checking if you can create a role through edit mode', () => {
     it('should be able to create a role', () => {
       cy.get('[data-test-id="input-search"]').clear().type('automated')
-      // We wait 1s in order the search to be completed
-      cy.wait(1000) 
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-new-role"]').click()
       cy.url().should('contain', '/new')
     })

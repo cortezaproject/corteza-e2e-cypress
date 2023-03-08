@@ -13,9 +13,7 @@ describe('Testing the toggle functionality of the sidebar', () => {
   context('Testing the toggle functionality of the sidebar', () => {
     it('should be able to unpin the sidebar', () => {
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('[data-test-id="button-pin-icon"]').click()
+      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click()
       // We click on the center of the page to move the focus away from the sidebar so it can hide
       cy.get('body').click('center')
       // We check that the pin icon is not present
@@ -25,10 +23,8 @@ describe('Testing the toggle functionality of the sidebar', () => {
     })
 
     it('should be able to pin the sidebar', () => {
-      // We wait for 1s in order the page to be fully loaded
-      cy.wait(1000)
       // We hover on the three lines in the top left corner so that the sidebar will expand
-      cy.get('[data-test-id="button-sidebar-open"]').trigger('mouseover', { force: true })
+      cy.get('[data-test-id="button-sidebar-open"]', { timeout: 10000 }).trigger('mouseover', { force: true })
       cy.get('[data-test-id="button-pin-icon"]').click()
       // We click on the center of the page to move the focus away from the sidebar and to see if it will stay
       cy.get('body').click('center')

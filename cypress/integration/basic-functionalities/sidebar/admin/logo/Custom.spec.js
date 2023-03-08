@@ -14,16 +14,12 @@ describe('Testing the sidebar custom logo', () => {
     it('should be able to set a default logo', () => {
       // We access the admin user interface settings
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('[data-test-id="sidebar"]').find('a[href="/ui"]').click()
+      cy.get('[data-test-id="sidebar"]', { timeout: 10000 }).find('a[href="/ui"]').click()
       cy.get('[data-test-id="drop-area"]:eq()')
           .get('input[type="file"]:eq()')
           .selectFile('cypress/fixtures/images/yin_yang.png', { force: true })
       cy.get('[data-test-id="button-submit"]').click()
-      // We wait for 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="img-main-logo"]').should('have.attr', 'src').should('include','attachment')
+      cy.get('[data-test-id="img-main-logo"]', { timeout: 10000 }).should('have.attr', 'src').should('include','attachment')
     })
   })
 })

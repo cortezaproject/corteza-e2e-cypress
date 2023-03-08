@@ -24,7 +24,6 @@ describe('Test helper dropdown functionalities', () => {
 
   context('Test for using the send feedback feature', () => {
     it('should be able to use the send feedback feature', () => {
-      // We wait for 10s in order the send feedback feature to be fully loaded and open in separate modal
       cy.get('[data-test-id="dropdown-helper-feedback"]').should('exist')
     })
   })

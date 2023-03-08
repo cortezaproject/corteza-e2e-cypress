@@ -68,9 +68,7 @@ describe('Test for checking the log in button functionality', () => {
 
     it('should not be able to log in with just a password entered', () => {
       cy.login({ password, buttonLoginID: 'button-login', url: baseURL })
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.url().should('be.equal', baseURL + '/auth/login')
+      cy.url().should('be.equal', baseURL + '/auth/login', { timeout: 10000 })
     })
   })
   

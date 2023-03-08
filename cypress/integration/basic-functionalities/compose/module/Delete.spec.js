@@ -18,8 +18,8 @@ describe('Test for deleting a module', () => {
       cy.get('[data-test-id="button-admin"]').click()
       // We wait 1s in order the page to be loaded
       cy.wait(1000)
-      cy.get('[data-test-id="table-modules-list"] > .card-body > div > #resource-list > tbody').click()
-      cy.get('[data-test-id="editor-toolbar"]').within(() => {
+      cy.get('[data-test-id="table-modules-list"] > .card-body > div > #resource-list > tbody', { timeout: 10000 }).click()
+      cy.get('[data-test-id="editor-toolbar"]', { timeout: 10000 }).within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('[data-test-id="button-delete-confirm"]').click()
       })

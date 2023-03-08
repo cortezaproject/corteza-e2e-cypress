@@ -12,9 +12,7 @@ describe('Test for creating a user', () => {
 
   context('Test for creating a user without any data entered or misconfigured field', () => {
     it('should not be able to create a user without any info entered', () => {
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Users').click()
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
@@ -90,13 +88,9 @@ describe('Test for creating a user', () => {
 
     it('should also be able to create a user with missing handle', () => {
       cy.get('.nav-sidebar').contains('Users').click()
-      // We wait for 1s in order the resource to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="button-new-user"]').click()
+      cy.get('[data-test-id="button-new-user"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
-        // We wait for 1s in order the resource to be loaded
-        cy.wait(1000)
-        cy.get('[data-test-id="input-email"]').type('missing@email.com')
+        cy.get('[data-test-id="input-email"]', { timeout: 10000 }).type('missing@email.com')
         cy.get('[data-test-id="input-name"]').type('missing account')
         cy.get('[data-test-id="button-submit"]').click()
       })
@@ -106,9 +100,7 @@ describe('Test for creating a user', () => {
 
     it('should check if the user exists', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
-        // We wait for 1s in order the resource to be loaded
-        cy.wait(1000)
-        cy.get('[data-test-id="input-email"]').should('have.value', 'missing@email.com')
+        cy.get('[data-test-id="input-email"]', { timeout: 10000 }).should('have.value', 'missing@email.com')
         cy.get('[data-test-id="input-name"]').should('have.value', 'missing account')
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })

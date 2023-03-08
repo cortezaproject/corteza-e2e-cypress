@@ -15,13 +15,9 @@ describe('Test for deleting a record', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="button-admin"]').click()
+      cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-all-records"]').click()
-      // We wait ss in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('table > tbody').find('tr:first').click()
+      cy.get('table > tbody', { timeout: 10000 }).find('tr:first').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       cy.get('.alert').should('exist')
@@ -29,9 +25,9 @@ describe('Test for deleting a record', () => {
 
     it('should be able to delete the record by clicking on the edit button in the all records view', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
-      // We wait ss in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-back-without-save"]').click()
+      // We wait 1s in order the page to be fully loaded
+      cy.wait(1000)
+      cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('table > tbody').find('tr:first').within(() => {
         cy.get('td').find('a:eq(0)').click()
@@ -87,9 +83,7 @@ describe('Test for deleting a record', () => {
   context('Test for deleting a record by selecting', () => {
     it('should be able to delete a record by check-marking it', () => {
       cy.get('.nav-sidebar').contains('Cypress page').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[type="checkbox"]:last').check({ force: true })
+      cy.get('[type="checkbox"]:last', { timeout: 10000 }).check({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       // We confirm that the action was completed successfully
@@ -97,7 +91,7 @@ describe('Test for deleting a record', () => {
 
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      cy.get('[type="checkbox"]:last').check({ force: true })
+      cy.get('[type="checkbox"]:last', { timeout: 10000 }).check({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       // We confirm that the action was completed successfully

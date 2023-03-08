@@ -45,14 +45,12 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="button-save"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
-      // We wait for 1s the process to be finished
-      cy.wait(1000)
     })
 
     it('should exist', () => {
-      cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress report')
-      cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_handle')
-      cy.get('[data-test-id="input-description"]').should('have.value', 'This is an automated description.')
+      cy.get('[data-test-id="input-name"]', { timeout: 10000 }).should('have.value', 'Cypress report')
+      cy.get('[data-test-id="input-handle"]', { timeout: 10000 }).should('have.value', 'cypress_handle')
+      cy.get('[data-test-id="input-description"]', { timeout: 10000 }).should('have.value', 'This is an automated description.')
       cy.get('[data-test-id="button-report-builder"]').click()
       cy.contains('Cypress report')
       cy.get('[data-test-id="button-back"]').click()

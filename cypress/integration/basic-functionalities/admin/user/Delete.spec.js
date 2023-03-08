@@ -12,25 +12,22 @@ describe('Test for deleting a user', () => {
 
   context('Test for deleting a user', () => {
     it('should be able to delete a user', () => {
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      cy.get('[data-test-id="input-search"]').type('automated')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Users').click()
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('automated')
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')
-      cy.contains('automated').should('not.exist')
-
-      cy.get('[data-test-id="input-search"]').type('missing')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.contains('automated', { timeout: 10000 }).should('not.exist')
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('missing')
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()

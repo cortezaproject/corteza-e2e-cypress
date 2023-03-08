@@ -12,9 +12,7 @@ describe('Test for creating a template', () => {
 
   context('Test for creating a template with misconfigured handle', () => {
     it('should not be able to create a template with misconfigured handle', () => {
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Templates').click()
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type('automated template')
@@ -48,9 +46,7 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="button-submit"]').click()
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
-        // We wait 1s in order the button to be switched from check to submit
-        cy.wait(1000)
-        cy.get('[data-test-id="button-submit"]').should('exist')
+        cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
       })
       // We confirm that the action was completed successfully
       cy.get('.b-toast-success')
@@ -66,9 +62,9 @@ describe('Test for creating a template', () => {
       })
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      // We should wait in order the search to be completed
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })
