@@ -12,11 +12,12 @@ describe('Test for deleting a role', () => {
 
   context('Test for deleting a role', () => {
     it('should be able to delete it', () => {
+      cy.intercept('/api/system/roles/?query=automated&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Roles').click()
       cy.get('[data-test-id="input-search"]').clear().type('automated')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
+      cy.contains('automated', { timeout: 10000 }).should('exist')
+      cy.wait('@role')
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()

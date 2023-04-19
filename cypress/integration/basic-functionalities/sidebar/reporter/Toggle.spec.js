@@ -24,10 +24,10 @@ describe('Testing the toggle functionality of the sidebar', () => {
   context('Testing the toggle functionality of the sidebar', () => {
     it('should be able to unpin the sidebar', () => {
       cy.visit(reporterURL + '/list')
-      // We wait for 1s in order the page to be fully loaded
-      cy.wait(1000)
-      // We click on the created report
-      cy.get('table > tbody > :first-child()', { timeout: 10000 }).click()
+      cy.contains("Cypress").should("exist")
+      // We click on the report builder on the created report
+      cy.get('table > tbody > :first-child()', { timeout: 10000 }).should("exist")
+      cy.contains("Report Builder").click()
       cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click()
       // We click on the center of the page to move the focus away from the sidebar so it can hide
       cy.get('body').click('center')

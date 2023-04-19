@@ -13,10 +13,9 @@ describe('Testing the sidebar default logo', () => {
   context('Testing the sidebar default logo', () => {
     it('should be able to see the default logo', () => {
       cy.visit(reporterURL + '/list')
-      // We wait for 1s in order the page to be fully loaded
-      cy.wait(1000)
-      // We click on the created report
-      cy.get('table > tbody > :first-child()', { timeout: 10000 }).click()
+      // We click on the report builder on the created report
+      cy.get('table > tbody > :first-child()', { timeout: 10000 }).should("exist")
+      cy.contains("Report Builder").click()
       cy.get('[data-test-id="img-main-logo"]').should('have.attr', 'src').should('include', 'assets')
     })
   })

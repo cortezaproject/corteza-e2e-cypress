@@ -55,6 +55,7 @@ describe('Test for creating a template', () => {
 
   context('Test for checking if the created template exists', () => {
     it('should exist', () => {
+      cy.intercept('/api/system/template/?query=automated&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('template')
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').should('have.value', 'automated template')
         cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_template')
@@ -62,8 +63,7 @@ describe('Test for creating a template', () => {
       })
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
+      cy.wait('@template')
       cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')

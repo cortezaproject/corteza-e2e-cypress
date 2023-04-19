@@ -12,10 +12,10 @@ describe('Test for deleting a template', () => {
 
   context('Test for deleting a template', () => {
     it('should be able to delete a template', () => {
+      cy.intercept('/api/system/template/?query=automated_template&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('delete_template')
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
+      cy.wait('@delete_template')
       cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
@@ -28,9 +28,9 @@ describe('Test for deleting a template', () => {
     })
 
     it('should be able to delete the remaining created templates', () => {
+      cy.intercept('/api/system/template/?query=duplicate&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('duplicate')
       cy.get('[data-test-id="input-search"]').clear().type('duplicate')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
+      cy.wait('@duplicate')
       cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()

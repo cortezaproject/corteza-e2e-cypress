@@ -17,14 +17,14 @@ describe('Test for checking the search bar functionality', () => {
         cy.get('.modal-header > :last-child()').click()
       }
       cy.get('[data-test-id="input-search"]').type('xw')
-      cy.get('[data-test-id="heading-no-apps"]').should('exist')
+      cy.get('[data-test-id="heading-no-apps"]', { timeout: 10000 }).should('exist')
     })
   })
 
   context('Test for searching an existing app', () => {
     it('should be able to search for the Admin Area', () => {
       cy.get('[data-test-id="input-search"]').clear().type('admin')
-      cy.get('[data-test-id="Admin Area"]').click({ force: true })
+      cy.get('[data-test-id="Admin Area"]', { timeout: 10000 }).click({ force: true })
       cy.url().should('exist', oneURL + '/admin')
     })
   })

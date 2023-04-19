@@ -15,8 +15,9 @@ describe('Test for editing a record page', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
-      cy.get('[data-test-id="button-admin"]').click({ force: true })
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Pages').click()
+      cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).should('exist').click({ force: true })
+      cy.get('[data-test-id="button-public"]', { timeout: 10000 }).should('exist')
+      cy.get('.nav-sidebar').contains('Pages', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').clear().type('Cypress page')
       cy.get('[data-test-id="input-handle"]').type('cypress_page')
@@ -29,7 +30,7 @@ describe('Test for editing a record page', () => {
     })
 
     it('should be edited', () => {
-      cy.contains('Edit page').click()
+      cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').should('have.value', 'Cypress page')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_page')
       cy.get('[data-test-id="input-description"]').should('have.value', 'Page description')

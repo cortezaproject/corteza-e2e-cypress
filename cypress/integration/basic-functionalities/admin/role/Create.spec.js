@@ -72,15 +72,15 @@ describe('Test for creating a role', () => {
 
   context('Test for checking if the created role exists', () => {
     it('should exist', () => {
+      cy.intercept('/api/system/roles/?query=automated&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('automated_role')
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').should('have.value', 'automated role')
         cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_role')
       })
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
+      cy.wait('@automated_role')
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })

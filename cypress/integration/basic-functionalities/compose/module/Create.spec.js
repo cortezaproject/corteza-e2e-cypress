@@ -15,7 +15,7 @@ describe('Test for creating a module', () => {
     it('should not be able to create a module without any data entered', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
+      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-admin"]').click()
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-save-and-close"].disabled').should('exist')

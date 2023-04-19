@@ -67,6 +67,7 @@ describe('Test for creating a namespace', () => {
     })
 
     it('should exist', () => {
+      cy.intercept("/api/compose/namespace/?query=cypress&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("cypress_ns")
       cy.url().should('exist', composeURL + '/namespaces/edit')
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress namespace')
       cy.get('[data-test-id="input-slug"]').should('have.value', 'cypress_namespace')
@@ -74,6 +75,7 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-description"]').should('have.value', 'This is the description of the namespace')
       cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.wait("@cypress_ns")
       cy.get('tbody').contains('cypress_namespace').should('exist')
     })
 
@@ -84,11 +86,13 @@ describe('Test for creating a namespace', () => {
     })
 
     it('should exist', () => {
+      cy.intercept("/api/compose/namespace/?query=Name&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("name_ns")
       cy.url().should('exist', composeURL + '/namespaces/edit')
       cy.get('[data-test-id="input-name"]').should('have.value', 'Name')
       cy.get('[data-test-id="input-slug"]').should('have.value', '')
       cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('Name')
+      cy.wait("@name_ns")
       cy.get('tbody').contains('Name').should('exist')
     })
   })

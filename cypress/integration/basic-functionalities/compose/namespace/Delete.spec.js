@@ -12,21 +12,21 @@ describe('Test for deleting a namespace', () => {
 
   context('Test for deleting the created namespaces', () => {
     it('should be able to delete the namespace successfully', () => {
+      cy.intercept("/api/compose/namespace/?query=edited&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("ns_edited")
+      cy.intercept("/api/compose/namespace/?query=Name&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("ns_name")
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('edited')
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('tbody').click()
+      cy.wait("@ns_edited")
+      cy.get('tbody').contains('edited').should('exist').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       cy.get('[data-test-id="input-search"]').type('Edited namespace')
       cy.get('[data-test-id="no-matches"]').should('exist')
 
       cy.get('[data-test-id="input-search"]').clear().type('Name')
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
-      cy.get('tbody').click()
+      cy.wait("@ns_name")
+      cy.get('tbody').contains('Name').should('exist').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('Name')
