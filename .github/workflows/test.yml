@@ -3,7 +3,7 @@ name: Test webapps
 on:
   push:
     branches:
-      - main
+      - 2023.3.x
   schedule:
     - cron: "30 9 * * *"
 
