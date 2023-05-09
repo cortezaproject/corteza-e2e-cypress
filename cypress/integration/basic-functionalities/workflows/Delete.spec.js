@@ -12,12 +12,13 @@ describe('Test for deleting a workflow', () => {
 
   context('Test for deleting a workflow', () => {
     it('should be able to delete the workflow', () => {
+      cy.intercept('/api/automation/workflows/?query=Cypress&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&pageCursor=&sort=handle+ASC').as('cypress_wf')
+      cy.intercept('/api/automation/workflows/?query=test&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&pageCursor=&sort=handle+ASC').as('test_wf')
       cy.visit(workflowURL + '/list')
       cy.get('[data-test-id="input-search"]').type('Cypress')
-      // We wait 1s in order the search to be finished
-      cy.wait(1000)
-      cy.get('tbody > tr:last').click()
-      cy.contains('Cypress workflow').should('exist')
+      cy.wait("@cypress_wf")
+      //cy.get('tbody > tr:last').click()
+      cy.contains('Cypress workflow').should('exist').click()
       cy.get('[data-test-id="button-configure-workflow"]').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
@@ -26,10 +27,9 @@ describe('Test for deleting a workflow', () => {
       cy.contains('Cypress workflow').should('not.exist')
       
       cy.get('[data-test-id="input-search"]').type('test')
-      // We wait 1s in order the search to be finished
-      cy.wait(1000)
-      cy.get('tbody > tr:last').click()
-      cy.contains('Test workflow').should('exist')
+      cy.wait("@test_wf")
+      //cy.get('tbody > tr:last').click()
+      cy.contains('Test workflow').should('exist').click()
       cy.get('[data-test-id="button-configure-workflow"]').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()

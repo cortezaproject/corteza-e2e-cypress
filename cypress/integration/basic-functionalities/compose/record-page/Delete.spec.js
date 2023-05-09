@@ -15,6 +15,7 @@ describe('Test for deleting a record page', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
+      cy.contains('Record List').should('exist')
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).click()
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Pages').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()

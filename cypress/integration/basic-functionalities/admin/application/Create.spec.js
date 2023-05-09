@@ -46,14 +46,14 @@ describe('Test for creating an application', () => {
 
   context('Test for checking if the created application exists', () => {
     it('should exist', () => {
+      cy.intercept('/api/system/application/?query=automated&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('created_app')
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').should('have.value', 'automated application')
       })
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated')
-      // We should wait in order the search to be completed
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
+      cy.wait('@created_app')
+      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-application-id"]').should('exist')
         cy.get('[data-test-id="input-created-at"]').should('exist')

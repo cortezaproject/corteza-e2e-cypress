@@ -14,11 +14,9 @@ describe('Testing the toggle functionality of the sidebar', () => {
     it('should be able to unpin the sidebar', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('crm')
-      // We wait for 1s in order the search to be finished
-      cy.wait(1000)
       // We need to visit a namespace so that the sidebar will be present
-      cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
-      cy.get('[data-test-id="button-pin-icon"]').click()
+      cy.get('[data-test-id="link-visit-namespace-crm"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click()
       // We click on the center of the page to move the focus away from the sidebar so it can hide
       cy.get('body').click('center')
       // We check that the pin icon is not present
