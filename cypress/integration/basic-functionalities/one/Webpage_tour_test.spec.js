@@ -12,10 +12,9 @@ describe('Test webpage tour', () => {
 
   context('This is a function for testing the webpage tour', () => {
     it('should be able to go through the webpage tour', () => {
-      cy.intercept("/api/system/permissions/effective?resource=application").as("tour")
+      cy.get('.modal-footer').should('exist')
       // We click on the start tour button
       cy.get('.modal-footer > :last-child()').click()
-      cy.wait("@tour")
       Cypress._.times(5, () => {
         // With this function we click 5 times on the next button in order to go through the tour modals
         cy.get('[data-test-id="button-next"]', { timeout: 10000 }).should("exist").click()
