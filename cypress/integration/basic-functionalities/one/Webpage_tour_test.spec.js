@@ -18,7 +18,7 @@ describe('Test webpage tour', () => {
       cy.wait("@tour")
       Cypress._.times(5, () => {
         // With this function we click 5 times on the next button in order to go through the tour modals
-        cy.get('[data-test-id="button-next"]', { timeout: 10000 }).should("exist").click({ multiple: true })
+        cy.get('[data-test-id="button-next"]', { timeout: 10000 }).should("exist").click()
       })
       cy.get('[data-test-id="button-stop-tour"]').click()
     })
