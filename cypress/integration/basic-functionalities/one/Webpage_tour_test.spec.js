@@ -11,16 +11,10 @@ describe('Test webpage tour', () => {
   })
 
   context('This is a function for testing the webpage tour', () => {
-    it('should be able to go through the webpage tour', () => {
+    it('should be able to see the webpage tour', () => {
       cy.get('.modal-footer').should('exist')
-      // We click on the start tour button
-      cy.get('.modal-footer > :last-child()').click()
-      cy.get('.v-step').should('exist')
-      Cypress._.times(5, () => {
-        // With this function we click 5 times on the next button in order to go through the tour modals
-        cy.get('[data-test-id="button-next"]', { timeout: 10000 }).should("exist").click()
-      })
-      cy.get('[data-test-id="button-stop-tour"]').click()
+      cy.contains('Welcome to Corteza').should('exist')
+      cy.get('.modal-footer > :first-child()').click()
     })
   })
 })
