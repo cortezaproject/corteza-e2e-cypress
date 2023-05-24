@@ -12,13 +12,13 @@ describe('Test for deleting a role', () => {
 
   context('Test for deleting a role', () => {
     it('should be able to delete a role', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      cy.wait('@role')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()

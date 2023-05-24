@@ -12,26 +12,27 @@ describe('Test for assigning a member to a role', () => {
 
   context('Test for assigning a member to a role', () => {
     it('should be able to assign a member', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('search')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      cy.wait('@search')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-role-edit-members"]').within(() => {
-        cy.get('[data-test-id="input-search"]').type('Permissions account')
-        cy.get('[data-test-id="button-add-member"]').click()
+        cy.get('[data-test-id="input-role-members"]').type('Permissions account{enter}')
         cy.get('[data-test-id="button-submit"]').click()
       })
     })
 
     it('should check whether the member was assigned', () => {
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('search')
       cy.get('.nav-sidebar').contains('Roles').click()
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      cy.wait('@search')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-role-edit-members"]').within(() => {
         cy.contains('Permissions account').should('exist')

@@ -14,12 +14,13 @@ describe('Test for creating a user with limited permissions', () => {
 
   context('Test for creating additional user', () => {
     it('should create a user that will have limited permissions', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
+      cy.intercept('/api/system/roles/?query=').as('toast')
       cy.visit(adminURL + '/')
-      // We wait for 4s in order the page to be fully loaded/rendered
-      cy.wait(4000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Users').click()
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
+      cy.wait('@users')
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-name"]').type('Permissions account')
@@ -30,7 +31,9 @@ describe('Test for creating a user with limited permissions', () => {
       cy.get('.card-footer:last').within(() => {
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.wait(1000)
+      // We check if the success toast appears
+      cy.get('.b-toast-success')
+      cy.wait('@toast')
     })
   })
 })

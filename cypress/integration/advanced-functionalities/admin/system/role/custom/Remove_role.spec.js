@@ -11,29 +11,31 @@ describe('Test for deleting a role', () => {
   })
 
   context('Test for deleting a role', () => {
-    it('should be able to delete a role', () => {
+    it('should be able to add a role for deleting', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=Permissions+account&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('user')
       cy.visit(adminURL + '/')
-      // We wait for 4s in order the page to be fully loaded
-      cy.wait(4000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
       cy.get('[data-test-id="input-search"]').type('Permissions account')
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@user')
       cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
-      cy.get('.input-group').type('Developer')
-      cy.get('.filtered-role').click()
-      cy.get('.card-footer:eq(1)').within(() => {
-        cy.get('[data-test-id="button-submit"]').click()
-        // We wait 2s in order the page to be fully loaded
-        cy.wait(2000)
-      })
-      cy.get('[data-test-id="button-remove-role"]:first').click()
-      cy.get('.card-footer:eq(1)').within(() => {
+      cy.get('[data-test-id="input-role-picker"]').type('Developer{enter}')
+      cy.get('[data-test-id="card-role-membership"]').within(() => {
         cy.get('[data-test-id="button-submit"]').click()
       })
-      cy.contains('Developer').should('not.exist')
+    })
+
+    it('should be able to delete a role', () => {
+      cy.get('[data-test-id="card-role-membership"]').within(() => {
+        cy.contains('Developer').should('exist')
+        cy.get('[data-test-id="button-remove-role"]:first').click()
+        cy.get('[data-test-id="button-submit"]').click()
+      })
+      cy.get('[data-test-id="card-role-membership"]').within(() => {
+        cy.contains('Role membership').should('exist')
+        cy.contains('Developer').should('not.exist')
+      })
     })
   })
 })

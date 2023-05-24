@@ -12,38 +12,36 @@ describe('Test for un-deleting a role', () => {
 
   context('Test for un-deleting a role', () => {
     it('should be able to un-delete a role', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/roles/?query=&deleted=2&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('filter')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=2&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('deleted')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="filter-deleted-roles"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@deleted')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.confirmation-confirm').click()
       cy.get('[data-test-id="input-deleted-at"]').should('not.exist')
     })
-    
+
     it('should be able to test deleted filter', () => {
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.get('.nav-sidebar').contains('Roles').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@role')
       // We check that the Deleted state doesn't exist
       cy.contains('Advanced functionalities').get('#resource-list > tbody').contains('Deleted').should('not.exist')
       // We check that the text is not gray
       cy.contains('Advanced functionalities').get('.text-secondary').should('not.exist')
       cy.get('[data-test-id="filter-deleted-roles"]').contains('Only').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.get('[data-test-id="no-matches"]').should('exist')
       cy.contains('Advanced functionalities').should('not.exist')
     })
   })

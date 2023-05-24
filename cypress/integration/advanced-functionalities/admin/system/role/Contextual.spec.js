@@ -14,40 +14,33 @@ describe('Testing contextual role', () => {
 
   context('Testing contextual role', () => {
     it('should be able to assign a role to a user', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=Permissions+account&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Users').click()
+      cy.contains('deleted users').should('exist')
       cy.get('[data-test-id="input-search"]').type('Permissions account')
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@search')
       cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
-      cy.get('.input-group').type('Security administrator')
-      cy.get('.filtered-role').click()
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('.card-footer:eq(1)').within(() => {
-        // We wait for 1s in order the page to be fully loaded
-        cy.wait(1000)
+      cy.get('[data-test-id="card-role-membership"]').within(() => {
+        cy.get('[data-test-id="input-role-picker"]').type('Security administrator{enter}')
         cy.get('[data-test-id="button-submit"]').click()
-        // We wait for 2s in order the page to be fully loaded
-        cy.wait(2000)
       })
     })
 
     it('should create a contextual role and set it to true', () => {
+      cy.intercept('/api/system/stats/').as('load')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="button-new-role"]').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Contextual')
         cy.get('[data-test-id="input-handle"]').type('Contextual')
         cy.get('[data-test-id="checkbox-is-contextual"]').check({ force: true })
-        // We wait 1s in order the page to be fully loaded
-        cy.wait(1000)
-        cy.get('[data-test-id="input-expression"]').type('true')
+        cy.get('[data-test-id="input-expression"]').should('exist').type('true')
         cy.get('[data-test-id="checkbox-resource-types-list"]').within(() => {
           cy.get('.custom-control-input:eq(1)').check({ force: true })
         })
@@ -65,34 +58,34 @@ describe('Testing contextual role', () => {
     })
 
     it('should not be able to see any roles when expression is set to true', () => {
+      cy.intercept('/api/system/users/?query=&limit=15').as('load')
       cy.get('[data-test-id="dropdown-profile"]').click()
       cy.get('[data-test-id="dropdown-profile-logout"]').click()
       cy.get('[data-test-id="link-login"]').click()
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.contains('deleted roles').should('exist')
       // Roles should not be displayed hence the message "No matches for your search"
       cy.get('[data-test-id="no-matches"]').should('exist')
     })
 
     it('should be able to set the expression to false', () => {
+      cy.intercept('/api/system/users/?query=&limit=15').as('load')
+      cy.intercept('/api/system/roles/?query=Contextual&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.get('[data-test-id="dropdown-profile"]').click()
       cy.get('[data-test-id="dropdown-profile-logout"]').click()
       cy.get('[data-test-id="link-login"]').click()
       cy.get('[data-test-id="input-email"]').type(email)
       cy.get('[data-test-id="input-password"]').type(password)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('Contextual')
-      // We wait 2s in order the search to be completed
-      cy.wait(2000)
+      cy.wait('@role')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-expression"]').clear().type('false')
@@ -109,18 +102,20 @@ describe('Testing contextual role', () => {
     })
 
     it('should be able to see roles when expression is set to false', () => {
+      cy.intercept('/api/system/users/?query=&limit=15').as('load')
+      cy.intercept('/api/system/roles/?query=Contextual&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
       cy.get('[data-test-id="dropdown-profile"]').click()
       cy.get('[data-test-id="dropdown-profile-logout"]').click()
       cy.get('[data-test-id="link-login"]').click()
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('Contextual')
-      // Roles should not be displayed hence the message "No matches for your search"
-      cy.get('#resource-list').contains('Contextual')
+      cy.wait('@role')
+      cy.get('#resource-list').contains('Contextual').should('exist')
     })
   })
 })

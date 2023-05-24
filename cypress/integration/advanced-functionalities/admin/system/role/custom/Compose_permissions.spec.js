@@ -14,9 +14,9 @@ describe('Testing compose permissions', () => {
 
   context('Testing permissions', () => {
     it('should be able to log in with the limited permissions account and check if it has restrictions', () => {
+      cy.intercept('/api/compose/namespace/').as('load')
       cy.visit(composeURL + '/namespaces')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-permissions"]').click()
       cy.get('[data-test-id="select-user-list-roles"]').type('Test{enter}')

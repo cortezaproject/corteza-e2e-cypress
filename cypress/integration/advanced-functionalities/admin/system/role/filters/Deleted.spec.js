@@ -12,18 +12,17 @@ describe('Testing deleted filter', () => {
 
   context('Testing deleted filter', () => {
     it('should be able to filter only deleted roles', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/roles/?query=&deleted=2&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('filter')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=2&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('deleted')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="filter-deleted-roles"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@deleted')
       // We check if the text is gray
       cy.contains('Advanced functionalities').get('.text-secondary').should('exist')
       cy.contains('Advanced functionalities').get('#resource-list > tbody > tr:last > td:last > a').click()

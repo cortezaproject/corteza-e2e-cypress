@@ -12,15 +12,14 @@ describe('Test for archiving a role', () => {
 
   context('Test for archiving a role', () => {
     it('should be able to archive a role', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/roles/?query=advanced&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Roles').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.contains('deleted roles').should('exist')
       cy.get('[data-test-id="input-search"]').type('advanced')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@search')
       cy.contains('Advanced functionalities').get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-archive"]').click()
       cy.get('.confirmation-confirm').click()
