@@ -22,8 +22,8 @@ describe('Test for editing a record page', () => {
       cy.get('.nav-sidebar').contains('Pages', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').clear().type('Cypress page')
-      cy.get('[data-test-id="input-handle"]').type('cypress_page')
-      cy.get('[data-test-id="input-description"]').type('Page description')
+      cy.get('[data-test-id="input-handle"]').clear().type('cypress_page')
+      cy.get('[data-test-id="input-description"]').clear().type('Page description')
       // Toggling page visibility
       cy.get('[data-test-id="checkbox-page-visibility"]').check({ force: true })
       cy.get('[data-test-id="button-save-and-close"]').click()
@@ -32,6 +32,7 @@ describe('Test for editing a record page', () => {
     })
 
     it('should be edited', () => {
+      cy.contains('Cypress page').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').should('have.value', 'Cypress page')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_page')

@@ -16,7 +16,7 @@ describe('Test for editing an application', () => {
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated application')
       cy.wait('@edit_app')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-new-application"]').should('exist')
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('exist')
@@ -51,7 +51,7 @@ describe('Test for editing an application', () => {
     it('should be able to create an application', () => {
       cy.intercept('/api/system/application/?query=edited+application&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('app')
       cy.wait('@app')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-new-application"]').click()
       cy.url().should('contain', '/new')
     })

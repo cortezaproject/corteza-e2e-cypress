@@ -13,8 +13,10 @@ describe('Test for editing a report', () => {
   context('Test for editing a report', () => {
     it('should be able to edit the name', () => {
       cy.visit(reporterURL + '/list')
-      // We click on the Edit button on the created report
-      cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
+      // We click on the created report
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > :first-child()').click()
+      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
       cy.get('[data-test-id="input-name"]').clear().type('Edited cypress report')
     })
 

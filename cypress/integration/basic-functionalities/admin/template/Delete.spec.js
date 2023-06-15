@@ -16,7 +16,7 @@ describe('Test for deleting a template', () => {
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
       cy.wait('@delete_template')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
@@ -31,7 +31,7 @@ describe('Test for deleting a template', () => {
       cy.intercept('/api/system/template/?query=duplicate&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('duplicate')
       cy.get('[data-test-id="input-search"]').clear().type('duplicate')
       cy.wait('@duplicate')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()

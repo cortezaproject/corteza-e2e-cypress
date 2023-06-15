@@ -17,7 +17,7 @@ describe('Test for deleting a role', () => {
       cy.get('[data-test-id="input-search"]').clear().type('automated')
       cy.contains('automated', { timeout: 10000 }).should('exist')
       cy.wait('@role')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()

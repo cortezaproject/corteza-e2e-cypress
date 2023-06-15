@@ -16,7 +16,7 @@ describe('Test for editing a role', () => {
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@edited_role')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-new-role"]').should('exist')
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('exist')
@@ -58,7 +58,7 @@ describe('Test for editing a role', () => {
       cy.get('[data-test-id="input-search"]').clear().type('automated')
       cy.wait('@edit_role')
       cy.contains('automated', { timeout: 10000 }).should('exist')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="button-new-role"]').click()
       cy.url().should('contain', '/new')
     })

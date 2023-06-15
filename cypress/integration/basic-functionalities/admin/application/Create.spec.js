@@ -53,7 +53,7 @@ describe('Test for creating an application', () => {
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@created_app')
-      cy.get('#resource-list > tbody > tr:last > td:last > a', { timeout: 10000 }).should('exist').click()
+      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-application-id"]').should('exist')
         cy.get('[data-test-id="input-created-at"]').should('exist')

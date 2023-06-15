@@ -12,22 +12,28 @@ describe('Test for deleting a report', () => {
 
   context('Test for deleting a report', () => {
     it('should be able to delete all of the reports successfully', () => {
-      // We click on the Edit button on the created report
-      cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
+      // We click on the report
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > :first-child()').click()
+      cy.get('.tools-wrapper > div > div > a:nth-child(2)', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
 
-      // We click on the Edit button on the created report
-      cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
+      cy.wait(1000)
+      // We click on the report
+      cy.get('#resource-list > tbody > :first-child()').click()
+      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
 
+      cy.wait(1000)
       // We click on the Edit button on the created report
-      cy.get('table > tbody > :first-child() > :last-child() > a:nth-child(2)').click()
+      cy.get('#resource-list > tbody > :first-child()').click()
+      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
       // We check if the success toast appears
