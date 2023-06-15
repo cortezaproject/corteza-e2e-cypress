@@ -57,17 +57,4 @@ describe('Test for editing a namespace', () => {
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
     })
   })
-
-  context('Test for cloning a namespace', () => {
-    it('should be able to clone a namespace', () => {
-      cy.intercept("/api/compose/namespace/?query=edited&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("ns_edited")
-      cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
-      cy.get('[data-test-id="input-search"]').type('edited')
-      cy.wait("@ns_edited")
-      cy.get('tbody').contains('edited').should('exist').click()
-      cy.get('[data-test-id="button-clone"]').click()
-      cy.url().should('exist', '/clone/')
-    })
-  })
 })

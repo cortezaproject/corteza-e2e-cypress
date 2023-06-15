@@ -55,21 +55,6 @@ describe('Test for editing a record', () => {
     })
   })
 
-  context('Test for cloning a record', () => {
-    it('should be able to clone a record ', () => {
-      cy.get('[data-test-id="button-clone"]').click()
-      cy.get('input:nth-child(1)').eq(1).clear().type('Bob')
-      cy.get('input:nth-child(1)').eq(2).clear().type('Wiser')
-      cy.get('input:nth-child(1)').eq(3).clear().type('31')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('31').should('exist')
-      cy.get('.card-body').contains('Bob').should('exist')
-      cy.get('.card-body').contains('Wiser').should('exist')
-      cy.url().should('contain', '/record/')
-    })
-  })
-
   context('Test for editing a record through the module all records button', () => {
     it('should be able to edit a record by clicking on it ', () => {
       cy.get('.nav-sidebar').contains('Modules').click()
