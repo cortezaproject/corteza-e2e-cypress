@@ -50,7 +50,7 @@ $ yarn cypress run --spec <path-to-spec-file>
 .Example:
 [source,bash]
 ----
-$ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_a_user.spec.js
+$ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_user.spec.js
 ----
 
 == SMTP support
