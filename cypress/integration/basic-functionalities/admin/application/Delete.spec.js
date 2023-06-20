@@ -16,7 +16,8 @@ describe('Test for deleting an application', () => {
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated application')
       cy.wait('@app')
-      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
@@ -27,7 +28,8 @@ describe('Test for deleting an application', () => {
       cy.contains('automated application').should('not.exist')
       // We are also deleting the other created application
       cy.get('[data-test-id="input-search"]').clear().type('edited application')
-      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()

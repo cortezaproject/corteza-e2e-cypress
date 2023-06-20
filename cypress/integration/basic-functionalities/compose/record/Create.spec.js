@@ -17,7 +17,7 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.contains('Record List').should('exist')
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).should('exist').click()
-      cy.get('[data-test-id="button-all-records"]', { timeout: 10000 }).click()
+      cy.get('[data-test-id="button-all-records"]', { timeout: 1000 }).click()
       cy.get('[data-test-id="button-add-record"]').click()
       cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('John')
       cy.get('input:nth-child(1)').eq(2).type('Doe')
@@ -26,7 +26,7 @@ describe('Test for creating a record', () => {
       cy.contains('View').should('exist')
       cy.get('.card-body', { timeout: 10000 }).contains('John').should('exist')
       cy.get('.card-body').contains('Doe').should('exist')
-      cy.get('.card-body').contains('28', { timeout: 10000 }).should('exist')
+      cy.get('.card-body').contains('28', { timeout: 1000 }).should('exist')
       cy.url().should('contain', '/record')
     })
   })
@@ -51,7 +51,7 @@ describe('Test for creating a record', () => {
   context('Test for creating a record through the public page', () => {
     it('should be able to create a record ', () => {
       cy.get('[data-test-id="button-public"]').click()
-      cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).click()
+      cy.get('[data-test-id="button-add-record"]', { timeout: 1000 }).click()
       cy.contains('Name').should('exist')
       cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('Eddie')
       cy.get('input:nth-child(1)').eq(2).type('Turner')

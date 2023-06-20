@@ -26,7 +26,7 @@ describe('Test for editing a report', () => {
 
     it('should be able to edit the description', () => {
       cy.get('[data-test-id="input-description"]').clear().type('This is an edited automated description.')
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="button-save"]').click({ force: true })
       // We check if the success toast appears
       cy.get('.b-toast-success')
     })

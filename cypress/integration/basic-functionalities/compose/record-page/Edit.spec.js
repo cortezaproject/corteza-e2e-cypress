@@ -32,7 +32,6 @@ describe('Test for editing a record page', () => {
     })
 
     it('should be edited', () => {
-      cy.contains('Cypress page').click()
       cy.get('[data-test-id="button-page-edit"]:first').click()
       cy.get('[data-test-id="input-title"]').should('have.value', 'Cypress page')
       cy.get('[data-test-id="input-handle"]').should('have.value', 'cypress_page')

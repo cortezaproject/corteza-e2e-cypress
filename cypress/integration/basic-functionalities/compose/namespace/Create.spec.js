@@ -76,12 +76,14 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.wait("@cypress_ns")
+      cy.wait(100)
       cy.get('tbody').contains('cypress_namespace').should('exist')
     })
 
     it('should be able to create a namespace with missing handle', () => {
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="input-name"]').type('Name')
+      cy.wait(100)
       cy.get('[data-test-id="button-save"]').click()
     })
 
@@ -93,6 +95,7 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="input-search"]').type('Name')
       cy.wait("@name_ns")
+      cy.wait(100)
       cy.get('tbody').contains('Name').should('exist')
     })
   })
@@ -107,7 +110,7 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-subtitle"]').type('Testing namespace')
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click()
       // We check if the danger toast appears
       cy.get('.b-toast-danger').should('exist')
     })

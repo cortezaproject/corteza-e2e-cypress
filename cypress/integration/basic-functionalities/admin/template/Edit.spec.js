@@ -16,7 +16,8 @@ describe('Test for editing a template', () => {
       cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
       cy.wait('@edit_template')
-      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).click()
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="button-new-template"]').should('exist')
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').should('exist')

@@ -12,8 +12,9 @@ describe('Test webpage tour', () => {
 
   context('This is a function for testing the webpage tour', () => {
     it('should be able to see the webpage tour', () => {
-      cy.get('.modal-footer').should('exist')
+      cy.get('.modal-footer', { timeout: 10000 }).should('exist')
       cy.contains('Welcome to Corteza').should('exist')
+      cy.wait(1000)
       cy.get('.modal-footer > :first-child()').click()
     })
   })

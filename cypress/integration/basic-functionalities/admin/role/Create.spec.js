@@ -80,7 +80,8 @@ describe('Test for creating a role', () => {
       cy.get('.nav-sidebar').contains('Roles').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@automated_role')
-      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).should('exist').click()
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })

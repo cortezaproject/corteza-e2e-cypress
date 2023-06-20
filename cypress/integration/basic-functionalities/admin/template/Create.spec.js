@@ -64,7 +64,8 @@ describe('Test for creating a template', () => {
       cy.get('.nav-sidebar').contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@template')
-      cy.get('#resource-list > tbody > tr:last', { timeout: 10000 }).click()
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })

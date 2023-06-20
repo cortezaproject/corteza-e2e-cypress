@@ -69,7 +69,7 @@ describe('Test for creating a module', () => {
         cy.get('input:eq(1)').type('Age')
         cy.get('select').select('Number input')
       })
-      cy.get('[data-test-id="button-save-and-close"]').click()
+      cy.get('[data-test-id="button-save-and-close"]', { timeout: 1000 }).click()
       // We check if the success toast appears
       cy.get('.b-toast-success')
     })

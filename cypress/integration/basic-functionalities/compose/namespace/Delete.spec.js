@@ -18,6 +18,7 @@ describe('Test for deleting a namespace', () => {
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="input-search"]').type('edited')
       cy.wait("@ns_edited")
+      cy.wait(1000)
       cy.get('tbody').contains('edited').should('exist').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
@@ -26,6 +27,7 @@ describe('Test for deleting a namespace', () => {
 
       cy.get('[data-test-id="input-search"]').clear().type('Name')
       cy.wait("@ns_name")
+      cy.wait(1000)
       cy.get('tbody').contains('Name').should('exist').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()

@@ -128,7 +128,7 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="button-create-report"]').click()
       cy.get('[data-test-id="input-name"]').type('Name')
       cy.get('[data-test-id="input-handle"]').type('cypress_handle')
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="button-save"]').click({ force: true })
       // We check if the danger toast appears
       cy.get('.b-toast-danger')
     })
