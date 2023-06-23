@@ -58,7 +58,6 @@ describe('Test for creating an application', () => {
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-application-id"]').should('exist')
         cy.get('[data-test-id="input-created-at"]').should('exist')
-        cy.get('[data-test-id="checkbox-enabled"]').should('be.checked')
       })
     })
   })

@@ -21,10 +21,13 @@ jobs:
       CYPRESS_WORKFLOW_URL: http://corteza/workflow
       CYPRESS_REPORTER_URL: http://corteza/reporter
       CYPRESS_ONE_URL: http://corteza/one
+      CYPRESS_PRIVACY_URL: http://corteza/privacy
       CYPRESS_USER_EMAIL: cypress@test.com
       CYPRESS_USER_EMAIL_NEW: permissions@email.com
       CYPRESS_USER_PASSWORD: cypress123
       CYPRESS_USER_PASSWORD_NEW: newcypress123
+      CYPRESS_USER_DPO: dpo@email.com
+      CYPRESS_USER_DPO_PASSWORD: dpo@email.com
       AUTH_REQUEST_RATE_LIMIT: 0
       FEDERATION_ENABLED: 'true'
       FEDERATION_HOST: http://corteza

@@ -19,10 +19,13 @@ The main configuration file is the `cypress.json`, but do try to separate the ho
   "WORKFLOW_URL": "http://localhost:8082",
   "REPORTER_URL": "http://localhost:8083",
   "ONE_URL": "http://localhost:8084",
+  "PRIVACY_URL": "http://localhost:8085",
   "USER_EMAIL": "cypress@test.com",
   "USER_PASSWORD": "cypress123",
   "USER_PASSWORD_NEW": "newcypress123",
-  "USER_EMAIL_NEW": "permissions@email.com"
+  "USER_EMAIL_NEW": "permissions@email.com",
+  "USER_DPO": "dpo@email.com",
+  "USER_DPO_USER_PASSWORD": "dpo@email.com",
 }
 ----
 
