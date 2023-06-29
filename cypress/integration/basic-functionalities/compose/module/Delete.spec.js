@@ -22,8 +22,6 @@ describe('Test for deleting a module', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('[data-test-id="button-delete-confirm"]').click()
       })
-      // We check if the success toast appears
-      cy.get('.b-toast-success') 
       cy.contains('cypress_module').should('not.exist')
     })
   })

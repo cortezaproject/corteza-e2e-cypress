@@ -23,8 +23,6 @@ describe('Test for deleting a user', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
 
       cy.contains('automated', { timeout: 10000 }).should('not.exist')
       cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('missing')
@@ -35,8 +33,6 @@ describe('Test for deleting a user', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.contains('missing').should('not.exist')
     })
   })

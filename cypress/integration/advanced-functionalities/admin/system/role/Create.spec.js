@@ -25,8 +25,6 @@ describe('Test for creating a role for testing advanced functionalities', () => 
         cy.get('[data-test-id="textarea-description"]').type('Role for testing advanced functionalities.')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

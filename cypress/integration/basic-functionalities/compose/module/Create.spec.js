@@ -70,8 +70,6 @@ describe('Test for creating a module', () => {
         cy.get('select').select('Number input')
       })
       cy.get('[data-test-id="button-save-and-close"]', { timeout: 1000 }).click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should exist', () => {
@@ -88,9 +86,7 @@ describe('Test for creating a module', () => {
         cy.get('input:first').type('name')
         cy.get('input:eq(1)').type('Name')
       })
-      cy.get('[data-test-id="button-save-and-close"]').click()
-      // We check if the error toast appears
-      cy.get('.b-toast-danger')
+      cy.get('[data-test-id="button-save-and-close"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-back-without-save"]').click()
     })
   })

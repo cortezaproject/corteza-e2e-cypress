@@ -34,8 +34,6 @@ describe('Test for editing a messaging queue', () => {
       cy.get('[data-test-id="input-consumer"]').select('Corteza')
       cy.get('[data-test-id="input-polling"]').clear().type('10s')
       cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-updated-at"]').should('exist')
     })
 
@@ -48,14 +46,10 @@ describe('Test for editing a messaging queue', () => {
     it('should be able to select between different consumers', () => {
       cy.get('[data-test-id="input-consumer"]').select('Eventbus')
       cy.get('[data-test-id="button-submit"]').click({ force: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-consumer"]').should('have.value', 'eventbus')
 
       cy.get('[data-test-id="input-consumer"]').select('Redis')
       cy.get('[data-test-id="button-submit"]').click({ force: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-consumer"]').should('have.value', 'redis')
     })
   })

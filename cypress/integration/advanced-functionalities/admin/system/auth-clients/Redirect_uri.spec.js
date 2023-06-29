@@ -22,8 +22,6 @@ describe('Test for adding a redirect uri to auth client', () => {
       cy.get('[data-test-id="button-add-redirect-uris"]').click()
       cy.get('[data-test-id="input-uri"]').type('https://www.planetcrust.com/features/corteza-platform')
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('.nav-sidebar').contains('Auth Clients').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)

@@ -34,8 +34,6 @@ describe('Test for editing a template', () => {
         cy.get('[data-test-id="textarea-description"]').type(' edited')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 

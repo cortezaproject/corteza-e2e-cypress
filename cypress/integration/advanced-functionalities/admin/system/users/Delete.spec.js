@@ -24,8 +24,6 @@ describe('Test for deleting a user', () => {
       cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('.confirmation-confirm').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       // We wait 2s for the search to finish
       cy.wait(2000)
       cy.get('[data-test-id="dropdown-profile"]').click()

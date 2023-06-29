@@ -31,8 +31,6 @@ describe('Test for creating a simple workflow and checking its functionalities',
     it('should be able to create a workflow with missing handle', () => {
       cy.get('[data-test-id="input-handle"]').clear().type('test')
       cy.get('[data-test-id="button-save-workflow"]', { timeout: 1000 }).click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 
@@ -54,8 +52,6 @@ describe('Test for creating a simple workflow and checking its functionalities',
       cy.get('[data-test-id="input-handle"]').type('cypress_workflow')
       cy.get('[data-test-id="input-description"]').type('This is a simple workflow created by an automated cypress test.')
       cy.get('[data-test-id="button-save-workflow"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

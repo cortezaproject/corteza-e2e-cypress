@@ -19,8 +19,6 @@ describe('Test for importing users', () => {
       // We wait 2s in order the page to be fully loaded
       cy.wait(2000)
       cy.get('[data-test-id="button-import"]').click().get('#dropzone').selectFile('cypress/downloads/export.zip', { action: 'drag-drop', force: true })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
   })
 })

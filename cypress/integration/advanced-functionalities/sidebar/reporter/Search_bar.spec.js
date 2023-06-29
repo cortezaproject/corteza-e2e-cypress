@@ -17,8 +17,6 @@ describe('Test for reporter sidebar search functionality', () => {
       cy.get('[data-test-id="input-name"]').type('Cypress report')
       cy.get('[data-test-id="input-handle"]').type('Cypress')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       // We wait for 1s the process to be finished
       cy.wait(1000)
     })

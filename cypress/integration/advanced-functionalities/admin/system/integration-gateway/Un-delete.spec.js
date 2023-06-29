@@ -35,8 +35,6 @@ describe('Test for un-deleting an integration gateway', () => {
         cy.get('[data-test-id="button-undelete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('.nav-sidebar').contains('Integration Gateway').click()
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)

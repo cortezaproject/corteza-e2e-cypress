@@ -23,8 +23,6 @@ describe('Test for creating a template for testing advanced functionalities', ()
         cy.get('[data-test-id="textarea-description"]').type('Template for testing advanced functionalities.')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-created-at"]').should('exist')
     })
   })

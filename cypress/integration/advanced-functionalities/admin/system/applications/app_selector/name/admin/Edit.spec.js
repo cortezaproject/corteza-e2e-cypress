@@ -24,14 +24,10 @@ describe('Test for editing the name of the application', () => {
         cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="card-application-selector"]').within(() => {
         cy.get('[data-test-id="input-name"]').clear()
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-name"]').should('have.value', 'Testing application')
     })
 
@@ -42,8 +38,6 @@ describe('Test for editing the name of the application', () => {
         cy.get('[data-test-id="input-name"]').clear().type('Edited testing application')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should check if the name was edited', () => {

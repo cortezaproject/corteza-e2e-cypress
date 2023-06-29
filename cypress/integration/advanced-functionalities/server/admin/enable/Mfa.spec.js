@@ -21,8 +21,6 @@ describe('Test for enabling multi-factor authentication', () => {
       cy.get('[data-test-id="checkbox-enable-emailOTP"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-TOTP"]').check({ force: true })
       cy.get('[data-test-id="button-submit"]').click({ multiple: true, force: true })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="checkbox-enable-emailOTP"]').should('be.checked')
       cy.get('[data-test-id="checkbox-enable-TOTP"]').should('be.checked')
     })

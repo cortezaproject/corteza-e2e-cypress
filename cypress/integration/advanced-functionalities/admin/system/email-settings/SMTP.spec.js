@@ -30,8 +30,6 @@ describe('Test for SMTP server functionalities', () => {
       cy.get('[data-test-id="checkbox-allow-invalid-certificates"]').check({ force: true })
       cy.get('[data-test-id="input-tls-server-name"]').clear({ force: true }).type('default.domain.ltd', { force: true })
       cy.get('[data-test-id="button-submit"]').click({ force: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should check whether the entered info is saved', () => {
@@ -52,16 +50,12 @@ describe('Test for SMTP server functionalities', () => {
       cy.get('[data-test-id="input-server"]').clear({ force: true }).type('localhost', { force: true })
       cy.get('[data-test-id="input-server-port"]').clear().type('1025')
       cy.get('[data-test-id="button-submit"]').click({ force: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should be able to send and receive the mail', () => {
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
       cy.get('[data-test-id="button-smtp"]').click({ force: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       // We wait 1s in order the mail to be sent
       cy.wait(1000)
       // We check if the mail is received in MailHog

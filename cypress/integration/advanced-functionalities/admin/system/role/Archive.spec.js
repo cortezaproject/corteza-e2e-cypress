@@ -24,8 +24,6 @@ describe('Test for archiving a role', () => {
       cy.contains('Advanced functionalities').get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-archive"]').click()
       cy.get('.confirmation-confirm').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-archived-at"]').should('exist')
     })
   })

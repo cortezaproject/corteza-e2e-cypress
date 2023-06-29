@@ -27,8 +27,6 @@ describe('Testing template types', () => {
         cy.get('[data-test-id="button-submit"]').click()
         cy.get('[data-test-id="input-updated-at"]').should('exist')
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

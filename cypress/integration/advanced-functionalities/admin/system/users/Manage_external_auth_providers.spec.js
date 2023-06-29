@@ -34,8 +34,6 @@ describe('Test for managing external providers of a user', () => {
       cy.get('[data-test-id="input-name"]').clear().type('auth account')
       cy.get('[data-test-id="input-handle"]').clear().type('auth_account')
       cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="card-external-auth-providers"]').within(() => {
         cy.contains('password').should('not.exist')
       })

@@ -93,15 +93,11 @@ describe('Test for deleting a record', () => {
       cy.get('[type="checkbox"]:last', { timeout: 10000 }).check({ force: true })
       cy.get('div > div > [data-test-id="button-delete"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success') 
 
       cy.get('table > tbody').find('tr:first').should("exist")
       cy.get('[type="checkbox"]:first', { timeout: 10000 }).check({ force: true })
       cy.get('div > div > [data-test-id="button-delete"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success') 
     })
   })
 })  

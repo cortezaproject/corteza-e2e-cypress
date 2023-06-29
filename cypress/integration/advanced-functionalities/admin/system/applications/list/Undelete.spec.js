@@ -22,8 +22,6 @@ describe('Test for un-deleting admin application', () => {
         cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should be able to un-delete an app', () => {

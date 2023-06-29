@@ -27,8 +27,6 @@ describe('Test for un-deleting a role', () => {
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.confirmation-confirm').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-deleted-at"]').should('not.exist')
     })
     

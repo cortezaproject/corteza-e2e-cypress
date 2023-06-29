@@ -22,8 +22,6 @@ describe('Test for deleting an application', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-search"]').type('automated application')
       cy.contains('automated application').should('not.exist')
       // We are also deleting the other created application

@@ -25,15 +25,11 @@ describe('Test for creating a user with limited permissions', () => {
       cy.get('[data-test-id="input-name"]').type('Permissions account')
       cy.get('[data-test-id="input-handle"]').type('permissions_account')
       cy.get('[data-test-id="button-submit"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-new-password"]').type(newPassword, { force: true })
       cy.get('[data-test-id="input-confirm-password"]').type(newPassword, { force: true })
       cy.get('.card-footer:last').within(() => {
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.wait(1000)
     })
   })

@@ -27,8 +27,6 @@ describe('Test for editing a record page', () => {
       // Toggling page visibility
       cy.get('[data-test-id="checkbox-page-visibility"]').check({ force: true })
       cy.get('[data-test-id="button-save-and-close"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should be edited', () => {

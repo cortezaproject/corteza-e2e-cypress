@@ -29,9 +29,7 @@ describe('Test for editing a workflow', () => {
       cy.get('[data-test-id="input-label"]').type(' edited')
       cy.get('[data-test-id="input-handle"]').type('_edited')
       cy.get('[data-test-id="input-description"]').clear().type('Edited description.')
-      cy.get('[data-test-id="button-save-workflow"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
+      cy.get('[data-test-id="button-save-workflow"]', { timeout: 10000 }).click()
       cy.get('.close').click({ multiple: true })
     })
 

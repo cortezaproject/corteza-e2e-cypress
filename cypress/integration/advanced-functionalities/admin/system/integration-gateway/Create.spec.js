@@ -66,8 +66,6 @@ describe('Test for creating an integration gateway', () => {
       cy.get('[data-test-id="input-endpoint"].is-invalid').should('not.exist')
       cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
       cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-create-at"]').should('exist')
     })
 

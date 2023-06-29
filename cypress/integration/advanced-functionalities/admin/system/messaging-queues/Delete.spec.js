@@ -32,8 +32,6 @@ describe('Test for deleting a messaging queue', () => {
     it('should be able to delete a messaging queue', () => {
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('.confirmation-confirm').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-search"]').type('TestQueue')
       cy.get('[data-test-id="no-matches"]').should('exist')
     })

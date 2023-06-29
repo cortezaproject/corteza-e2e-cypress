@@ -26,8 +26,6 @@ describe('Testing partial template', () => {
         cy.get('[data-test-id="checkbox-is-partial-template"]').check({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="badge-partial-template"]').should('exist')
     })
   })

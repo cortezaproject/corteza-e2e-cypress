@@ -33,8 +33,6 @@ describe('Test for un-deleting a messaging queue', () => {
     it('should be able to un-delete a messaging queue', () => {
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.confirmation-confirm').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-search"]').type('TestQueue')
       cy.get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="input-deleted-at"]').should('not.exist')

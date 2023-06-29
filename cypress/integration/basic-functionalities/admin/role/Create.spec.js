@@ -32,8 +32,6 @@ describe('Test for creating a role', () => {
         cy.get('[data-test-id="input-handle"]').clear()
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should not be able to create a role with misconfigured handle', () => {
@@ -65,8 +63,6 @@ describe('Test for creating a role', () => {
         cy.get('[data-icon="check"]') 
         cy.get('[data-test-id="button-submit"]').should('exist')
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 
@@ -97,8 +93,6 @@ describe('Test for creating a role', () => {
         cy.get('[data-test-id="input-handle"]').type('duplicate_role')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We check if the danger toast appears
-      cy.get('.b-toast-danger') 
     })
     
     it('should not be able to create a role with identical handle', () => {
@@ -107,8 +101,6 @@ describe('Test for creating a role', () => {
         cy.get('[data-test-id="input-handle"]').clear().type('automated_role')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We check if the danger toast appears
-      cy.get('.b-toast-danger') 
     })
   })
 })

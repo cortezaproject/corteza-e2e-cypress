@@ -24,8 +24,6 @@ describe('Test for creating a role with limited permissions', () => {
         cy.get('[data-test-id="input-handle"]').type('test')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

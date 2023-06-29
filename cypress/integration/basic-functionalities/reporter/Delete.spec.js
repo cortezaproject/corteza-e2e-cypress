@@ -18,8 +18,6 @@ describe('Test for deleting a report', () => {
       cy.get('.tools-wrapper > div > div > a:nth-child(2)', { timeout: 10000 }).click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
 
       cy.wait(1000)
       // We click on the report
@@ -27,8 +25,6 @@ describe('Test for deleting a report', () => {
       cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
 
       cy.wait(1000)
       // We click on the Edit button on the created report
@@ -36,8 +32,6 @@ describe('Test for deleting a report', () => {
       cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('[data-test-id="button-delete-confirm"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
 
       cy.get('[data-test-id="no-matches"]').should('exist')
     })

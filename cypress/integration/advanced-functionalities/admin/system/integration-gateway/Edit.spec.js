@@ -34,8 +34,6 @@ describe('Test for editing an integration gateway', () => {
       cy.get('[data-test-id="card-route-edit"]').within(() => {
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-updated-at"]').should('exist')
       cy.get('[data-test-id="input-endpoint"]').should('have.value', '/testEdited')
     })

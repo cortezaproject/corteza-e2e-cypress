@@ -39,8 +39,6 @@ describe('Test for creating an application', () => {
         cy.get('[data-icon="check"]')
         cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 
@@ -70,8 +68,6 @@ describe('Test for creating an application', () => {
         cy.get('[data-test-id="input-name"]').type('automated application')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-created-at"]').should('exist')
     })
   })

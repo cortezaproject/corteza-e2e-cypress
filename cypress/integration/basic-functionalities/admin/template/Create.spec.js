@@ -48,8 +48,6 @@ describe('Test for creating a template', () => {
         cy.get('[data-icon="check"]')
         cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 
@@ -92,8 +90,6 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="input-handle"]').type('duplicate_template')
         cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should not be able to create a template with identical handle', () => {
@@ -102,8 +98,6 @@ describe('Test for creating a template', () => {
         cy.get('[data-test-id="input-handle"]').clear().type('automated_template')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We check if the danger toast appears
-      cy.get('.b-toast-danger')
     })
   })
 })

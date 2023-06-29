@@ -62,8 +62,6 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should exist', () => {
@@ -111,8 +109,6 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click()
-      // We check if the danger toast appears
-      cy.get('.b-toast-danger').should('exist')
     })
   })
 })

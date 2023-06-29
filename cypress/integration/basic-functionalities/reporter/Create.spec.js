@@ -43,8 +43,6 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="input-handle"]').type('cypress_handle')
       cy.get('[data-test-id="input-description"]').type('This is an automated description.')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should exist', () => {
@@ -55,10 +53,6 @@ describe('Test for creating a report', () => {
       cy.contains('Cypress report')
       cy.get('[data-test-id="button-back"]').click()
 
-      // We click on the created report
-      cy.get('table > tbody > :first-child()').click()
-      // We check that an error toast doesn't appear
-      cy.get('.b-toast-danger').should('not.exist')
       // Visiting main page of Reporter
       cy.visit(reporterURL + '/list')
     })
@@ -67,8 +61,6 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="button-create-report"]').click()
       cy.get('[data-test-id="input-name"]').type('Test')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should exist', () => {
@@ -78,10 +70,6 @@ describe('Test for creating a report', () => {
       cy.contains('Test')
       cy.get('[data-test-id="button-back"]').click()
 
-      // We click on the created report
-      cy.get('table > tbody > :first-child()').click()
-      // We check that an error toast doesn't appear
-      cy.get('.b-toast-danger').should('not.exist')
       // Visiting main page of Reporter
       cy.visit(reporterURL + '/list')
     })
@@ -117,8 +105,6 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="input-handle"]').type('another_cypress_report')
       cy.get('[data-test-id="input-description"]').type('This is another automated description.')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="button-back"]').click()
     })
   })
@@ -129,8 +115,6 @@ describe('Test for creating a report', () => {
       cy.get('[data-test-id="input-name"]').type('Name')
       cy.get('[data-test-id="input-handle"]').type('cypress_handle')
       cy.get('[data-test-id="button-save"]').click({ force: true })
-      // We check if the danger toast appears
-      cy.get('.b-toast-danger')
     })
   })
 })

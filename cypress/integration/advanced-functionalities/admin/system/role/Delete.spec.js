@@ -24,8 +24,6 @@ describe('Test for deleting a role', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

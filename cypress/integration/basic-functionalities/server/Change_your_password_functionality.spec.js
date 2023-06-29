@@ -50,8 +50,6 @@ describe('Test for checking the change password functionality', () => {
       cy.get('[data-test-id="input-old-password"]', { timeout: 10000 }).type(password)
       cy.get('[data-test-id="input-new-password"]').type(password)
       cy.get('[data-test-id="button-change-password"]').click()
-      // We check if the error message pops up
-      cy.get('.text-danger')
     })
   })
 

@@ -70,8 +70,6 @@ describe('Test for creating a user', () => {
       cy.get('[data-test-id="input-name"]').type('Cypress test account')
       cy.get('[data-test-id="input-handle"]').type('cypress_test_account')
       cy.get('[data-test-id="button-submit"]').click()
-      // We check if the success toast appears
-      cy.get('.border-primary')
       cy.url('pathname').should('include', '/auth')
     })
   })

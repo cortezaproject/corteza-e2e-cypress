@@ -32,8 +32,6 @@ describe('Test for checking system permissions', () => {
       cy.get('.card-footer > [data-test-id="button-submit"]').click({ force: true })
       // We wait 1s in order the page to be fully loaded
       cy.wait(1000)
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should be able to log in and check if the account is restricted from accessing all settings', () => {

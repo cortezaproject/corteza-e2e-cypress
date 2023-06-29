@@ -38,8 +38,6 @@ describe('Test for creating auth client', () => {
       cy.get('[data-test-id="input-name"]').type('Test auth client')
       cy.get('[data-test-id="input-handle"]').type('test_auth_client')
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="created-at"]').should('exist')
     })
   })

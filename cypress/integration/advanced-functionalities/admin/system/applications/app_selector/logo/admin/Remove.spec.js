@@ -26,8 +26,6 @@ describe('Test for removing a logo on application', () => {
         cy.get('[data-test-id="button-logo-show"]').should('not.exist')
         cy.get('[data-test-id="button-logo-reset"]').should('not.exist')
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

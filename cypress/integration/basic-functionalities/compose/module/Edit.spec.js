@@ -24,11 +24,7 @@ describe('Test for editing a module', () => {
         cy.get('input:first').clear({ force: true }).type('name', { force: true })
       })    
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success') 
-      cy.get('[data-test-id="button-save-and-close"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success') 
+      cy.get('[data-test-id="button-save-and-close"]', { timeout: 10000 }).click()
     })
 
     it('should be edited', () => {

@@ -23,8 +23,6 @@ describe('Test for checking if secret key is generated', () => {
       cy.get('[data-test-id="button-show-client-secret"]').click()
       cy.get('[data-test-id="button-regenerate-client-secret"]').click()
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

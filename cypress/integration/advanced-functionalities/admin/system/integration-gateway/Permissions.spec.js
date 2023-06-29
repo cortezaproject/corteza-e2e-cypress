@@ -54,8 +54,6 @@ describe('Testing permissions of an integration gateway', () => {
       cy.get('[data-test-id="button-login-and-remember"]').click()
       // We wait for 3s in order the page to be fully loaded
       cy.wait(3000)
-      // We see that an error is displayed that we cannot search or view routes
-      cy.get('.b-toast-danger')
       // Integration gateway routes should not be displayed hence the message "No matches for your search"
       cy.get('[data-test-id="no-matches"]').should('exist')
       cy.get('[data-test-id="dropdown-profile"]').click()

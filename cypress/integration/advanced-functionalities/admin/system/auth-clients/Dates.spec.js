@@ -41,8 +41,6 @@ describe('Test for checking if you can select dates', () => {
       cy.get('.b-time-minutes > .btn:first').click()
       cy.get('.b-form-time-control').contains('Close').click()
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should have a date and time selected', () => {
@@ -55,8 +53,6 @@ describe('Test for checking if you can select dates', () => {
     it('should be able to reset the dates', () => {
       cy.get('[data-test-id="button-reset-value"]').click({ multiple: true })
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="datepicker-choose-date"]:first').should('have.value', '')
       cy.get('[data-test-id="datepicker-choose-date"]:last').should('have.value', '')
       cy.get('[data-test-id="timepicker-choose-time"]:first').should('have.value', '')

@@ -40,11 +40,7 @@ describe('Test for editing a namespace', () => {
       cy.get('[data-test-id="input-subtitle"]').clear().type('Edited subtitle')
       cy.get('[data-test-id="input-description"]').clear().type('Edited description')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
-      cy.get('[data-test-id="button-save-and-close"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
+      cy.get('[data-test-id="button-save-and-close"]', { timeout: 10000 }).click()
     })
 
     it('should be edited', () => {

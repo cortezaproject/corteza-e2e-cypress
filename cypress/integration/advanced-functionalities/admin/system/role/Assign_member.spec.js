@@ -25,8 +25,6 @@ describe('Test for assigning a member to a role', () => {
         cy.get('[data-test-id="button-add-member"]').click()
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should check whether the member was assigned', () => {

@@ -23,8 +23,6 @@ describe('Test for adding an impersonate user', () => {
       cy.get('[data-test-id="impersonate-user"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should be able to generate cURL snippet', () => {

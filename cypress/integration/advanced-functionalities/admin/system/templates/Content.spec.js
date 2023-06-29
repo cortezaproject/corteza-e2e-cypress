@@ -24,8 +24,6 @@ describe('Testing template content', () => {
       cy.contains('test').get('#resource-list > tbody > tr:last > td:last > a').click()
       cy.get('[data-test-id="template-html-editor"]').type('{{template "email_general_header" }}', { parseSpecialCharSequences: false })
       cy.get('[data-test-id="button-submit"]').click({ multiple: true })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

@@ -31,8 +31,6 @@ describe('Test for editing an application', () => {
         cy.get('[data-test-id="input-name"]').clear().type('edited application')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 

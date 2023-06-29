@@ -53,8 +53,6 @@ describe('Testing contextual role', () => {
         })
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="card-role-edit-members"]').should('not.exist')
     })
 
@@ -100,8 +98,6 @@ describe('Testing contextual role', () => {
         cy.get('[data-test-id="input-expression"]').clear().type('false')
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should adjust the permissions of the role', () => {

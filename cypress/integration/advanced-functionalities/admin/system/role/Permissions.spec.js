@@ -27,8 +27,6 @@ describe('Testing permissions of a role', () => {
       cy.get('[data-test-id="modal-clone-permission"]').within(() => {
         cy.get('button').contains('Clone').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 

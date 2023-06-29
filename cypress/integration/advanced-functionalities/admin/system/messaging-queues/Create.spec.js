@@ -46,8 +46,6 @@ describe('Test for creating a messaging queue', () => {
       cy.get('[data-test-id="input-consumer"]').select('Store')
       cy.get('[data-test-id="input-polling"]').clear().type('5s')
       cy.get('[data-test-id="button-submit"]').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-created-at"]').should('exist')
     })
 

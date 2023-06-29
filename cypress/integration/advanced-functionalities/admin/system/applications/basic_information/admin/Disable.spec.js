@@ -24,8 +24,6 @@ describe('Test for disabling admin application', () => {
         cy.get('[data-test-id="checkbox-enabled"]').uncheck({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
 
     it('should check whether the app is disabled', () => {

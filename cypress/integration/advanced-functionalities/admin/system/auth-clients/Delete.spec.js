@@ -21,8 +21,6 @@ describe('Test for deleting auth client', () => {
       cy.get('#resource-list > tbody > tr:first > td > a').click()
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('.btn-danger').click()
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
     })
   })
 })

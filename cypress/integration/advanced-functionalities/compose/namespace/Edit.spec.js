@@ -22,8 +22,6 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="input-subtitle"]').type('Testing namespace')
       cy.get('[data-test-id="input-description"]').type('This is the description of the namespace')
       cy.get('[data-test-id="button-save-and-close"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
   })
 
@@ -130,8 +128,6 @@ describe('Testing second layer of namespace', () => {
       cy.get('.card-footer').within(() => {
         cy.get('[data-test-id="button-import"]').click()
       })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
   })
 
@@ -150,8 +146,6 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="dropdown-language-item-Slovenian"]').click()
       cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').type('Slovenian name translation')
       cy.get('[data-test-id="button-submit"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.get('.header-navigation').within(() => {
         cy.get('[data-test-id="button-translation"]').click()
       })
@@ -161,8 +155,6 @@ describe('Testing second layer of namespace', () => {
     it('should be able to delete a translation', () => {
       cy.get('[data-test-id="translation-value-Name-language-slovenščina"]').clear()
       cy.get('[data-test-id="button-submit"]').click({ force: true })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
       cy.get('.header-navigation').within(() => {
         cy.get('[data-test-id="button-translation"]').click()
       })

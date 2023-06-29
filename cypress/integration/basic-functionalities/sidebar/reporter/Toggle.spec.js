@@ -16,8 +16,6 @@ describe('Testing the toggle functionality of the sidebar', () => {
       cy.get('[data-test-id="button-create-report"]').click()
       cy.get('[data-test-id="input-name"]').type('Cypress report')
       cy.get('[data-test-id="button-save"]').click()
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
   })
 

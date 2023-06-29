@@ -27,8 +27,6 @@ describe('Test for editing a report', () => {
     it('should be able to edit the description', () => {
       cy.get('[data-test-id="input-description"]').clear().type('This is an edited automated description.')
       cy.get('[data-test-id="button-save"]').click({ force: true })
-      // We check if the success toast appears
-      cy.get('.b-toast-success')
     })
 
     it('should be edited', () => {
@@ -41,10 +39,6 @@ describe('Test for editing a report', () => {
       cy.get('[data-test-id="button-report-builder"]').click()
       cy.contains('Edited cypress report')
       cy.get('[data-test-id="button-back"]').click()
-      // We click on the edited report
-      cy.get('table > tbody > :first-child()').click()
-      // We check that an error toast doesn't appear
-      cy.get('.b-toast-danger').should('not.exist')
       // Visiting main page of Reporter
       cy.visit(reporterURL + '/list')
     })

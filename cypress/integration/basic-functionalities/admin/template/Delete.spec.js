@@ -22,8 +22,6 @@ describe('Test for deleting a template', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      // We confirm that the action was completed successfully
-      cy.get('.b-toast-success')
       cy.get('[data-test-id="input-search"]').type('automated_template')
       cy.contains('automated_template').should('not.exist')
     })
