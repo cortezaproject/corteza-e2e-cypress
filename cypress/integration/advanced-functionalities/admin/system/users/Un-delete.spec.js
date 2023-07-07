@@ -12,38 +12,44 @@ describe('Test for un-deleting a user', () => {
 
   context('Test for un-deleting a user', () => {
     it('should be able to un-delete a user', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('users')
+      cy.intercept('/api/system/users/?query=&deleted=2&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
+      cy.intercept('/api/system/users/?query=Permissions&deleted=2&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="filter-deleted-users"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
+      cy.get('[data-test-id="filter-deleted-users"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('Permissions')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.wait('@search')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.confirmation-confirm').click()
       cy.get('[data-test-id="input-deleted-at"]').should('not.exist')
     })
     
     it('should be able to test deleted filter', () => {
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('users')
+      cy.intercept('api/system/users/?query=Permissions&deleted=2&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
+      cy.intercept('/api/system/users/?query=Permissions&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
       cy.get('[data-test-id="input-search"]').type('Permissions')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@search')
       // We check that the Deleted state doesn't exist
       cy.contains('Permissions account').get('#resource-list > tbody').contains('Deleted').should('not.exist')
       // We check that the text is not gray
       cy.contains('Permissions account').get('.text-secondary').should('not.exist')
-      cy.get('[data-test-id="filter-deleted-users"]').contains('Only').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.get('[data-test-id="filter-deleted-users"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.contains('Permissions account').should('not.exist')
     })
   })

@@ -12,51 +12,53 @@ describe('Test for checking if you can select dates', () => {
 
   context('Test for checking if you can select dates', () => {
     it('should be able to select a valid from date', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
-      cy.get('[data-test-id="datepicker-choose-date"]:first').click()
-      cy.get('.b-calendar-grid-body').contains('18').click({ force: true })
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-date"] button').click({ force: true })
+      cy.get('.b-calendar-grid-body', { timeout: 10000 }).contains('18').click({ force: true })
     })
 
     it('should be able to select a valid from time', () => {
-      cy.get('[data-test-id="timepicker-choose-time"]:first').click()
-      cy.get('.b-time-hours > .btn:first').click()
-      cy.get('.b-time-minutes > .btn:first').click()
-      cy.get('.b-form-time-control').contains('Close').click()
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-time"] button').click({ force: true })
+      cy.get('.b-time-hours > .btn:first').click({ force: true })
+      cy.get('.b-time-minutes > .btn:first').click({ force: true })
     })
 
     it('should be able to select a valid expires at date', () => {
-      cy.get('[data-test-id="datepicker-choose-date"]:last').click()
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-date"] button').click({ force: true })
       cy.get('.b-calendar-grid-body').contains('19').click({ force: true })
     })
 
     it('should be able to select a valid expires at time', () => {
-      cy.get('[data-test-id="timepicker-choose-time"]:last').click()
-      cy.get('.b-time-hours > .btn:first').click()
-      cy.get('.b-time-minutes > .btn:first').click()
-      cy.get('.b-form-time-control').contains('Close').click()
-      cy.get('.card-footer > [data-test-id="button-submit"]').click()
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-time"] button').click({ force: true })
+      cy.get('.b-time-hours > .btn:first').click({ force: true })
+      cy.get('.b-time-minutes > .btn:first').click({ force: true })
+      cy.get('.card-footer > [data-test-id="button-submit"]').click({ force: true })
     })
 
     it('should have a date and time selected', () => {
-      cy.get('[data-test-id="datepicker-choose-date"]:first').should('not.have.value', 'Choose a date')
-      cy.get('[data-test-id="datepicker-choose-date"]:last').should('not.have.value', 'Choose a date')
-      cy.get('[data-test-id="timepicker-choose-time"]:first').should('not.have.value', 'No time selected')
-      cy.get('[data-test-id="timepicker-choose-time"]:last').should('not.have.value', 'No time selected')
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-date"]').should('not.have.value', 'Choose a date')
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-date"]').should('not.have.value', 'Choose a date')
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-time"]').should('not.have.value', 'No time selected')
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-time"]').should('not.have.value', 'No time selected')
     })
 
     it('should be able to reset the dates', () => {
-      cy.get('[data-test-id="button-reset-value"]').click({ multiple: true })
-      cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      cy.get('[data-test-id="datepicker-choose-date"]:first').should('have.value', '')
-      cy.get('[data-test-id="datepicker-choose-date"]:last').should('have.value', '')
-      cy.get('[data-test-id="timepicker-choose-time"]:first').should('have.value', '')
-      cy.get('[data-test-id="timepicker-choose-time"]:last').should('have.value', '')
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-date"] button').click({ force: true })
+      
+      cy.get('.b-calendar-footer').get('button[aria-label="Clear"]').click({ force: true })
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-time"] button').click({ force: true })
+      cy.get('.b-time-footer').get('button[aria-label="Clear"]').click({ force: true })
+      cy.get('.card-footer > [data-test-id="button-submit"]').click({ force: true })
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-date"]').should('have.value', '')
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-date"]').should('have.value', '')
+      cy.get('[data-test-id="input-valid-from"] [data-test-id="picker-time"]').should('have.value', '')
+      cy.get('[data-test-id="input-expires-at"] [data-test-id="picker-time"]').should('have.value', '')
     })
   })
 })

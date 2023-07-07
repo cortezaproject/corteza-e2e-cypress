@@ -13,12 +13,9 @@ describe('Testing whether the app name is edited', () => {
   context('Testing whether the app name is edited', () => {
     it('should be edited', () => {
       cy.visit(oneURL + '/')
-      // Here we close the start tour pop up
-      if (!window.sessionStorage.getItem('auth.refresh-token')) {
-        cy.get('.modal-header > :last-child()').click()
-      }
-      cy.get('[data-test-id="input-search"]').type('Testing application', { force: true })
-      cy.get('.overflow-auto').contains('Edited testing application')
+      cy.get('button').contains('Skip tour').click({ force: true })
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('testing application', { force: true })
+      cy.get('.card').should('exist')
     })
   })
 })

@@ -12,23 +12,24 @@ describe('Test for un-deleting auth client', () => {
 
   context('Test for un-deleting auth client', () => {
     it('should be able to un-delete an auth client ', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
+      cy.intercept('/api/system/auth/clients/?deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('filter')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="filter-deleted-auth-clients"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('[data-test-id="filter-deleted-auth-clients"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.contains('Test auth client').get('.text-secondary').should('exist')
-      cy.get('#resource-list > tbody > tr:first > td > a').should('exist', 'Deleted').click()
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 })
+        .contains('test_auth_client')
+        .should('exist', 'Deleted').click()
       cy.get('[data-test-id="deleted-at"]').should('exist')
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.btn-danger').click()
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
       cy.contains('Test auth client').should('exist')
     })
   })

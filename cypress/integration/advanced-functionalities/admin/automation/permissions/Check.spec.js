@@ -14,9 +14,10 @@ describe('Test for checking admin automation permissions', () => {
 
   context('Test for checking admin automation permissions', () => {
     it('should be able to log in and check if grant permissions on automation component is restricted', () => {
+      cy.intercept('/api/automation/workflows/?query=&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&sort=handle+ASC')
+        .as('workflows')
       cy.visit(workflowURL + '/list')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@workflows')
       // First we check if the workflows are present logging in with the super admin account
       cy.get('[data-test-id="no-matches"]').should('not.exist')
       // We first log out so we can log in with the evaluated permission account
@@ -26,8 +27,6 @@ describe('Test for checking admin automation permissions', () => {
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
       // We check that the we are not able to see any workflows hence the permission is applied
       cy.get('[data-test-id="no-matches"]').should('exist')
     })

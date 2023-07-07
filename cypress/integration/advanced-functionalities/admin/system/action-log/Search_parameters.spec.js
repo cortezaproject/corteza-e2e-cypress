@@ -7,17 +7,21 @@ describe('Test for action log search functionalities', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
       cy.login({ email, password, url: adminURL })
+    } else {
+      cy.get('[data-test-id="dropdown-profile"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="dropdown-profile-logout"]', { timeout: 10000 }).click({ force: true })
+      cy.login({ email, password, url: adminURL })
     }
   })
 
   context('Test for action log search functionalities', () => {
     it('should be able to select starting from date', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/actionlog/?limit=10').as('action-log')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Action log').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/actionlog"]').click({ force: true })
+      cy.wait('@action-log')
       cy.get('[data-test-id="filter-starting-from"]').within(() => {
         cy.get('.b-form-datepicker').click()
         cy.get('.b-calendar-grid-body').contains('1').click({ force: true })
@@ -27,21 +31,21 @@ describe('Test for action log search functionalities', () => {
     it('should be able to select starting from time', () => {
       cy.get('[data-test-id="filter-starting-from"]').within(() => {
         cy.get('.b-form-timepicker').click()
-        cy.contains('Now').click({ force: true })
+        cy.get('button[aria-label="Now"]').click({ force: true })
       })
     })
 
     it('should be able to select ending at date', () => {
       cy.get('[data-test-id="filter-ending-at"]').within(() => {
         cy.get('.b-form-datepicker').click()
-        cy.contains('Today').click({ force: true })
+        cy.get('button[aria-label="Today"]').click({ force: true })
       })
     })
 
     it('should be able to select ending at time', () => {
       cy.get('[data-test-id="filter-ending-at"]').within(() => {
         cy.get('.b-form-timepicker').click()
-        cy.contains('Now').click({ force: true })
+        cy.get('button[aria-label="Now"]').click({ force: true })
       })
     })
 
@@ -59,7 +63,6 @@ describe('Test for action log search functionalities', () => {
     })
 
     it('should be able to add a user ID', () => {
-      cy.get('[data-test-id="input-user-id"]').type('Cypress test account')
       cy.get('[data-test-id="button-submit"]').click()
     })
 
@@ -70,21 +73,28 @@ describe('Test for action log search functionalities', () => {
       })
       cy.get('[data-test-id="filter-starting-from"]').within(() => {
         cy.get('.b-form-timepicker').click()
-        cy.contains('Now').click({ force: true })
+        cy.get('button[aria-label="Now"]').click({ force: true })
       })
       cy.get('[data-test-id="filter-ending-at"]').within(() => {
         cy.get('.b-form-datepicker').click()
-        cy.contains('Today').click({ force: true })
+        cy.get('button[aria-label="Today"]').click({ force: true })
       })
       cy.get('[data-test-id="filter-ending-at"]').within(() => {
         cy.get('.b-form-timepicker').click()
-        cy.contains('Now').click({ force: true })
+        cy.get('button[aria-label="Now"]').click({ force: true })
       })
       cy.get('[data-test-id="input-resource"]').clear().type('system:auth')
       cy.get('[data-test-id="input-action"]').clear().type('authenticate')
       cy.get('[data-test-id="input-user-id"]').clear()
       cy.get('[data-test-id="button-submit"]').click()
-      cy.get('#resource-list > tbody > tr:first').should('exist', 'system:auth', 'authenticate', 'Cypress test account', 'auth', 'successfully authenticated with password')
+      cy.get('#resource-list > tbody > tr:first')
+        .should('exist',
+          'system:auth',
+          'authenticate',
+          'Cypress test account',
+          'auth',
+          'successfully authenticated with password'
+        )
     })
   })
 })

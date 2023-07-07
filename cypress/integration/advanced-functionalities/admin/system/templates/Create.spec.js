@@ -12,10 +12,12 @@ describe('Test for creating a template for testing advanced functionalities', ()
 
   context('Test for creating a template for testing advanced functionalities', () => {
     it('should create a template', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/template/?query=&handle=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('templates')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Templates').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/template"]').click({ force: true })
+      cy.wait('@templates')
       cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type('Test template')

@@ -12,13 +12,11 @@ describe('Test for compose sidebar search functionality', () => {
 
   context('Test for compose sidebar search functionality', () => {
     it('should be able to search for pages', () => {
+      cy.intercept('/api/compose/namespace/').as('namespace-list')
       cy.visit(composeURL + '/namespaces')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@namespace-list')
       cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('Home')
-      // We wait for 1s in order the search to be finished
-      cy.wait(1000)
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('Home')
       cy.get('.nav-sidebar').contains('Home').should('exist')
     })
   })

@@ -12,10 +12,12 @@ describe('Test for deleting a reminder', () => {
 
   context('Testing for deleting a reminder', () => {
     it('should be able to delete a reminder', () => {
+      cy.intercept('/api/compose/namespace/').as('namespace-list')
       cy.visit(composeURL + '/namespaces')
+      cy.wait('@namespace-list')
       cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-item-reminders"]').click()
-      cy.get('[data-test-id="button-delete-reminder"]').click()
+      cy.get('[data-test-id="dropdown-item-reminders"]').click({ force: true })
+      cy.get('[data-test-id="button-delete-reminder"]').click({ force: true })
       cy.get('[data-test-id="span-reminder-title"]').should('not.exist', 'Test reminder')
     })
   })

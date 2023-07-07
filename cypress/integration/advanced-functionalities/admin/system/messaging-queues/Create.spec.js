@@ -7,17 +7,21 @@ describe('Test for creating a messaging queue', () => {
   before(() => {
     if (!window.sessionStorage.getItem('auth.refresh-token')) {
       cy.login({ email, password, url: adminURL })
+    } else {
+      cy.get('[data-test-id="dropdown-profile"]').click()
+      cy.get('[data-test-id="dropdown-profile-logout"]').click()
+      cy.login({ email, password, url: adminURL })
     }
   })
 
   context('Test for creating a messaging queue', () => {
     it('should check whether the correct buttons and states are shown', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/queues/?query=&limit=100&incTotal=true&sort=createdAt+DESC&deleted=0').as('message-queues')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Messaging Queues').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/queue"]').click({ force: true })
+      cy.wait('@message-queues')
       cy.get('[data-test-id="button-add"]').click()
       cy.get('[data-test-id="button-delete"]').should('not.exist')
       cy.get('[data-test-id="button-undelete"]').should('not.exist')

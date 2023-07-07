@@ -12,20 +12,19 @@ describe('Test for adding a redirect uri to auth client', () => {
 
   context('Test for adding a redirect uri to auth client', () => {
     it('should be able to add a uri link', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
-      cy.get('[data-test-id="button-add-redirect-uris"]').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
+      cy.get('[data-test-id="button-add-redirect-uris"]').click({ timeout: 10000 })
       cy.get('[data-test-id="input-uri"]').type('https://www.planetcrust.com/features/corteza-platform')
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
       cy.get('[data-test-id="updated-at"]').should('exist')
     })
   })

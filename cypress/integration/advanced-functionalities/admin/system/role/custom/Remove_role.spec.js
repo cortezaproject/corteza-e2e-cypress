@@ -13,13 +13,14 @@ describe('Test for deleting a role', () => {
   context('Test for deleting a role', () => {
     it('should be able to add a role for deleting', () => {
       cy.intercept('/api/system/stats/').as('load')
-      cy.intercept('/api/system/users/?query=Permissions+account&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('user')
+      cy.intercept('/api/system/users/?query=Permissions+account&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('user')
       cy.visit(adminURL + '/')
       cy.wait('@load')
-      cy.get('.nav-sidebar').contains('Users').click()
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
       cy.get('[data-test-id="input-search"]').type('Permissions account')
       cy.wait('@user')
-      cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="input-role-picker"]').type('Developer{enter}')
       cy.get('[data-test-id="card-role-membership"]').within(() => {
         cy.get('[data-test-id="button-submit"]').click()

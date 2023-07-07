@@ -12,21 +12,23 @@ describe('Test for creating auth client', () => {
 
   context('Test for creating auth client', () => {
     it('should check if some labels and fields are hidden when in create mode', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
       cy.get('[data-test-id="button-new-auth-client"]').click()
       cy.get('[data-test-id="input-client-secret"]').should('not.exist')
       cy.get('[data-test-id="input-uri"]').should('not.exist')
       cy.get('[data-test-id="select-user"]').should('not.exist')
       cy.get('[data-test-id="button-permissions"]').should('not.exist')
       cy.get('[data-test-id="button-delete"]').should('not.exist')
-      cy.contains('Generate').should('not.exist')
-      cy.get('[data-test-id="cURL"]').should('not.exist')
-      cy.contains('Hide cURL').should('not.exist')
+      // Check if Generate cURL snippet button is hidden
+      cy.get('[data-test-id="button-cURL-snippet"]').should('not.exist')
+      cy.get('[data-test-id="cURL-string"]').should('not.exist')
+      // Check if Hide cURLsnippet  button is hidden
+      cy.get('[data-test-id="button-cURL-snippet"]').should('not.exist')
       cy.get('[data-test-id="button-new-auth-client"]').should('not.exist')
       cy.get('[data-test-id="created-at"]').should('not.exist')
       cy.get('[data-test-id="updated-at"]').should('not.exist')

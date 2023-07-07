@@ -21,7 +21,7 @@ describe('Testing compose permissions', () => {
       cy.get('[data-test-id="button-permissions"]').click()
       cy.get('[data-test-id="select-user-list-roles"]').type('Test{enter}')
       // We select Deny for read any namespace permission
-      cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
+      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
       cy.contains('Save changes').click({ force: true })
       cy.get('[data-test-id="dropdown-profile"]').click()
       cy.get('[data-test-id="dropdown-profile-logout"]').click()
@@ -32,7 +32,7 @@ describe('Testing compose permissions', () => {
       // We check with this that there are no namespaces present, hence the profile doesn't have permissions
       cy.get('[data-test-id="button-manage-namespaces"]').should('not.exist')
       cy.get('[data-test-id="button-edit-namespace"]').should('not.exist')
-      cy.contains('No namespaces found').should('not.exist')
+      cy.get('[data-test-id="no-namespaces-found"]').should('not.exist')
     })
   })
 })

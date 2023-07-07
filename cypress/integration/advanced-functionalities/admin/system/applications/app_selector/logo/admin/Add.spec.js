@@ -12,17 +12,21 @@ describe('Test for adding a logo on application', () => {
 
   context('Test for adding a logo on application', () => {
     it('should be able to add a logo', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/application/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('applications')
+      cy.intercept('api/system/application/?query=Testing+application&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded/rendered
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Applications').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/application"]').click({ force: true })
+      cy.wait('@applications')
       cy.get('[data-test-id="input-search"]').type('Testing application')
-      // We wait 1s in order the search to be completed
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.wait('@search')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-application-selector"]').within(() => {
         cy.get('[data-test-id="file-logo-upload"]').selectFile('cypress/fixtures/images/yin_yang.png', { force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true }).get('svg .fa-check').should('not.exist')
       })
       cy.get('[data-test-id="file-logo-upload"]').should('exist', 'yin_yang.png')
       cy.get('[data-test-id="button-logo-show"]').click()

@@ -39,7 +39,7 @@ describe('Test for adding a DPO user', () => {
       cy.get('[data-test-id="card-user-password"]').within(() => {
         cy.get('[data-test-id="input-new-password"]').type(dpoPassword, { force: true })
         cy.get('[data-test-id="input-confirm-password"]').type(dpoPassword, { force: true })
-        cy.get('[data-test-id="button-submit"]').click({ force: true }).contains('Submit')
+        cy.get('[data-test-id="button-submit"]').click({ force: true }).get('svg .fa-check').should('not.exist')
       })
     })
   })

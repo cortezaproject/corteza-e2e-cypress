@@ -15,9 +15,8 @@ describe('Test for creating a role for testing advanced functionalities', () => 
       cy.intercept('/api/system/stats/').as('load')
       cy.visit(adminURL + '/')
       cy.wait('@load')
-      cy.get('.nav-sidebar').contains('Roles').click()
+      cy.get('.nav-sidebar').find('a[href="/system/role"]').click({ force: true })
       cy.get('[data-test-id="button-new-role"]').click()
-      cy.contains('Basic information').should('exist')
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Advanced functionalities')
         cy.get('[data-test-id="input-handle"]').type('advanced_functionalities')

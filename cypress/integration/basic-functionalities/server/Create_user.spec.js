@@ -5,6 +5,12 @@ const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
   context('Test for creating a user with misconfigured parameter', () => {
+    it('should not be able to create an account without any info entered', () => {
+      cy.visit(baseURL + '/auth/signup')
+      cy.get('[data-test-id="button-submit"]').click()
+      cy.url().should('be.equal', baseURL + '/auth/signup')
+    })
+
     it('should not be able to create an account with just an email entered', () => {
       cy.visit(baseURL + '/auth')
       cy.get('[data-test-id="link-signup"]').click()
@@ -19,7 +25,6 @@ describe('Test for creating a user', () => {
       cy.get('[data-test-id="input-email"]').type('cypress_email')
       cy.get('[data-test-id="input-password"]').type('password')
       cy.get('[data-test-id="input-name"]').type('cypress account')
-      cy.get('[data-test-id="input-handle"]').type('cypress_handle')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
@@ -40,22 +45,9 @@ describe('Test for creating a user', () => {
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
 
-    it('should not be able to create an account without an info entered', () => {
-      cy.visit(baseURL + '/auth/signup')
-      cy.get('[data-test-id="button-submit"]').click()
-      cy.url().should('be.equal', baseURL + '/auth/signup')
-    })
-
     it('should not be able to create an account with just a name entered', () => {
       cy.visit(baseURL + '/auth/signup')
       cy.get('[data-test-id="input-name"]').type('Cypress Test')
-      cy.get('[data-test-id="button-submit"]').click()
-      cy.url().should('be.equal', baseURL + '/auth/signup')
-    })
-
-    it('should not be able to create an account with just a handle entered', () => {
-      cy.visit(baseURL + '/auth/signup')
-      cy.get('[data-test-id="input-handle"]').type('cypress_handle')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url().should('be.equal', baseURL + '/auth/signup')
     })
@@ -68,7 +60,6 @@ describe('Test for creating a user', () => {
       cy.get('[data-test-id="input-email"]').type(email)
       cy.get('[data-test-id="input-password"]').type(password)
       cy.get('[data-test-id="input-name"]').type('Cypress test account')
-      cy.get('[data-test-id="input-handle"]').type('cypress_test_account')
       cy.get('[data-test-id="button-submit"]').click()
       cy.url('pathname').should('include', '/auth')
     })

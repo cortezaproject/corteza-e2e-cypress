@@ -12,38 +12,44 @@ describe('Test for un-deleting a template', () => {
 
   context('Test for un-deleting a template', () => {
     it('should be able to un-delete a template', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/template/?query=&handle=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('templates')
+      cy.intercept('/api/system/template/?query=test&handle=&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
+      cy.intercept('/api/system/template/?query=&handle=&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Templates').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="filter-deleted-template"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/template"]').click({ force: true })
+      cy.wait('@templates')
+      cy.get('[data-test-id="filter-deleted-template"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('test')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.wait('@search')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-undelete"]').click()
       cy.get('.confirmation-confirm').click()
       cy.get('[data-test-id="input-deleted-at"]').should('not.exist')
     })
 
     it('should be able to test deleted filter', () => {
-      cy.get('.nav-sidebar').contains('Templates').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.intercept('/api/system/template/?query=&handle=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('templates')
+      cy.intercept('/api/system/template/?query=test&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
+      cy.intercept('/api/system/template/?query=test&handle=&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
+      cy.get('.nav-sidebar').find('a[href="/system/template"]').click({ force: true })
+      cy.wait('@templates')
       cy.get('[data-test-id="input-search"]').type('test')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@search')
       // We check that the Deleted state doesn't exist
       cy.contains('test').get('#resource-list > tbody').contains('Deleted').should('not.exist')
       // We check that the text is not gray
       cy.contains('test').get('.text-secondary').should('not.exist')
-      cy.get('[data-test-id="filter-deleted-template"]').contains('Only').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.get('[data-test-id="filter-deleted-template"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.get('[data-test-id="no-matches"]').should('exist')
     })
   })

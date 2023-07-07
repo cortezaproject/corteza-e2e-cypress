@@ -16,7 +16,7 @@ describe('Test for creating a role with limited permissions', () => {
       cy.intercept('/api/system/roles/?query=&deleted=0&archived=0&limit=100&incTotal=true&sort=createdAt+DESC').as('roles')
       cy.visit(adminURL + '/')
       cy.wait('@load')
-      cy.get('.nav-sidebar').contains('Roles').click()
+      cy.get('.nav-sidebar').find('a[href="/system/role"]').click({ force: true })
       cy.wait('@roles')
       cy.get('[data-test-id="button-new-role"]').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {

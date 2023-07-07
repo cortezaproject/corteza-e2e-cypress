@@ -1,3 +1,4 @@
+import '../basic-functionalities/server/Create_user.spec'
 import './admin'
 import './compose'
 import './one'

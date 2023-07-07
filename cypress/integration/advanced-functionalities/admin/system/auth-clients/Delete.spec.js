@@ -12,13 +12,13 @@ describe('Test for deleting auth client', () => {
 
   context('Test for deleting auth client', () => {
     it('should be able to delete an auth client ', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
       cy.get('.btn-danger').click()
     })

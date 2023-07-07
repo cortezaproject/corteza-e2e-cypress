@@ -12,15 +12,19 @@ describe('Test for un-deleting an integration gateway', () => {
 
   context('Test for un-deleting an integration gateway', () => {
     it('should check whether the correct buttons and states are shown', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/apigw/route/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('integration-gateway')
+      cy.intercept('/api/system/apigw/route/?query=%2FtestEdited&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('[data-test-id="filter-deleted-routes"]').contains('Only').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
+      cy.wait('@integration-gateway')
+      cy.get('[data-test-id="filter-deleted-routes"] input[value="2"]').click({ force: true })
       cy.get('[data-test-id="input-search"]').type('/testEdited')
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.wait('@search')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="input-delete-at"]').should('exist')
       cy.get('[data-test-id="input-updated-at"]').should('exist')
       cy.get('[data-test-id="input-create-at"]').should('exist')
@@ -31,27 +35,31 @@ describe('Test for un-deleting an integration gateway', () => {
     })
 
     it('should be able to un-delete an integration gateway', () => {
+      cy.intercept('/api/system/apigw/route/?query=%2FtestEdited&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.get('[data-test-id="card-route-edit"]').within(() => {
         cy.get('[data-test-id="button-undelete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
       cy.get('[data-test-id="input-search"]').type('/testEdited')
+      cy.wait('@search')
       cy.get('[data-test-id="no-matches"]').should('not.exist')
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="input-delete-at"]').should('not.exist')
     })
 
     it('should check that the route is not present in the deleted filter', () => {
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
+      cy.intercept('/api/system/apigw/route/?query=&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
+      cy.intercept('/api/system/apigw/route/?query=%2FtestEdited&deleted=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
       // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('[data-test-id="filter-deleted-routes"]').contains('Only').click()
+      cy.get('[data-test-id="filter-deleted-routes"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('/testEdited')
+      cy.wait('@search')
       cy.get('[data-test-id="no-matches"]').should('exist')
     })
   })

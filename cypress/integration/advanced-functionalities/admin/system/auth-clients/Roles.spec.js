@@ -12,52 +12,39 @@ describe('Test for checking role inputs', () => {
 
   context('Test for checking role inputs', () => {
     it('should be able to include a permitted role', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
       cy.get('[data-test-id="permitted-roles"]').within(() => {
-        cy.get('[data-test-id="input-role"]').type('Security administrator{enter}')
-        cy.get('[data-test-id="button-add-role"]').click()
+        cy.get('[data-test-id="input-role-picker"]').type('Security administrator{enter}')
       })
-      cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
     })
 
     it('should be able to include a prohibited role', () => {
       cy.get('[data-test-id="prohibited-roles"]').within(() => {
-        cy.get('[data-test-id="input-role"]').type('Developer{enter}')
-        cy.get('[data-test-id="button-add-role"]').click({ force: true })
+        cy.get('[data-test-id="input-role-picker"]').type('Developer{enter}')
       })
-      cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
     })
 
     it('should be able to include a forced role', () => {
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
       cy.get('[data-test-id="forced-roles"]').within(() => {
-        cy.get('[data-test-id="input-role"]').type('Federation{enter}')
-        cy.get('[data-test-id="button-add-role"]').click()
+        cy.get('[data-test-id="input-role-picker"]').type('Federation{enter}')
       })
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
     })
 
     it('should check whether the inputted roles are present', () => {
-      cy.get('.nav-sidebar').contains('Auth Clients').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:first > td > a').click()
-      cy.get('[data-test-id="selected-row-list"]:eq(0)').should('exist', 'Security administrator')
-      cy.get('[data-test-id="selected-row-list"]:eq(1)').should('exist', 'Developer')
-      cy.get('[data-test-id="selected-row-list"]:eq(2)').should('exist', 'Federation')
+      cy.intercept('/api/system/auth/clients/?deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('auth-clients')
+      cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
+      cy.wait('@auth-clients')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
+      cy.get('[data-test-id="selected-row-list"]:eq(0)', { timeout: 10000 }).should('exist', 'Security administrator')
+      cy.get('[data-test-id="selected-row-list"]:eq(1)', { timeout: 10000 }).should('exist', 'Developer')
+      cy.get('[data-test-id="selected-row-list"]:eq(2)', { timeout: 10000 }).should('exist', 'Federation')
     })
   })
 })

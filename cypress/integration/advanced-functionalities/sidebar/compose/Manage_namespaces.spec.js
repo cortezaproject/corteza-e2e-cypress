@@ -12,9 +12,9 @@ describe('Test for compose sidebar manage namespaces button functionality', () =
 
   context('Test for compose sidebar manage namespaces button functionality', () => {
     it('should be able to click on manage namespaces and be redirected', () => {
+      cy.intercept('/api/compose/namespace/').as('namespace-list')
       cy.visit(composeURL + '/namespaces')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@namespace-list')
       cy.get('[data-test-id="link-visit-namespace-crm"]').click({ force: true })
       // We click on the namespaces dropdown in the header and on manage namespaces
       cy.get('[data-test-id="select-namespace"]').click().find('a[href="/namespaces/manage"]').click()

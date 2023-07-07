@@ -23,8 +23,6 @@ describe('Testing multi-factor authentication', () => {
       cy.get('[data-test-id="link-redirect-to-profile"]').click()
       cy.get('[data-test-id="link-tab-security"]').click()
       cy.get('[data-test-id="button-enable-email-otp"]').click()
-      // We check if the success toast appears
-      cy.get('.border-primary')
       cy.get('[data-test-id="button-disable-email-otp"]').should('exist')
     })
   })

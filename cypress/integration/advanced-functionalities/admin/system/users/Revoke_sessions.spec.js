@@ -12,18 +12,14 @@ describe('Test for revoking all active sessions of a user', () => {
 
   context('Test for revoking all active sessions of a user', () => {
     it('should be able to revoking all active sessions', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="button-sessions-revoke"]').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
       cy.get('.btn-danger:last').click()
     })
   })

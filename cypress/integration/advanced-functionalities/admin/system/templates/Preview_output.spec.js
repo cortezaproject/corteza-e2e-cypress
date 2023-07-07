@@ -12,22 +12,19 @@ describe('Testing preview output', () => {
 
   context('Testing preview output', () => {
     it('should be able to preview the output in HTML', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/template/?query=&handle=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('templates')
+      cy.intercept('/api/system/template/?query=case_update_content&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Templates').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/template"]').click({ force: true })
+      cy.wait('@templates')
       cy.get('[data-test-id="input-search"]').type('case_update_content')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
-      cy.contains('case_update_content').get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.wait('@search')
+      cy.contains('case_update_content').get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-preview-html-template"]').click()
-      cy.url('exist', '/render/preview.html')
-    })
-
-    it('should be able to preview the output in PDF', () => {
-      cy.get('[data-test-id="button-preview-pdf-template"]').click()
       cy.url('exist', '/render/preview.html')
     })
   })

@@ -14,35 +14,36 @@ describe('Testing permissions of an integration gateway', () => {
 
   context('Testing permissions of an integration gateway', () => {
     it('should be able to add a role for evaluation and adjust permissions', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/apigw/route/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('integration-gateway')
+      cy.intercept('/api/system/apigw/route/?query=%2FtestEdited&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
+      cy.wait('@integration-gateway')
       cy.get('[data-test-id="input-search"]').type('/testEdited')
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last > td:last > a').click()
-      cy.get('[data-test-id="button-permissions"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@search')
+      cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
-      cy.get('.modal-footer').contains('Save & Close').click()
-      cy.contains('Cancel').click()
+      cy.get('.modal-footer').contains('Save & Close').click({ force: true })
+      cy.contains('Cancel').click({ force: true })
     })
 
     it('should be able to adjust permissions', () => {
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.intercept('/api/system/apigw/route/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('integration-gateway')
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
+      cy.wait('@integration-gateway')
       cy.get('[data-test-id="button-permissions"]').click()
       cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       // We select Deny for read any route
-      cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
-      cy.get('footer').contains('Save changes').click()
+      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
+      cy.get('footer').contains('Save changes').click({ force: true })
     })
 
     it('should be able to login with the limited permissions account and check if permissions are applied', () => {
@@ -52,8 +53,7 @@ describe('Testing permissions of an integration gateway', () => {
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
       cy.get('[data-test-id="button-login-and-remember"]').click()
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+
       // Integration gateway routes should not be displayed hence the message "No matches for your search"
       cy.get('[data-test-id="no-matches"]').should('exist')
       cy.get('[data-test-id="dropdown-profile"]').click()

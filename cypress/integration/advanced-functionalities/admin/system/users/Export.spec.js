@@ -12,12 +12,12 @@ describe('Test for exporting users', () => {
 
   context('Test for exporting users', () => {
     it('should be able to export users', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
       cy.get('[data-test-id="button-export"]').click()
       // We click on the export button again, but in the pop up modal
       cy.get('[data-test-id="button-export"]').click({ multiple: true, force: true })

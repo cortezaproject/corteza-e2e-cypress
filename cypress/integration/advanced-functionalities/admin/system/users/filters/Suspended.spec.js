@@ -12,21 +12,24 @@ describe('Testing suspended filter', () => {
 
   context('Testing suspended filter', () => {
     it('should be able to filter only suspended users', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC')
+        .as('users')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('filter')
+      cy.intercept('/api/system/users/?query=Permissions&deleted=0&suspended=2&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC')
+        .as('search')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="filter-suspended-users"]').contains('Only').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
+      cy.get('[data-test-id="filter-suspended-users"] input[value="2"]').click({ force: true })
+      cy.wait('@filter')
       cy.get('[data-test-id="input-search"]').type('Permissions')
-      // We wait 1s for the search to finish
-      cy.wait(1000)
+      cy.wait('@search')
       // We check if the text is gray
       cy.contains('Permissions account').get('.text-secondary').should('exist')
-      cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="input-suspended-at"]').should('exist')
     })
   })

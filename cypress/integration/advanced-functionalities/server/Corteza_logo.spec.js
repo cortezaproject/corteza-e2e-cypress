@@ -12,8 +12,6 @@ describe('Testing Corteza logo', () => {
 
   context('Testing Corteza logo', () => {
     it('should be able to click on Corteza logo and be redirected to log in screen', () => {
-      // We wait 1s in order the page to be loaded
-      cy.wait(1000)
       cy.get('[data-test-id="img-corteza-logo"]').click()
       cy.url().should('exist', baseURL + '/auth/')
     })

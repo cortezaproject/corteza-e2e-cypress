@@ -12,13 +12,14 @@ describe('Test for importing users', () => {
 
   context('Test for importing users', () => {
     it('should be able to import users', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-import"]').click().get('#dropzone').selectFile('cypress/downloads/export.zip', { action: 'drag-drop', force: true })
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
+      cy.get('[data-test-id="button-import"]').click().get('#dropzone')
+        .selectFile('cypress/downloads/export.zip', { action: 'drag-drop', force: true })
     })
   })
 })

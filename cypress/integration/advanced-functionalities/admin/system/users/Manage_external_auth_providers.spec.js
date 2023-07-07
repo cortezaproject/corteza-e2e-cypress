@@ -12,23 +12,23 @@ describe('Test for managing external providers of a user', () => {
 
   context('Test for managing external providers of a user', () => {
     it('should be able to have external provider of type password', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
       // We click on the edit icon on the Permissions account
-      cy.contains('Permissions account').get('#resource-list > tbody > tr:last > td:last > a').click()
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-external-auth-providers"]').within(() => {
         cy.contains('password').should('exist')
       })
     })
 
     it('should create new user from admin so it will not have external provider present', () => {
-      cy.get('.nav-sidebar').contains('Users').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
+      cy.intercept('/api/system/users/?query=&deleted=0&suspended=0&limit=100&incTotal=true&sort=createdAt+DESC').as('users')
+      cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
+      cy.wait('@users')
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="input-email"]').clear().type('auth@email.com')
       cy.get('[data-test-id="input-name"]').clear().type('auth account')

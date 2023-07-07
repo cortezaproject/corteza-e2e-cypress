@@ -12,15 +12,13 @@ describe('Test for creating an integration gateway', () => {
 
   context('Test for creating an integration gateway', () => {
     it('should check whether the correct buttons and states are present', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/apigw/route/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('integration-gateway')
       cy.visit(adminURL + '/')
-      // We wait 3s in order the page to be fully loaded
-      cy.wait(3000)
-      cy.get('.nav-sidebar').contains('Integration Gateway').click()
-      // We wait 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@load')
+      cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
+      cy.wait('@integration-gateway')
       cy.get('[data-test-id="button-add"]').click()
-      // We wait 1s in order the page to be fully loaded
-      cy.wait(1000)
       cy.get('[data-test-id="button-delete"]').should('not.exist')
       cy.get('[data-test-id="button-undelete"]').should('not.exist')
       cy.get('[data-test-id="button-submit"].disabled').should('exist')
