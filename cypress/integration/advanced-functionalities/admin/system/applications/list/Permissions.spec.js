@@ -14,18 +14,14 @@ describe('Testing permissions in admin applications', () => {
 
   context('Testing permissions in admin applications', () => {
     it('should be able to deny permissions for a specific role', () => {
+      cy.intercept('/api/system/stats/').as('load')
+      cy.intercept('/api/system/application/?query=&deleted=0&limit=100&incTotal=true&sort=createdAt+DESC').as('applications')
       cy.visit(adminURL + '/')
-      // We wait for 3s in order the page to be fully loaded
-      cy.wait(3000)
+      cy.wait('@load')
       cy.get('.nav-sidebar').contains('Applications').click()
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="button-permissions"]').click()
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
-      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
-      // We wait for 2s in order the page to be fully loaded
-      cy.wait(2000)
+      cy.wait('@applications')
+      cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="select-user-list-roles"]', { timeout: 10000 }).type('Security administrator{enter}')
       cy.get('[data-test-id="toggle-role-permissions"]:first').contains('Deny').click()
       cy.get('footer').contains('Save changes').click({ force: true })
     })
