@@ -54,7 +54,7 @@ describe('Test for adding compose data that will be used for different types of 
     it('should add a record', () => {
       cy.get('[data-test-id="button-all-records"]').click()
       cy.get('[data-test-id="button-add-record"]').click()
-      cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('John')
+      cy.get('input:nth-child(2)', { timeout: 10000 }).eq(1).type('John')
       cy.get('[data-test-id="button-save"]').click()
     })
   })
