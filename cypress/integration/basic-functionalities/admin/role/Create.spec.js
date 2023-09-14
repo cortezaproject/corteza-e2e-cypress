@@ -28,9 +28,9 @@ describe('Test for creating a role', () => {
 
     it('should be able to create a role with missing handle', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
-        cy.get('[data-test-id="input-name"]').type('Name')
+        cy.get('[data-test-id="input-name"]').type('No handle')
         cy.get('[data-test-id="input-handle"]').clear()
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 

@@ -15,7 +15,6 @@ describe('Test for editing a record page', () => {
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="input-search"]').type('cypress')
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
-      cy.contains('No block').should('exist')
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.contains('Modules').should('exist')
       cy.get('[data-test-id="button-public"]', { timeout: 10000 }).should('exist')

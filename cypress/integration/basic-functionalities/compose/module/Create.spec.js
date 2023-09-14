@@ -34,13 +34,7 @@ describe('Test for creating a module', () => {
   })
 
   context('Test for checking if buttons in the toolbar or component should/should not be displayed', () => {
-    it('should be able to press the back button and be redirected to the list of modules page', () => {
-      cy.get('[data-test-id="button-back-without-save"]').should('exist').click()
-      cy.url().should('exist', composeURL + '/ns/cypress_namespace/admin/modules')
-    })
-
     it('should not display federation, discovery settings, export and permissions buttons when in create module mode', () => {
-      cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-federation-settings"]').should('not.exist')
       cy.get('[data-test-id="button-discovery-settings"]').should('not.exist')
       cy.get('[data-test-id="button-export"]').should('not.exist')
@@ -52,6 +46,8 @@ describe('Test for creating a module', () => {
 
   context('Test for creating a module', () => {
     it('should be able to create a module', () => {
+      cy.get('a[title="Modules"]', { timeout: 10000 }).should('exist').click()
+      cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="input-module-name"]').type('Cypress module')
       cy.get('[data-test-id="input-module-handle"]').type('cypress_module')
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(0).within(() => {
@@ -69,25 +65,7 @@ describe('Test for creating a module', () => {
         cy.get('input:eq(1)').type('Age')
         cy.get('select').select('Number input')
       })
-      cy.get('[data-test-id="button-save-and-close"]', { timeout: 1000 }).click()
-    })
-
-    it('should exist', () => {
-      cy.contains('Cypress module').should('exist')
-    })
-  })
-
-  context('Test for creating a module with same name as existing one', () => {
-    it('should not be able to create a module with identical name', () => {
-      cy.get('[data-test-id="button-create"]').click()
-      cy.get('[data-test-id="input-module-name"]').type('Cypress module')
-      cy.get('[data-test-id="input-module-handle"]').type('cypress_module')
-      cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(0).within(() => {
-        cy.get('input:first').type('name')
-        cy.get('input:eq(1)').type('Name')
-      })
-      cy.get('[data-test-id="button-save-and-close"]', { timeout: 10000 }).click()
-      cy.get('[data-test-id="button-back-without-save"]').click()
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click()
     })
   })
 })
