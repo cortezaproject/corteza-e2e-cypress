@@ -12,7 +12,7 @@ jobs:
     name: Cypress run
     runs-on: ubuntu-latest
     env:
-      CORTEZA_VERSION: 2023.3.6
+      CORTEZA_VERSION: 2023.3.7
       CYPRESS_VERSION: 9.5.1
       CYPRESS_HOST: http://corteza
       CYPRESS_BASE_URL: http://corteza
