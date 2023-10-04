@@ -48,13 +48,14 @@ describe('Test for adding compose data that will be used for different types of 
         cy.get('[data-test-id="select-sens-lvl"]').click().type('level_1{enter}')
         cy.get('button').contains('Save and close').click()
       })
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click({ force: true })
     })
 
     it('should add a record', () => {
-      cy.get('[data-test-id="button-all-records"]').click()
-      cy.get('[data-test-id="button-add-record"]').click()
-      cy.get('input:nth-child(2)', { timeout: 10000 }).eq(1).type('John')
+      cy.wait(1000)
+      cy.get('[data-test-id="button-all-records"] a').should('exist').click({ force: true })
+      cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).click({ force: true })
+      cy.get('.card-body input:first', { timeout: 10000 }).type('John')
       cy.get('[data-test-id="button-save"]').click()
     })
   })

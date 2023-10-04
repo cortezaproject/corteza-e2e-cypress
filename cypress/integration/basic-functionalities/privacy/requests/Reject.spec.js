@@ -14,20 +14,18 @@ describe('Test for rejecting a request', () => {
     it('should be able to', () => {
       cy.get('[data-test-id="button-home"]').click()
       cy.get('a[href="/request/list"]').click()
-      cy.get('[data-test-id="input-search"]').type('pending')
       cy.get('#resource-list tbody tr:nth-child(3) td:nth-child(2)', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('.btn-danger').contains('Reject request').click()
-      cy.get('.btn-secondary').click()
-      cy.get('.btn-danger').contains('Reject request').click()
-      cy.get('.btn-danger:nth-child(1)').click()
+      cy.get('[data-test-id="button-delete"].btn-danger').click()
+      cy.get('[data-test-id="button-delete-cancel"]').click()
+      cy.get('[data-test-id="button-delete"].btn-danger').click()
+      cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 }).click()
     })
 
     it('should be rejected', () => {
-      cy.get('[data-test-id="input-search"]').type('rejected')
       cy.get('#resource-list tbody tr:nth-child(3) td:nth-child(2)', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="badge-rejected"]').should('exist')
-      cy.get('button').contains('Approve request').should('be.disabled')
-      cy.get('.btn-danger').contains('Reject request').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')
     })
   })
 
@@ -36,15 +34,15 @@ describe('Test for rejecting a request', () => {
       cy.get('[data-test-id="button-home"]').click()
       cy.get('a[href="/request/list"]').click()
       cy.get('.card-header').within(() => {
-        cy.get('button').contains('Approve Requests').should('be.disabled')
-        cy.get('.btn-danger').contains('Reject Requests').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')
         cy.get('[data-test-id="input-search"]').clear().type('pending')
       })
       cy.get('#resource-list > tbody > tr:first > td:first > div > [type="checkbox"]').check({ force: true })
       cy.get('.card-header').within(() => {
-        cy.get('.btn-danger').contains('Reject Request').click()
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete"].btn-danger').click()
       })
+      cy.get('[data-test-id="button-delete-confirm"]').click()
     })
 
     it('should be rejected', () => {
@@ -52,8 +50,8 @@ describe('Test for rejecting a request', () => {
       cy.get('a[href="/request/list"]').click()
       cy.get('[data-test-id="input-search"]').clear().type('rejected')
       cy.get('#resource-list > tbody > tr').should('have.length', 2)
-      cy.get('.btn-primary').contains('Approve Requests').should('be.disabled')
-      cy.get('.btn-danger').contains('Reject Requests').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
+      cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')
     })
   })
 })

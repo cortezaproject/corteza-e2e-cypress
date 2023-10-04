@@ -37,10 +37,14 @@ describe('Test for adding a DPO user', () => {
 
     it('should be able to add password', () => {
       cy.get('[data-test-id="card-user-password"]').within(() => {
-        cy.get('[data-test-id="input-new-password"]').type(dpoPassword, { force: true })
-        cy.get('[data-test-id="input-confirm-password"]').type(dpoPassword, { force: true })
-        cy.get('[data-test-id="button-submit"]').click({ force: true }).get('svg .fa-check').should('not.exist')
-      })
+        cy.get('[data-test-id="input-new-password"]', { timeout: 10000 }).type(dpoPassword, { force: true })
+        cy.get('[data-test-id="input-confirm-password"]', { timeout: 10000 }).type(dpoPassword, { force: true })
+        cy.get('[data-test-id="button-submit"]', { timeout: 10000 })
+          .click({ force: true })
+          .get('svg .fa-check', { timeout: 10000 })
+          .should('not.exist')
+        })
+      cy.get('[data-test-id="card-external-auth-providers"] table tbody tr', { timeout: 10000 }).should('exist')
     })
   })
 })
