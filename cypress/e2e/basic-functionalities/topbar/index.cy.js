@@ -1,0 +1,5 @@
+import './admin/index.cy'
+import './compose/index.cy'
+import './one/index.cy'
+import './reporter/index.cy'
+import './workflow/index.cy'

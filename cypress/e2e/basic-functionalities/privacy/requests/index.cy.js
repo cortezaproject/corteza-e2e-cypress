@@ -1,0 +1,8 @@
+import './Create.cy'
+import './Cancel.cy'
+import './data/index.cy'
+import './Delete.cy'
+import './Correct.cy'
+import '../Add-DPO-user.cy'
+import './Approve.cy'
+import './Reject.cy'

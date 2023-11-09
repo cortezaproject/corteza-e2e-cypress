@@ -1,0 +1,7 @@
+import './Create.cy'
+import './Edit.cy'
+import './Delete.cy'
+import './Un-delete.cy'
+import './Permissions.cy'
+import './Route_filters.cy'
+import './Profiler.cy'

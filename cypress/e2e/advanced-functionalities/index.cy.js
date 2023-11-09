@@ -1,0 +1,7 @@
+import '../basic-functionalities/server/Create_user.cy'
+import './admin/index.cy'
+import './compose/index.cy'
+import './one/index.cy'
+import './server/index.cy'
+import './sidebar/index.cy'
+import './pagination/index.cy'

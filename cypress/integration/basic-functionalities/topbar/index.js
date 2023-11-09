@@ -1,5 +1,0 @@
-import './admin/index'
-import './compose/index'
-import './one/index'
-import './reporter/index'
-import './workflow/index'
