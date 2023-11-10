@@ -26,6 +26,7 @@ export default defineConfig({
     json: true,
   },
   e2e: {
+    testIsolation: false,
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {},
   },
