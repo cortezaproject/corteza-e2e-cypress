@@ -1,15 +1,7 @@
 /// <reference types="cypress" />
 const reporterURL = Cypress.env('REPORTER_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for reporter sidebar search functionality', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: reporterURL })
-    }
-  })
-
   context('Test for creating report so we can test the sidebar', () => {
     it('should be able to create a report', () => {
       cy.intercept('/api/system/reports/?query=&limit=100&incTotal=true&sort=handle+ASC').as('reports')

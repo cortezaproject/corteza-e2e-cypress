@@ -10,21 +10,22 @@ describe('Test avatar functionalities', () => {
     }
   })
 
-  context('Test for checking which user is logged in', () => {
-    it('should be able to see which user is logged in', () => {
-      cy.get('[data-test-id="dropdown-profile"]').click()
+  context('Test for checking logged in user', () => {
+    it('should be able to see username', () => {
+      cy.get('[data-test-id="dropdown-profile"]').click({ force: true })
+      cy.get('[data-test-id="dropdown-item-username"]').contains('Cypress test account')
     })
   })
 
-  context('Test for redirecting the user to the auth page', () => {
-    it('should be able to click on the profile button and be redirected to the auth page', () => {
-      cy.get('[data-test-id="dropdown-profile-user"]').click({ force: true })
+  context('Test for checking if the user can access profile in auth page', () => {
+    it('should be able to visit profile', () => {
+      cy.get('[data-test-id="dropdown-profile-user"]').url('exist', '/auth')
     })
   })
 
-  context('Test for redirecting the user to change password auth page', () => {
-    it('should be able to click on the change password button and be redirected to the auth page', () => {
-      cy.get('[data-test-id="dropdown-profile-change-password"]').click({ force: true })
+  context('Test for checking if the user can change password in auth page', () => {
+    it('should be able to visit change password page', () => {
+      cy.get('[data-test-id="dropdown-profile-change-password"]').url('exist', '/auth/change-password')
     })
   })
 

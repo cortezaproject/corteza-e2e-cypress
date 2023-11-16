@@ -33,7 +33,7 @@ describe('Test for creating a template', () => {
     it('template type should be HTML and partial template should exist', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="select-template-type"]').contains('HTML')
-        cy.get('[data-test-id="checkbox-is-partial-template"]').should('exist')
+        cy.get('[data-test-id="checkbox-is-partial-template"] input').should('exist')
       })
     })
   })

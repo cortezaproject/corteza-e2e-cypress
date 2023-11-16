@@ -1,17 +1,10 @@
 /// <reference types="cypress" />
 const workflowURL = Cypress.env('WORKFLOW_URL')
-const email = Cypress.env('USER_EMAIL')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
 const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Test for checking admin automation permissions', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: workflowURL })
-    }
-  })
-
   context('Test for checking admin automation permissions', () => {
     it('should be able to log in and check if grant permissions on automation component is restricted', () => {
       cy.intercept('/api/automation/workflows/?query=&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&sort=handle+ASC')

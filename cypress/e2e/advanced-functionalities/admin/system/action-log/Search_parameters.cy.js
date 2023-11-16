@@ -22,31 +22,27 @@ describe('Test for action log search functionalities', () => {
       cy.wait('@load')
       cy.get('.nav-sidebar').find('a[href="/system/actionlog"]').click({ force: true })
       cy.wait('@action-log')
-      cy.get('[data-test-id="filter-starting-from"]').within(() => {
-        cy.get('.b-form-datepicker').click()
-        cy.get('.b-calendar-grid-body').contains('1').click({ force: true })
-      })
+      cy.get('[data-test-id="filter-starting-from"] [data-test-id="picker-date"] button', { timeout: 10000 })
+        .click({ force: true })
+      cy.get('.b-calendar-grid-body', { timeout: 10000 }).contains('1').click({ force: true })
     })
 
     it('should be able to select starting from time', () => {
-      cy.get('[data-test-id="filter-starting-from"]').within(() => {
-        cy.get('.b-form-timepicker').click()
-        cy.get('button[aria-label="Now"]').click({ force: true })
-      })
+      cy.get('[data-test-id="filter-starting-from"] [data-test-id="picker-time"] button', { timeout: 10000 })
+        .click({ force: true })
+      cy.get('button[aria-label="Now"]', { timeout: 10000 }).click({ force: true })
     })
 
     it('should be able to select ending at date', () => {
-      cy.get('[data-test-id="filter-ending-at"]').within(() => {
-        cy.get('.b-form-datepicker').click()
-        cy.get('button[aria-label="Today"]').click({ force: true })
-      })
+      cy.get('[data-test-id="filter-ending-at"] [data-test-id="picker-date"] button', { timeout: 10000 })
+        .click({ force: true })
+      cy.get('button[aria-label="Today"]', { timeout: 10000 }).click({ force: true })
     })
 
     it('should be able to select ending at time', () => {
-      cy.get('[data-test-id="filter-ending-at"]').within(() => {
-        cy.get('.b-form-timepicker').click()
-        cy.get('button[aria-label="Now"]').click({ force: true })
-      })
+      cy.get('[data-test-id="filter-ending-at"] [data-test-id="picker-time"] button', { timeout: 10000 })
+        .click({ force: true })
+        cy.get('button[aria-label="Now"]', { timeout: 10000 }).click({ force: true })
     })
 
     it('should have a date and time selected', () => {
@@ -67,22 +63,22 @@ describe('Test for action log search functionalities', () => {
     })
 
     it('should be able to add search criteria and check the results', () => {
-      cy.get('[data-test-id="filter-starting-from"]').within(() => {
-        cy.get('.b-form-datepicker').click()
-        cy.get('.b-calendar-grid-body').contains('1').click({ force: true })
-      })
-      cy.get('[data-test-id="filter-starting-from"]').within(() => {
-        cy.get('.b-form-timepicker').click()
-        cy.get('button[aria-label="Now"]').click({ force: true })
-      })
-      cy.get('[data-test-id="filter-ending-at"]').within(() => {
-        cy.get('.b-form-datepicker').click()
-        cy.get('button[aria-label="Today"]').click({ force: true })
-      })
-      cy.get('[data-test-id="filter-ending-at"]').within(() => {
-        cy.get('.b-form-timepicker').click()
-        cy.get('button[aria-label="Now"]').click({ force: true })
-      })
+      cy.get('[data-test-id="filter-starting-from"] [data-test-id="picker-date"] button')
+        .click({ force: true })
+      cy.get('.b-calendar-grid-body').contains('1').click({ force: true })
+
+      cy.get('[data-test-id="filter-starting-from"] [data-test-id="picker-time"] button')
+        .click({ force: true })
+      cy.get('button[aria-label="Now"]', { timeout: 10000 }).click({ force: true })
+  
+      cy.get('[data-test-id="filter-ending-at"] [data-test-id="picker-date"] button')
+        .click({ force: true })
+      cy.get('button[aria-label="Today"]', { timeout: 10000 }).click({ force: true })
+
+      cy.get('[data-test-id="filter-ending-at"] [data-test-id="picker-time"] button')
+        .click({ force: true })
+      cy.get('button[aria-label="Now"]', { timeout: 10000 }).click({ force: true })
+
       cy.get('[data-test-id="input-resource"]').clear().type('system:auth')
       cy.get('[data-test-id="input-action"]').clear().type('authenticate')
       cy.get('[data-test-id="input-user-id"]').clear()

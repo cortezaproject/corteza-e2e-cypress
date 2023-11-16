@@ -7,6 +7,7 @@ export default defineConfig({
   },
   requestTimeout: 30000,
   numTestsKeptInMemory: 0,
+  experimentalMemoryManagement: true,
   responseTimeout: 50000,
   pageLoadTimeout: 100000,
   watchForFileChanges: false,

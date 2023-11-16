@@ -22,18 +22,18 @@ describe('Test for enabling admin application', () => {
       cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Testing application')
-        cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-enabled"] input').check({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 
     it('should be able to enable the application and be shown in webapp ONE', () => {
       cy.get('[data-test-id="card-application-info"]').within(() => {
-        cy.get('[data-test-id="checkbox-enabled"]').should('be.checked')
+        cy.get('[data-test-id="checkbox-enabled"] input').should('be.checked')
       })
       cy.get('[data-test-id="card-application-selector"]').within(() => {
         // In order the app to be shown, the listed checkbox should be also enabled
-        cy.get('[data-test-id="checkbox-listed"]').check({ force: true })
+        cy.get('[data-test-id="checkbox-listed"] input').check({ force: true })
         cy.get('[data-test-id="input-url"]').type('https://google.com')
         cy.get('[data-test-id="button-submit"]').click()
       })
@@ -50,7 +50,7 @@ describe('Test for enabling admin application', () => {
       cy.wait('@search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-application-selector"]').within(() => {
-        cy.get('[data-test-id="checkbox-listed"]').should('be.checked')
+        cy.get('[data-test-id="checkbox-listed"] input').should('be.checked')
       })
     })
   })

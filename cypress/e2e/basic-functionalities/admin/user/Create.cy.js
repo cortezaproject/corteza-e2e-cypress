@@ -1,18 +1,11 @@
 /// <reference types="cypress" />
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
-  })
-
   context('Test for creating a user without any data entered or misconfigured field', () => {
     it('should not be able to create a user without any info entered', () => {
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Users').click()
+      cy.visit(adminURL + '/')
+      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Users').click({ force: true })
       cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')

@@ -1,15 +1,7 @@
 /// <reference types="cypress" />
 const composeURL = Cypress.env('COMPOSE_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for adding compose data that will be used for different types of requests', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: composeURL })
-    }
-  })
-
   context('Test for adding record data', () => {
     it('should add a namespace', () => {
       cy.visit(composeURL + '/namespaces')

@@ -25,8 +25,8 @@ describe('Test for editing the name of the application', () => {
       cy.wait('@search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-application-info"]').within(() => {
-        cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-enabled"] input').check({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
       cy.get('[data-test-id="card-application-selector"]').within(() => {
         cy.get('[data-test-id="input-name"]').clear()

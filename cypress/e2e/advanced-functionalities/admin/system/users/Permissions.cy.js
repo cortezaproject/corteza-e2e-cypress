@@ -1,15 +1,9 @@
 /// <reference types="cypress" />
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
 
 describe('Test user permissions', () => {
-  before(() => {
-    cy.login({ email, password, url: adminURL })
-  })
-
   context('Test user permissions', () => {
     it('should be able to add a user for evaluation and adjust permissions', () => {
       cy.intercept('/api/system/stats/').as('load')

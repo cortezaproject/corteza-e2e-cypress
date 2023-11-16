@@ -40,7 +40,7 @@ describe('Test for creating auth client', () => {
       cy.get('[data-test-id="input-name"]').type('Test auth client')
       cy.get('[data-test-id="input-handle"]').type('test_auth_client')
       cy.get('.card-footer > [data-test-id="button-submit"]').click()
-      cy.get('[data-test-id="created-at"]').should('exist')
+      cy.get('[data-test-id="input-created-at"]').should('exist')
     })
   })
 })

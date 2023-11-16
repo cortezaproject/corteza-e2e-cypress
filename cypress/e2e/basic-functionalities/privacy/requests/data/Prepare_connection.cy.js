@@ -1,15 +1,7 @@
 /// <reference types="cypress" />
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for preparing db connection that will be used for different types of requests', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
-  })
-
   context('Test for adding sensitivity level and preparing db connection', () => {
     it('should add a sensitivity level', () => {
       cy.visit(adminURL)

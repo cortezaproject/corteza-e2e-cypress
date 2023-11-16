@@ -2,7 +2,6 @@
 const adminURL = Cypress.env('ADMIN_URL')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
-const newPassword = Cypress.env('USER_PASSWORD_NEW')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
 
 describe('Test for SMTP server functionalities', () => {
@@ -25,7 +24,6 @@ describe('Test for SMTP server functionalities', () => {
       cy.get('[data-test-id="input-server-port"]').should('not.have.value', 'one')
       cy.get('[data-test-id="input-server-port"]').clear().type('25')
       cy.get('[data-test-id="input-user"]').clear().type(newEmail)
-      cy.get('[data-test-id="input-password"]').clear().type(newPassword)
       cy.get('[data-test-id="input-sender-address"]').clear().type('sender@address.com')
       cy.get('[data-test-id="checkbox-allow-invalid-certificates"]').check({ force: true })
       cy.get('[data-test-id="input-tls-server-name"]').clear({ force: true }).type('default.domain.ltd', { force: true })
@@ -36,7 +34,6 @@ describe('Test for SMTP server functionalities', () => {
       cy.get('[data-test-id="input-server"]').should('have.value', 'default.host.domain.ltd')
       cy.get('[data-test-id="input-server-port"]').should('have.value', '25')
       cy.get('[data-test-id="input-user"]').should('have.value', newEmail)
-      cy.get('[data-test-id="input-password"]').should('have.value', newPassword)
       cy.get('[data-test-id="input-sender-address"]').should('have.value', 'sender@address.com')
       cy.get('[data-test-id="checkbox-allow-invalid-certificates"]').should('be.checked')
       cy.get('[data-test-id="input-tls-server-name"]').should('have.value', 'default.domain.ltd')

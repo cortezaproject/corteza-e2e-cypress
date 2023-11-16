@@ -25,7 +25,7 @@ describe('Test for adding a redirect uri to auth client', () => {
       cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
       cy.wait('@auth-clients')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
-      cy.get('[data-test-id="updated-at"]').should('exist')
+      cy.get('[data-test-id="input-updated-at"]').should('exist')
     })
   })
 })

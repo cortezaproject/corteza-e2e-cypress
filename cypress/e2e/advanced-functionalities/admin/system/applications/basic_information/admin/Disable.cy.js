@@ -25,8 +25,8 @@ describe('Test for disabling admin application', () => {
       cy.wait('@search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-application-info"]').within(() => {
-        cy.get('[data-test-id="checkbox-enabled"]').uncheck({ force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-enabled"] input').uncheck({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 
@@ -41,7 +41,7 @@ describe('Test for disabling admin application', () => {
       cy.wait('@search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-application-info"]').within(() => {
-        cy.get('[data-test-id="checkbox-enabled"]').should('not.be.checked')
+        cy.get('[data-test-id="checkbox-enabled"] input').should('not.be.checked')
       })
     })
   })

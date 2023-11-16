@@ -53,5 +53,10 @@ describe('Test for rejecting a request', () => {
       cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
       cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')
     })
+
+    it('should logout DPO user', () => {
+      cy.get('[data-test-id="dropdown-profile"]').click({ force: true })
+      cy.get('[data-test-id="dropdown-profile-logout"]').click({ force: true })
+    })
   })
 })

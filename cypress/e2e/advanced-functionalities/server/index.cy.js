@@ -1,6 +1,5 @@
 import './admin/enable/index.cy'
-import './mfa/Test.cy'
-import './mfa/Disable.cy'
+import './mfa/index.cy'
 import './Profile_tab.cy'
 import './Corteza_logo.cy'
 import './Authorized_clients.cy'

@@ -25,9 +25,9 @@ describe('Test for un-deleting an integration gateway', () => {
       cy.get('[data-test-id="input-search"]').type('/testEdited')
       cy.wait('@search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
-      cy.get('[data-test-id="input-delete-at"]').should('exist')
+      cy.get('[data-test-id="input-deleted-at"]').should('exist')
       cy.get('[data-test-id="input-updated-at"]').should('exist')
-      cy.get('[data-test-id="input-create-at"]').should('exist')
+      cy.get('[data-test-id="input-created-at"]').should('exist')
       cy.get('[data-test-id="button-submit"]').should('exist')
       cy.get('[data-test-id="button-add"]').should('exist')
       cy.get('[data-test-id="button-delete"]').should('not.exist')
@@ -46,7 +46,7 @@ describe('Test for un-deleting an integration gateway', () => {
       cy.wait('@search')
       cy.get('[data-test-id="no-matches"]').should('not.exist')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
-      cy.get('[data-test-id="input-delete-at"]').should('not.exist')
+      cy.get('[data-test-id="input-deleted-at"]').should('not.exist')
     })
 
     it('should check that the route is not present in the deleted filter', () => {

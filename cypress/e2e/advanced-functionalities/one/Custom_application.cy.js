@@ -1,13 +1,7 @@
 /// <reference types="cypress" />
 const oneURL = Cypress.env('ONE_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Testing the enable on application list functionality', () => {
-  before(() => {
-    cy.login({ email, password, url: oneURL })
-  })
-
   context('Test for checking if application is enabled', () => {
     it('should be enabled', () => {
       cy.visit(oneURL + '/')

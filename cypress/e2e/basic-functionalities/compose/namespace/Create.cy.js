@@ -12,6 +12,7 @@ describe('Test for creating a namespace', () => {
 
   context('Test for creating a namespace without any data entered or a misconfigured field', () => {
     it('should not be able to create a namespace', () => {
+      cy.visit(composeURL + '/')
       cy.get('[data-test-id="button-manage-namespaces"]').click()
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="button-save-and-close"].disabled').should('exist')
@@ -65,7 +66,8 @@ describe('Test for creating a namespace', () => {
     })
 
     it('should exist', () => {
-      cy.intercept("/api/compose/namespace/?query=cypress&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("cypress_ns")
+      cy.intercept('/api/compose/namespace/?query=&limit=100&incTotal=true&sort=name+ASC').as('ns-manage')
+      cy.intercept("/api/compose/namespace/?query=cypress&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("ns-search")
       cy.url().should('exist', composeURL + '/namespaces/edit')
       cy.get('[data-test-id="input-name"]').should('have.value', 'Cypress namespace')
       cy.get('[data-test-id="input-slug"]').should('have.value', 'cypress_namespace')
@@ -74,8 +76,9 @@ describe('Test for creating a namespace', () => {
       cy.get('[data-test-id="button-save"]').click({ force: true })
       cy.get('[data-test-id="app-selector"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-manage-namespaces"]', { timeout: 10000 }).click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.wait("@cypress_ns")
+      cy.wait('@ns-manage')
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('cypress')
+      cy.wait("@ns-search")
       cy.get('tbody').contains('cypress_namespace').should('exist')
     })
 
@@ -86,14 +89,16 @@ describe('Test for creating a namespace', () => {
     })
 
     it('should exist', () => {
-      cy.intercept("/api/compose/namespace/?query=No+handle&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("name_ns")
+      cy.intercept('/api/compose/namespace/?query=&limit=100&incTotal=true&sort=name+ASC').as('ns-manage')
+      cy.intercept("/api/compose/namespace/?query=No+handle&limit=100&incTotal=true&pageCursor=&sort=name+ASC").as("ns-search")
       cy.url().should('exist', composeURL + '/namespaces/edit')
       cy.get('[data-test-id="input-name"]').should('have.value', 'No handle')
       cy.get('[data-test-id="input-slug"]').should('have.value', '')
       cy.get('[data-test-id="app-selector"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-manage-namespaces"]', { timeout: 10000 }).click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('No handle')
-      cy.wait("@name_ns")
+      cy.wait('@ns-manage')
+      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('No handle')
+      cy.wait("@ns-search")
       cy.get('tbody').contains('No handle').should('exist')
     })
   })

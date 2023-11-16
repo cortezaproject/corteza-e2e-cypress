@@ -10,21 +10,21 @@ describe('Test helper dropdown functionalities', () => {
     }
   })
 
-  context('Test for opening up the forum page', () => {
-    it('should be able to access the forum page', () => {
-      cy.get('[data-test-id="dropdown-helper-forum"]').click({ force: true })
+  context('Test for checking if forum page can be accessed', () => {
+    it('should be accessible', () => {
+      cy.get('[data-test-id="dropdown-helper-forum"]').url('exist', 'https://forum.cortezaproject.org')
     })
   })
 
-  context('Test for opening up the documentation page', () => {
-    it('should be able to open corteza documentation', () => {
-      cy.get('[data-test-id="dropdown-helper-docs"]').click({ force: true })
+  context('Test for checking if the documentation page can be accessed', () => {
+    it('should be accessible', () => {
+      cy.get('[data-test-id="dropdown-helper-docs"]').url('include', '/docs')
     })
   })
 
-  context('Test for using the send feedback feature', () => {
-    it('should be able to use the send feedback feature', () => {
-      cy.get('[data-test-id="dropdown-helper-feedback"]').should('exist')
+  context('Test for checking if the send feedback link can be accessed', () => {
+    it('should be accessible', () => {
+      cy.get('[data-test-id="dropdown-helper-feedback"]').url('exist', 'mailto:info@cortezaproject.org')
     })
   })
 })

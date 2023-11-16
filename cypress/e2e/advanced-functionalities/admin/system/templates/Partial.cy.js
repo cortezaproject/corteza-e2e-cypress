@@ -25,7 +25,7 @@ describe('Testing partial template', () => {
       cy.wait('@search')
       cy.contains('test').get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="checkbox-is-partial-template"]').check({ force: true })
+        cy.get('[data-test-id="checkbox-is-partial-template"] input').check({ force: true })
         cy.get('[data-test-id="button-submit"]').click()
       })
       cy.get('[data-test-id="badge-partial-template"]').should('exist')

@@ -1,3 +1,5 @@
+// Will probably be refactored into a provisioning script or something similar
+// because without this file the other tests fail
 /// <reference types="cypress" />
 const baseURL = Cypress.env('HOST')
 const email = Cypress.env('USER_EMAIL')

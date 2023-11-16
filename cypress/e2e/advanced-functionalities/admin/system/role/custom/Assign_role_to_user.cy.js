@@ -22,9 +22,7 @@ describe('Test for assigning a role to a user', () => {
       cy.wait('@user')
       cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="input-role-picker"]').type('Test{enter}')
-      cy.get('[data-test-id="card-role-membership"]').within(() => {
-        cy.get('[data-test-id="button-submit"]').click()
-      })
+      cy.get('[data-test-id="card-role-membership"] [data-test-id="button-submit"]').click({ force: true })
     })
   })
 })

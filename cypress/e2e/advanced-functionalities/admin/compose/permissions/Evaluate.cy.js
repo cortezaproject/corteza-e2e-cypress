@@ -15,19 +15,13 @@ describe('Test for evaluating admin compose permissions', () => {
   })
 
   context('Test for evaluating admin compose permissions', () => {
-    it('should be able to add a role for evaluation', () => {
+    it('should be able to restrict the permission to grant permissions on compose component', () => {
       cy.intercept('/api/system/stats/').as('load')
       cy.intercept('/api/compose/permissions/').as('permissions')
       cy.visit(adminURL + '/')
       cy.wait('@load')
       cy.get('[data-test-id="sidebar"]').find('a[href="/compose/permissions"]').click({ force: true })
       cy.wait('@permissions')
-      cy.get('[data-test-id="button-add-role"]').click()
-      cy.get('[data-test-id="select-edit-roles"]').type('Security administrator{enter}')
-      cy.contains('Save & Close').click({ force: true })
-    })
-
-    it('should be able to restrict the permission to grant permissions on compose component', () => {
       cy.get('[data-test-id="permission-grant"] > .active-cell').click()
       cy.get('.card-footer > [data-test-id="button-submit"]').click({ force: true })
     })

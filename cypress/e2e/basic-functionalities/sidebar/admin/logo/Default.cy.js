@@ -13,7 +13,7 @@ describe('Testing the sidebar default logo', () => {
   context('Testing the sidebar default logo', () => {
     it('should be able to see the default logo', () => {
       cy.visit(adminURL + '/')
-      cy.get('[data-test-id="img-main-logo"]', { timeout: 10000 }).should('have.attr', 'src').should('include','assets')
+      cy.get('[data-test-id="img-main-logo"]', { timeout: 10000 }).should('have.attr', 'src').should('include', 'assets')
     })
   })
 })

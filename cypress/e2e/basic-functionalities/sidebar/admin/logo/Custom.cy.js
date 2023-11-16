@@ -19,7 +19,7 @@ describe('Testing the sidebar custom logo', () => {
           .get('input[type="file"]:eq()')
           .selectFile('cypress/fixtures/images/yin_yang.png', { force: true })
       cy.get('[data-test-id="button-submit"]:last').click()
-      cy.get('[data-test-id="img-main-logo"]', { timeout: 10000 }).should('have.attr', 'src').should('include','attachment')
+      cy.get('[data-test-id="img-main-logo"]', { timeout: 10000 }).should('have.attr', 'src').should('include', 'attachment')
     })
   })
 })

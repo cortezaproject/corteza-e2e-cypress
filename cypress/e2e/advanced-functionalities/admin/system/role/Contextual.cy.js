@@ -40,12 +40,10 @@ describe('Testing contextual role', () => {
       cy.get('[data-test-id="card-role-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Contextual')
         cy.get('[data-test-id="input-handle"]').type('Contextual')
-        cy.get('[data-test-id="checkbox-is-contextual"]').check({ force: true })
+        cy.get('[data-test-id="checkbox-is-contextual"] input').check({ force: true })
         cy.get('[data-test-id="input-expression"]').should('exist').type('true')
-        cy.get('[data-test-id="checkbox-resource-types-list"]').within(() => {
-          cy.get('.custom-control-input:eq(1)').check({ force: true })
-        })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-resource-type-system:role"]').check({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
       cy.get('[data-test-id="card-role-edit-members"]').should('not.exist')
     })

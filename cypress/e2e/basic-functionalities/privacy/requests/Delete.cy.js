@@ -22,7 +22,8 @@ describe('Test for requesting to delete data in a compose record', () => {
     it('should have the correct data', () => {
       cy.get('[data-test-id="badge-pending"]').should('exist')
       cy.get('[data-test-id="request-author"]').contains('Cypress test account')
-      cy.get('button').contains('Cancel request').should('be.enabled')
+      // Cancel button
+      cy.get('[data-test-id="button-delete"]').should('be.enabled')
     })
   })
 

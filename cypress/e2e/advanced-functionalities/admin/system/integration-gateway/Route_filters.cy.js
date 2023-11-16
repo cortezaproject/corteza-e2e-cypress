@@ -26,7 +26,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button:eq(0)').click()
-        cy.get('[data-test-id="header"]:eq(0)').click()
+        cy.get('[data-test-id="header"]:eq(0)').click({ force: true })
       })
       // We click on Save & Close
       cy.get('.modal-footer > .btn-primary').click()
@@ -38,7 +38,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:first').click()
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -46,7 +46,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
     it('should be able to enable and disable the pre filtering profiler filter', () => {
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button:eq(0)').click()
-        cy.get('[data-test-id="profiler"]:eq(0)').click()
+        cy.get('[data-test-id="profiler"]:eq(0)').click({ force: true })
       })
       // We click on Save & Close
       cy.get('.modal-footer > .btn-primary').click()
@@ -58,7 +58,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:first').click()
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -66,7 +66,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
     it('should be able to enable and disable the pre filtering query parameters filter', () => {
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button:eq(0)').click()
-        cy.get('[data-test-id="query-parameters"]:eq(0)').click()
+        cy.get('[data-test-id="query-parameters"]:eq(0)').click({ force: true })
       })
       // We click on Save & Close
       cy.get('.modal-footer > .btn-primary').click()
@@ -78,7 +78,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:first').click()
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -99,7 +99,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(1)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -107,7 +107,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
     it('should be able to enable and disable the processing payload processer filter', () => {
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button').click({ force: true })
-        cy.get('[data-test-id="payload-processer"]').click()
+        cy.get('[data-test-id="payload-processer"]').click({ force: true })
       })
       // We click on Save & Close
       cy.get('.modal-footer > .btn-primary').click()
@@ -119,7 +119,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(1)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -130,7 +130,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
         cy.get('[data-test-id="workflow-processer"]').click()
       })
       // We click on Save & Close
-      cy.get('.modal-footer > .btn-primary').click()
+      cy.get('.modal-footer > .btn-primary').click({ force: true })
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button').click({ force: true })
         // We check if the filter is grayed out indicating that it is selected
@@ -139,7 +139,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(1)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -160,7 +160,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(2)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -180,7 +180,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(2)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -200,7 +200,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(2)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })

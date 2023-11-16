@@ -22,8 +22,8 @@ describe('Test for un-deleting admin application', () => {
       cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('Test un-delete application')
-        cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-enabled"] input').check({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 

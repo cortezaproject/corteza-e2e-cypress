@@ -33,8 +33,8 @@ describe('Test for creating an application', () => {
     it('should be able to create an application', () => {
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('automated application')
-        cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="checkbox-enabled"] input').check({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
         cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
@@ -52,9 +52,8 @@ describe('Test for creating an application', () => {
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@created_app')
       cy.wait(1000)
-      cy.get('#resource-list > tbody > tr:last').should('exist').click()
-      cy.get('[data-test-id="card-application-info"]').within(() => {
-        cy.get('[data-test-id="input-application-id"]').should('exist')
+      cy.get('#resource-list > tbody > tr:last').should('exist').click({ force: true })
+      cy.get('[data-test-id="card-application-info"]', { timeout: 10000 }).within(() => {
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })
     })

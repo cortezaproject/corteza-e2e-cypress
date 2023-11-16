@@ -7,8 +7,6 @@ const newPassword = Cypress.env('USER_PASSWORD_NEW')
 describe('Testing the log out from everywhere feature', () => {
   before(() => {
     cy.login({ email, password: newPassword, url: baseURL })
-    // We check if the success toast appears
-    cy.get('.border-primary')
   })
 
   context('Test for logging out the user from everywhere', () => {

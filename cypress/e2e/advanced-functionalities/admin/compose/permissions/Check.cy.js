@@ -1,15 +1,9 @@
 /// <reference types="cypress" />
 const composeURL = Cypress.env('COMPOSE_URL')
-const email = Cypress.env('USER_EMAIL')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
-const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Test for checking admin compose permissions', () => {
-  before(() => {
-    cy.login({ email, password, url: composeURL })
-  })
-
   context('Test for checking admin compose permissions', () => {
     it('should be able to log in and check if grant permissions on compose component is restricted', () => {
       cy.intercept('/api/compose/namespace/').as('namespace-list')

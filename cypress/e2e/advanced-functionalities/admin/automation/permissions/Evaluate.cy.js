@@ -11,19 +11,13 @@ describe('Test for evaluating admin automation permissions', () => {
   })
 
   context('Test for evaluating admin automation permissions', () => {
-    it('should be able to add a role for evaluation', () => {
+    it('should be able to restrict the permission to grant permissions on automation component', () => {
       cy.intercept('/api/system/stats/').as('load')
       cy.intercept('/api/automation/permissions/').as('permissions')
       cy.visit(adminURL + '/')
       cy.wait('@load')
       cy.get('[data-test-id="sidebar"]').find('a[href="/automation/permissions"]').click({ force: true })
       cy.wait('@permissions')
-      cy.get('[data-test-id="button-add-role"]').click({ force: true })
-      cy.get('[data-test-id="select-edit-roles"]').type('Security administrator{enter}')
-      cy.contains('Save & Close').click({ force: true })
-    })
-
-    it('should be able to restrict the permission to grant permissions on automation component', () => {
       cy.get('[data-test-id="permission-grant"] > .active-cell').click({ force: true })
       cy.get('.card-footer > [data-test-id="button-submit"]').click({ force: true })
     })

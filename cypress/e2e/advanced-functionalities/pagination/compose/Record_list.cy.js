@@ -1,27 +1,25 @@
 /// <reference types="cypress" />
 const composeURL = Cypress.env('COMPOSE_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Testing pagination & sorting of compose record list', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: composeURL })
-    }
-  })
-
   context('Testing pagination of compose record list', () => {
-    it('should be able to add a namespace with three records for the purpose of this test', () => {
+    it('should be able to add a namespace', () => {
       cy.intercept('/api/compose/namespace/').as('namespace-list')
       cy.visit(composeURL + '/namespaces')
       cy.wait('@namespace-list')
       cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
       cy.get('[data-test-id="button-create"]').click({ force: true })
-      cy.get('[data-test-id="input-name"]').type('Test')
+      cy.get('[data-test-id="input-name"]').type('Test pagination')
       cy.get('[data-test-id="button-save"]').click({ force: true })
+    })
+
+    it('should be able to add a module', () => {
       cy.get('[data-test-id="button-visit-namespace"]').click({ force: true })
       cy.get('[data-test-id="button-module-create"]').click({ force: true })
       cy.get('[data-test-id="button-save"]').click({ force: true })
+    })
+    
+    it('should be able to add a record list page', () => {
       cy.get('[data-test-id="button-record-page-create"]', { timeout: 10000 }).click({ force: true })
       cy.get('.related-pages-dropdown').click({ force: true })
       cy.get('[data-test-id="dropdown-link-record-list-page-create"]', { timeout: 10000 }).click({ force: true })
@@ -30,16 +28,27 @@ describe('Testing pagination & sorting of compose record list', () => {
       cy.get('[data-test-id="checkbox-page-visibility"]', { timeout: 10000 }).should('exist').check({ force: true })
       cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="checkbox-page-visibility"]', { timeout: 10000 }).should('be.checked')
+    })
+    
+    it('should be able to add record with the name John', () => {
       cy.get('[data-test-id="button-page-builder"]').should('exist').click({ force: true })
       cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('fieldset:first input', { timeout: 10000 }).type('John')
-      cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('[data-test-id="button-clone"]', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('fieldset:first input', { timeout: 10000 }).clear().type('Mark')
-      cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('[data-test-id="button-clone"]', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('fieldset:first input', { timeout: 10000 }).clear().type('Henry')
-      cy.get('[data-test-id="button-submit"]', { timeout: 20000 }).should('exist').click({ force: true })
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('exist').click({ force: true })
+    })
+
+    it('should be able to add record with the name Mark', () => {
+      cy.get('[data-test-id="button-back"]').should('exist').click({ force: true })
+      cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).should('exist').click({ force: true })
+      cy.get('fieldset:first input', { timeout: 10000 }).should('exist').clear().type('Mark')
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('exist').click({ force: true })
+    })
+
+    it('should be able to add record with the name Henry', () => {
+      cy.get('[data-test-id="button-back"]').should('exist').click({ force: true })
+      cy.get('[data-test-id="button-add-record"]', { timeout: 10000 }).should('exist').click({ force: true })
+      cy.get('fieldset:first input', { timeout: 10000 }).should('exist').clear().type('Henry')
+      cy.get('[data-test-id="button-save"]', { timeout: 20000 }).should('exist').click({ force: true })
     })
 
     it('should be able to show total record count and limit the records per page', () => {
@@ -47,14 +56,15 @@ describe('Testing pagination & sorting of compose record list', () => {
       cy.get('[data-test-id="button-page-builder"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="button-edit"]:first', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="page-block-configurator"]', { timeout: 10000 })
+        .should('exist')
         .contains('Record list')
         .click({ force: true })
-      cy.get('[data-test-id="input-records-per-page"]', { timeout: 10000 }).clear().type('1')
-      cy.get('[data-test-id="show-total-record-count"][type="checkbox"]', { timeout: 10000 })
+        cy.get('[data-test-id="input-records-per-page"]', { timeout: 10000 }).clear().type('1')
+        cy.get('[data-test-id="show-total-record-count"][type="checkbox"]', { timeout: 10000 })
         .check({ force: true })
-      // We click on Save and close
-      cy.get('.modal-footer .btn-primary', { timeout: 10000 }).should('exist').click({ force: true })
-      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click({ force: true })
+        // We click on Save and close
+        cy.get('.modal-footer .btn-primary', { timeout: 10000 }).should('exist').click({ force: true })
+        cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="button-public"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="button-page-builder"]').click({ force: true })
       cy.get('[data-test-id="pagination-range"]', { timeout: 10000 })

@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CORTEZA_VERSION: 2023.3.8
-      CYPRESS_VERSION: 9.5.1
+      CYPRESS_VERSION: 13.5.0
       CYPRESS_HOST: http://corteza
       CYPRESS_BASE_URL: http://corteza
       CYPRESS_ADMIN_URL: http://corteza/admin

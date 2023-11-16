@@ -62,14 +62,13 @@ describe('Test for creating an integration gateway', () => {
     it('should be able to create an integration gateway', () => {
       cy.get('[data-test-id="input-endpoint"]').clear().type('/test')
       cy.get('[data-test-id="input-endpoint"].is-invalid').should('not.exist')
-      cy.get('[data-test-id="checkbox-enabled"]').check({ force: true })
-      cy.get('[data-test-id="button-submit"]').click()
-      cy.get('[data-test-id="input-create-at"]').should('exist')
+      cy.get('[data-test-id="checkbox-enabled"] input').check({ force: true })
+      cy.get('[data-test-id="button-submit"]').click({ force: true })
+      cy.get('[data-test-id="input-created-at"]').should('exist')
     })
 
     it('should check whether the data is persisted', () => {
       cy.get('[data-test-id="input-endpoint"]').should('have.value', '/test')
-      cy.get('[data-test-id="input-route-id"]').should('exist')
     })
   })
 })

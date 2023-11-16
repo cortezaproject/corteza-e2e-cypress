@@ -39,7 +39,7 @@ describe('Testing permissions of an integration gateway', () => {
         .as('integration-gateway')
       cy.get('.nav-sidebar').find('a[href="/system/apigw"]').click({ force: true })
       cy.wait('@integration-gateway')
-      cy.get('[data-test-id="button-permissions"]').click()
+      cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       // We select Deny for read any route
       cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
@@ -47,17 +47,17 @@ describe('Testing permissions of an integration gateway', () => {
     })
 
     it('should be able to login with the limited permissions account and check if permissions are applied', () => {
-      cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-profile-logout"]').click()
-      cy.get('[data-test-id="link-login"]').click()
+      cy.get('[data-test-id="dropdown-profile"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="dropdown-profile-logout"]').click({ force: true })
+      cy.get('[data-test-id="link-login"]').click({ force: true })
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
-      cy.get('[data-test-id="button-login-and-remember"]').click()
+      cy.get('[data-test-id="button-login-and-remember"]').click({ force: true })
 
       // Integration gateway routes should not be displayed hence the message "No matches for your search"
       cy.get('[data-test-id="no-matches"]').should('exist')
-      cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-profile-logout"]').click()
+      cy.get('[data-test-id="dropdown-profile"]').click({ force: true })
+      cy.get('[data-test-id="dropdown-profile-logout"]').click({ force: true })
     })
   })
 })

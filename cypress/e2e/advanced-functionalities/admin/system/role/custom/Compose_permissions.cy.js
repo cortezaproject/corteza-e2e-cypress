@@ -1,17 +1,9 @@
 /// <reference types="cypress" />
 const composeURL = Cypress.env('COMPOSE_URL')
-const email = Cypress.env('USER_EMAIL')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
-const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Testing compose permissions', () => {
-  before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: composeURL })
-    }
-  })
-
   context('Testing permissions', () => {
     it('should be able to log in with the limited permissions account and check if it has restrictions', () => {
       cy.intercept('/api/compose/namespace/').as('load')

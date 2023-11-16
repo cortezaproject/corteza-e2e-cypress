@@ -18,7 +18,7 @@ describe('Test for enabling password reset', () => {
       cy.wait('@load')
       cy.get('.nav-sidebar').find('a[href="/system/settings"]').click({ force: true })
       cy.wait('@auth-settings')
-      cy.get('[data-test-id="checkbox-password-reset"]').check({ force: true })
+      cy.get('[data-test-id="checkbox-password-reset"] input').click({ force: true })
       cy.get('[data-test-id="button-submit"]').click({ multiple: true, force: true })
     })
   })
