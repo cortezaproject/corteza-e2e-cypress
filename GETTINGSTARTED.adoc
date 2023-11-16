@@ -97,6 +97,13 @@ The host configuration should be specified either via `cypress.env.json` or by e
 Refer to the `.env.example` file for an idea.
 ====
 
+=== Pull Images
+
+[source,bash]
+----
+$ docker-compose pull
+----
+
 === Run headless
 
 [source,bash]

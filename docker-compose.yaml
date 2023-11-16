@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 
 services:
   corteza:
@@ -7,15 +7,31 @@ services:
       DOMAIN: corteza
 
   cypress:
-    image: cypress/included:${CYPRESS_VERSION}
-    depends_on: [ corteza ]
+    image: cypress/included:13.5.0
+    environment:
+      - CYPRESS_HOST=${CYPRESS_HOST}
+      - CYPRESS_BASE_URL=${CYPRESS_BASE_URL}
+      - CYPRESS_ADMIN_URL=${CYPRESS_ADMIN_URL}
+      - CYPRESS_COMPOSE_URL=${CYPRESS_COMPOSE_URL}
+      - CYPRESS_WORKFLOW_URL=${CYPRESS_WORKFLOW_URL}
+      - CYPRESS_REPORTER_URL=${CYPRESS_REPORTER_URL}
+      - CYPRESS_ONE_URL=${CYPRESS_ONE_URL}
+      - CYPRESS_PRIVACY_URL=${CYPRESS_PRIVACY_URL}
+      - CYPRESS_USER_EMAIL=${CYPRESS_USER_EMAIL}
+      - CYPRESS_USER_EMAIL_NEW=${CYPRESS_USER_EMAIL_NEW}
+      - CYPRESS_USER_PASSWORD=${CYPRESS_USER_PASSWORD}
+      - CYPRESS_USER_PASSWORD_NEW=${CYPRESS_USER_PASSWORD_NEW}
+      - CYPRESS_USER_DPO=${CYPRESS_USER_DPO}
+      - CYPRESS_USER_DPO_PASSWORD=${CYPRESS_USER_DPO_PASSWORD}
+    # depends_on: [ corteza ]
+    network_mode: host
     ipc: host # does not work in docker without it
-    working_dir: /e2e
+    working_dir: /e2e #entrypoint: "cypress run --spec cypress/integration/basic-functionalities/admin/user/index.js"
     volumes:
       - ./:/e2e
 
   mailhog:
-   image: mailhog/mailhog:latest
-   ports:
-     - 8025:8025
-     - 1025:1025
+    image: mailhog/mailhog:latest
+    ports:
+      - 8025:8025
+      - 1025:1025
