@@ -53,7 +53,7 @@ $ yarn cypress run --spec <path-to-spec-file>
 .Example:
 [source,bash]
 ----
-$ cypress run --spec cypress/integration/basic-functionalities/local-tests/server/Create_user.spec.js
+$ cypress run --spec cypress/e2e/basic-functionalities/local-tests/server/Create_user.cy.js
 ----
 
 == SMTP support
@@ -101,7 +101,7 @@ Refer to the `.env.example` file for an idea.
 
 [source,bash]
 ----
-$ docker-compose run --entrypoint='cypress run --spec cypress/integration/basic-functionalities/local-tests/server/index.js cypress' cypress
+$ docker-compose run --entrypoint='cypress run --spec cypress/e2e/basic-functionalities/local-tests/server/index.cy.js cypress' cypress
 ----
 
 === Run Cypress with screen

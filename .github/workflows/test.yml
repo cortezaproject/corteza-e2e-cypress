@@ -76,14 +76,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-             --spec cypress/integration/basic-functionalities/server/Create_user.spec.js
+             --spec cypress/e2e/basic-functionalities/server/Create_user.cy.js
              --reporter mochawesome
              --browser chrome' \
             cypress && \
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-             --spec cypress/integration/basic-functionalities/admin/index.js
+             --spec cypress/e2e/basic-functionalities/admin/index.cy.js
              --reporter mochawesome
              --browser chrome' \
             cypress
@@ -106,14 +106,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/server/Create_user.spec.js
+            --spec cypress/e2e/basic-functionalities/server/Create_user.cy.js
             --reporter mochawesome
             --browser chrome' \
             cypress
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/compose/index.js
+            --spec cypress/e2e/basic-functionalities/compose/index.cy.js
             --reporter mochawesome
             --browser chrome' \
             cypress
@@ -134,14 +134,14 @@ jobs:
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/server/Create_user.spec.js
+            --spec cypress/e2e/basic-functionalities/server/Create_user.cy.js
             --reporter mochawesome
             --browser chrome' \
             cypress
 
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/one/index.js
+            --spec cypress/e2e/basic-functionalities/one/index.cy.js
             --reporter mochawesome
             --browser chrome'\
             cypress
@@ -161,7 +161,7 @@ jobs:
           docker-compose -f .github/docker-compose.yaml restart corteza && \
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/reporter/index.js,cypress/integration/basic-functionalities/topbar/index.js,cypress/integration/basic-functionalities/workflow/index.js
+            --spec cypress/e2e/basic-functionalities/reporter/index.cy.js,cypress/e2e/basic-functionalities/topbar/index.cy.js,cypress/e2e/basic-functionalities/workflow/index.cy.js
             --reporter mochawesome
             --browser chrome' \
             cypress
@@ -181,7 +181,7 @@ jobs:
           docker-compose -f .github/docker-compose.yaml restart corteza && \
           docker-compose -f .github/docker-compose.yaml --project-directory . run \
             --entrypoint='cypress run 
-            --spec cypress/integration/basic-functionalities/server/index.js
+            --spec cypress/e2e/basic-functionalities/server/index.cy.js
             --reporter mochawesome
             --browser chrome' \
             cypress
