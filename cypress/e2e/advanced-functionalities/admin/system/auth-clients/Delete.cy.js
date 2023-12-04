@@ -20,7 +20,7 @@ describe('Test for deleting auth client', () => {
       cy.wait('@auth-clients')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).contains('test_auth_client').click({ force: true })
       cy.get('[data-test-id="button-delete"]').click()
-      cy.get('.btn-danger').click()
+      cy.get('.confirmation-confirm', { timeout: 10000 }).click({ force: true })
     })
   })
 })

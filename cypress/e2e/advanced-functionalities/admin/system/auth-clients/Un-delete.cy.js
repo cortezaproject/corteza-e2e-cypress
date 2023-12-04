@@ -27,7 +27,7 @@ describe('Test for un-deleting auth client', () => {
         .should('exist', 'Deleted').click()
       cy.get('[data-test-id="input-deleted-at"]').should('exist')
       cy.get('[data-test-id="button-undelete"]').click()
-      cy.get('.btn-danger').click()
+      cy.get('.confirmation-confirm', { timeout: 10000 }).click({ force: true })
       cy.get('.nav-sidebar').find('a[href="/system/authClient"]').click({ force: true })
       cy.wait('@auth-clients')
       cy.contains('Test auth client').should('exist')

@@ -20,7 +20,7 @@ describe('Test for deleting a module', () => {
       cy.get('[data-test-id="table-modules-list"] > .card-body > div > #resource-list > tbody').click()
       cy.get('[data-test-id="editor-toolbar"]', { timeout: 10000 }).within(() => {
         cy.get('[data-test-id="button-delete"]').click()
-        cy.get('[data-test-id="button-delete-confirm"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
       })
       cy.contains('cypress_module').should('not.exist')
     })

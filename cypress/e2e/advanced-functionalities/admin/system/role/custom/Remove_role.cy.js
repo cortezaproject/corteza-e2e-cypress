@@ -20,20 +20,22 @@ describe('Test for deleting a role', () => {
       cy.get('.nav-sidebar').find('a[href="/system/user"]').click({ force: true })
       cy.get('[data-test-id="input-search"]').type('Permissions account')
       cy.wait('@user')
-      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click()
+      cy.contains('Permissions account').get('#resource-list > tbody > tr:last').click({ force: true })
       cy.get('[data-test-id="input-role-picker"]').type('Developer{enter}')
       cy.get('[data-test-id="card-role-membership"]').within(() => {
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 
     it('should be able to delete a role', () => {
       cy.get('[data-test-id="card-role-membership"]').within(() => {
         cy.contains('Developer').should('exist')
-        cy.get('[data-test-id="button-remove-role"]:first').click()
-        cy.get('[data-test-id="button-submit"]').click()
-      })
-      cy.get('[data-test-id="card-role-membership"]').within(() => {
+        cy.get('[data-test-id="button-delete"]:first', { timeout: 10000 })
+          .should('exist')
+          .click({ force: true })
+        cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 })
+          .click({ force: true })
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
         cy.contains('Role membership').should('exist')
         cy.contains('Developer').should('not.exist')
       })

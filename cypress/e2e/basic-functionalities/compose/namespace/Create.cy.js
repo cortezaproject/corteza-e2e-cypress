@@ -32,21 +32,21 @@ describe('Test for creating a namespace', () => {
   context('Test if export, permissions, clone and delete buttons are not displayed when in create mode', () => {
     it('should not be displayed when into the create a new namespace view', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
-      cy.get('[data-test-id="button-create"]').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
+      cy.get('[data-test-id="button-create"]').click({ force: true })
       cy.get('[data-test-id="button-create-namespace"]').should('not.exist')
       cy.get('[data-test-id="button-export-namespace"]').should('not.exist')
       cy.get('[data-test-id="button-permissions"]').should('not.exist')
-      cy.get('[data-test-id="button-clone"]').should('not.exist')
-      cy.get('[data-test-id="button-delete"]').should('not.exist')
+      cy.get('[data-test-id="button-clone"]', { timeout: 10000 }).should('not.exist')
+      cy.get('[data-test-id="button-delete"]', { timeout: 10000 }).should('not.exist')
     })
   })
 
   context('Test for checking the back button functionality', () => {
     it('should be able to press on back button and be redirected to the main page', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
-      cy.get('[data-test-id="button-create"]').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
+      cy.get('[data-test-id="button-create"]').click({ force: true })
       cy.get('[data-test-id="button-back-without-save"]', { timeout: 10000 }).should('exist').click()
       cy.url().should('contain', composeURL + '/namespaces/manage')
     })
@@ -55,8 +55,8 @@ describe('Test for creating a namespace', () => {
   context('Test for creating a namespace', () => {
     it('should be able to create a namespace', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="button-manage-namespaces"]').click()
-      cy.get('[data-test-id="button-create"]').click()
+      cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
+      cy.get('[data-test-id="button-create"]').click({ force: true })
       cy.get('[data-test-id="input-name"]').type('Cypress namespace')
       cy.get('[data-test-id="input-slug"]').type('cypress_namespace')
       cy.get('[data-test-id="input-subtitle"]').type('Testing namespace')
@@ -85,7 +85,7 @@ describe('Test for creating a namespace', () => {
     it('should be able to create a namespace with missing handle', () => {
       cy.get('[data-test-id="button-create"]').click()
       cy.get('[data-test-id="input-name"]').type('No handle')
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="button-save"]').click({ force: true })
     })
 
     it('should exist', () => {

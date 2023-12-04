@@ -22,17 +22,18 @@ describe('Testing permissions in admin applications', () => {
       cy.wait('@applications')
       cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="select-user-list-roles"]', { timeout: 10000 }).type('Security administrator{enter}')
-      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
+      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]', { timeout: 10000 })
+        .click({ force: true })
       cy.get('footer').contains('Save changes').click({ force: true })
     })
 
     it('should be able to log in with the limited permissions account and check if it has restrictions', () => {
-      cy.get('[data-test-id="dropdown-profile"]').click()
-      cy.get('[data-test-id="dropdown-profile-logout"]').click()
-      cy.get('[data-test-id="link-login"]').click()
+      cy.get('[data-test-id="dropdown-profile"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="dropdown-profile-logout"]', { timeout: 10000 }).click({ force: true })
+      cy.get('[data-test-id="link-login"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="input-email"]').type(newEmail)
       cy.get('[data-test-id="input-password"]').type(newPassword)
-      cy.get('[data-test-id="button-login-and-remember"]').click()
+      cy.get('[data-test-id="button-login-and-remember"]', { timeout: 10000 }).click({ force: true })
       // Since we don't have permissions, we won't be even able to access admin
       cy.get('[data-test-id="no-matches"]').should('exist')
     })

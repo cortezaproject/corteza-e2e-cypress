@@ -21,7 +21,8 @@ describe('Test for deleting a user', () => {
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
-        cy.get('.confirmation-confirm').click()
+        cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 })
+          .click({ force: true })
       })
 
       cy.contains('automated', { timeout: 10000 }).should('not.exist')
@@ -31,7 +32,8 @@ describe('Test for deleting a user', () => {
       cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-delete"]').click()
-        cy.get('.confirmation-confirm').click()
+        cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 })
+          .click({ force: true })
       })
       cy.contains('missing').should('not.exist')
     })

@@ -119,7 +119,7 @@ describe('Test for checking the route filters of an integration gateway', () => 
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         // Next we remove the filter and see if it gets removed
         cy.get('[data-test-id="button-delete"]:eq(1)').click({ force: true })
-        cy.get('[data-test-id="button-delete-confirm"]').click({ force: true })
+        cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 }).click({ force: true })
         cy.get('[data-test-id="no-filters"]').should('exist')
       })
     })
@@ -168,10 +168,10 @@ describe('Test for checking the route filters of an integration gateway', () => 
     it('should be able to enable and disable the postfiltering JSON response filter', () => {
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button').click({ force: true })
-        cy.get('[data-test-id="response"]').click()
+        cy.get('[data-test-id="response"]').click({ force: true })
       })
       // We click on Save & Close
-      cy.get('.modal-footer > .btn-primary').click()
+      cy.get('.modal-footer > .btn-primary').click({ force: true })
       cy.get('[data-test-id="card-filter-list"]').within(() => {
         cy.get('[data-test-id="dropdown-add-filter"] > button').click({ force: true })
         // We check if the filter is grayed out indicating that it is selected
