@@ -6,7 +6,7 @@ The generic host and user settings are in the `cypress.env.json` file.
 
 [NOTE]
 ====
-The main configuration file is the `cypress.json`, but do try to separate the host settings and main configuration settings for cypress.
+The main configuration file is the `cypress.env.json`, but do try to separate the host settings and main configuration settings for cypress.
 ====
 
 [source,json]
