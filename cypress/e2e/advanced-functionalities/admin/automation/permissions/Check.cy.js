@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 const workflowURL = Cypress.env('WORKFLOW_URL')
 const newEmail = Cypress.env('USER_EMAIL_NEW')
-const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Test for checking admin automation permissions', () => {

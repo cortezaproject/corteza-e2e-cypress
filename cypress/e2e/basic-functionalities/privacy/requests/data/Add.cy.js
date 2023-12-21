@@ -26,14 +26,14 @@ describe('Test for adding compose data that will be used for different types of 
 
     it('should select sensitivity level in module', () => {
       cy.get('.nav-item').contains('Privacy').click()
-      cy.get('[data-test-id="select-sens-lvl"]').click().trigger('mousedown')
-      cy.contains('level_1').click()
+      cy.get('[data-test-id="select-sens-lvl"]').click()
+      cy.get('.tab-pane.active input[type="search"]').type('level_1{enter}')
     })
 
     it('should set sensitivity level of filed', () => {
       cy.get('.nav-item').contains('Fields').click()
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(0).within(() => {
-        cy.get('td:nth-child(4) [type=button]').click()
+        cy.get('[data-test-id="button-configure-field"]').click()
       })
       cy.get('.modal-content').within(() => {
         cy.get('.nav-item').contains('Privacy').click()

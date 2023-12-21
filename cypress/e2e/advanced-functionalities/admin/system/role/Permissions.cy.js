@@ -48,18 +48,22 @@ describe('Testing permissions of a role', () => {
       cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click()
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
-      cy.get('.modal-footer').contains('Save & Close').click({ force: true })
-      cy.contains('Cancel').click({ force: true })
+      cy.get('[data-test-id="button-save"]').eq(1).click({ force: true })
     })
 
     it('should be able to adjust permissions', () => {
       cy.get('.nav-sidebar').find('a[href="/system/role"]').click({ force: true })
       cy.get('[data-test-id="filter-deleted-roles"]').should('exist')
-      cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click()
-      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
-      // We select Deny for read any namespace permission
+      cy.get('[data-test-id="button-permissions"]', { timeout: 10000 })
+        .should('exist')
+        .click({ force: true })
+        cy.get('[data-test-id="select-user-list-roles"]', { timeout: 10000 })
+        .should('exist')
+        .type('Security administrator')
+        .should('exist')
+        // We select Deny for read any namespace permission
       cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
-      cy.get('footer').contains('Save changes').click({ force: true })
+      cy.get('[data-test-id="button-save"]').click({ force: true })
     })
 
     it('should be able to login with the limited permissions account and check if permissions are applied', () => {

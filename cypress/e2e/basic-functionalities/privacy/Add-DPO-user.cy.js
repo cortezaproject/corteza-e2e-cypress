@@ -29,8 +29,8 @@ describe('Test for adding a DPO user', () => {
 
     it('should set role to DPO', () => {
       cy.get('[data-test-id="card-role-membership"]').within(() => {
-        cy.get('[data-test-id="role-picker"]').click()
-        cy.contains('Data Privacy Officer').click()
+        cy.get('[data-test-id="input-role-picker"]').click()
+        cy.get('input[type="search"]').type('Data Privacy Officer{enter}').click()
         cy.get('[data-test-id="button-submit"]').click()
       })
     })

@@ -51,9 +51,11 @@ describe('Testing contextual role', () => {
     it('should adjust the permissions of the role', () => {
       cy.get('.nav-sidebar').find('a[href="/system/role"]').click({ force: true })
       cy.get('[data-test-id="button-permissions"]').click({ force: true })
-      cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
-      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
-      cy.get('footer').contains('Save changes').click({ force: true })
+      cy.get('[data-test-id="select-user-list-roles"]', { timeout: 10000 })
+        .type('Security administrator{enter}')
+      cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]', { timeout: 10000 })
+        .click({ force: true })
+      cy.get('[data-test-id="button-save"]').click({ force: true })
     })
 
     it('should not be able to see any roles when expression is set to true', () => {

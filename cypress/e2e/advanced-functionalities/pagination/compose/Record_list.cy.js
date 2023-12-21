@@ -15,8 +15,8 @@ describe('Testing pagination & sorting of compose record list', () => {
 
     it('should be able to add a module', () => {
       cy.get('[data-test-id="button-visit-namespace"]').click({ force: true })
-      cy.get('[data-test-id="button-module-create"]').click({ force: true })
-      cy.get('[data-test-id="button-save"]').click({ force: true })
+      cy.get('[data-test-id="button-module-create"]', { timeout: 10000 }).should('exist').click({ force: true })
+      cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('not.be.disabled').click({ force: true })
     })
     
     it('should be able to add a record list page', () => {
@@ -24,7 +24,7 @@ describe('Testing pagination & sorting of compose record list', () => {
       cy.get('.related-pages-dropdown').click({ force: true })
       cy.get('[data-test-id="dropdown-link-record-list-page-create"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="dropdown-link-record-list-page-edit"]', { timeout: 10000 }).click({ force: true })
-      cy.get('a[title="Edit page"]', { timeout: 10000 }).should('exist').click({ force: true })
+      cy.get('[data-test-id="page-edit"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="checkbox-page-visibility"]', { timeout: 10000 }).should('exist').check({ force: true })
       cy.get('[data-test-id="button-save"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="checkbox-page-visibility"]', { timeout: 10000 }).should('be.checked')

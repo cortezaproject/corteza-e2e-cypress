@@ -1,9 +1,7 @@
 /// <reference types="cypress" />
 const composeURL = Cypress.env('COMPOSE_URL')
 const email = Cypress.env('USER_EMAIL')
-const newEmail = Cypress.env('USER_EMAIL_NEW')
 const password = Cypress.env('USER_PASSWORD')
-const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
 describe('Testing second layer of namespace', () => {
   // We need to create a namespace so we can have data to work with
@@ -106,7 +104,6 @@ describe('Testing second layer of namespace', () => {
       cy.get('[data-test-id="checkbox-toggle-application"]').check({ force: true })
       cy.get('[data-test-id="checkbox-enable-namespace"]').should('be.checked')
       cy.get('[data-test-id="button-save"]').click({ force: true })
-      cy.get('[data-test-id="button-save-and-close"]').click({ force: true })
     })
   })
 
@@ -130,7 +127,8 @@ describe('Testing second layer of namespace', () => {
 
   context('Testing translations', () => {
     it('should be able to enter translations for another language', () => {
-      cy.intercept('/api/compose/namespace/?query=Cypress+namespace&limit=100&incTotal=true&pageCursor=&sort=name+ASC').as('ns-search')
+      cy.intercept('/api/compose/namespace/?query=Cypress+namespace&limit=100&incTotal=true&pageCursor=&sort=name+ASC')
+        .as('ns-search')
       cy.get('[data-test-id="input-search"]', { timeout: 10000 }).clear().type('Cypress namespace')
       cy.wait('@ns-search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).should('exist').click({ force: true })
@@ -147,11 +145,13 @@ describe('Testing second layer of namespace', () => {
 
     it('should be able to delete a translation', () => {
       cy.get('.header-navigation [data-test-id="button-translation"]').click({ force: true })
-      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]', { timeout: 10000 }).should('exist').clear()
-      cy.get('[data-test-id="button-submit"]').click({ force: true })
+      cy.get('[data-test-id="translation-value-Name-language-slovenščina"]', { timeout: 10000 })
+        .should('exist')
+        .clear()
+      cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).click({ force: true })
       cy.get('.header-navigation [data-test-id="button-translation"]').click({ force: true })
       cy.get('[data-test-id="translation-value-Name-language-slovenščina"]', { timeout: 10000 })
-        .should('not.exist', 'Slovenian name translation')
+        .should('have.value', '')
     })
   })
 
@@ -167,10 +167,10 @@ describe('Testing second layer of namespace', () => {
         .click({ force: true })
       cy.wait('@ns-manage')
       cy.get('[data-test-id="input-search"]', { timeout: 10000 })
-          .should('exist')
-          .should('not.be', 'disabled')
-          .clear()
-          .type('Cypress namespace')
+        .should('exist')
+        .should('not.be', 'disabled')
+        .clear()
+        .type('Cypress namespace')
       cy.wait('@ns-search')
       cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).should('exist').click({ force: true })
       cy.get('[data-test-id="button-export-namespace"]').click({ force: true })
