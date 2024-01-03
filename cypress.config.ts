@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+import { seedDb } from './cypress/plugins/index'
 
 export default defineConfig({
   env: {
@@ -12,7 +13,7 @@ export default defineConfig({
   pageLoadTimeout: 100000,
   watchForFileChanges: false,
   chromeWebSecurity: false,
-  video: false,
+  video: true,
   screenshotOnRunFailure: true,
   screenshotsFolder: 'cypress/screenshots',
   viewportWidth: 1520,
@@ -27,8 +28,11 @@ export default defineConfig({
     json: true,
   },
   e2e: {
-    testIsolation: false,
-    baseUrl: 'http://localhost:3000',
-    setupNodeEvents(on, config) {},
+    testIsolation: true,
+    setupNodeEvents(on, config) {
+      on('task', {
+        seedDb
+      })
+    },
   },
 })
