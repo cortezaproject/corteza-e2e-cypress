@@ -13,7 +13,7 @@ export default defineConfig({
   pageLoadTimeout: 100000,
   watchForFileChanges: false,
   chromeWebSecurity: false,
-  video: true,
+  video: false,
   screenshotOnRunFailure: true,
   screenshotsFolder: 'cypress/screenshots',
   viewportWidth: 1520,

@@ -1,19 +1,24 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a template', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb( provisionAll)
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: adminURL })
+    
+    cy.visit(adminURL + '/')
+    
+    cy.navigateAdmin({ app: 'Templates' })
+    cy.get('[data-test-id="button-new-template"]').click()
   })
 
   context('Test for creating a template with misconfigured handle', () => {
     it('should not be able to create a template with misconfigured handle', () => {
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
-      cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type('automated template')
         cy.get('[data-test-id="input-handle"]').type('H')
@@ -41,6 +46,7 @@ describe('Test for creating a template', () => {
   context('Test for creating a template', () => {
     it('should be able to create a template', () => {
       cy.get('[data-test-id="card-template-info"]').within(() => {
+        cy.get('[data-test-id="input-short-name"]').clear().type('automated template')
         cy.get('[data-test-id="input-handle"]').clear().type('automated_template')
         cy.get('[data-test-id="textarea-description"]').type('automated description')
         cy.get('[data-test-id="button-submit"]').click()
@@ -54,17 +60,15 @@ describe('Test for creating a template', () => {
   context('Test for checking if the created template exists', () => {
     it('should exist', () => {
       cy.intercept('/api/system/template/?query=automated&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('template')
-      cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="input-short-name"]').should('have.value', 'automated template')
-        cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_template')
-        cy.get('[data-test-id="textarea-description"]').should('have.value', 'automated description')
-      })
-      cy.get('.nav-sidebar').contains('Templates').click()
+      cy.navigateAdmin({ app: 'Templates' })
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@template')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
+        cy.get('[data-test-id="input-short-name"]').should('have.value', 'automated template')
+        cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_template')
+        cy.get('[data-test-id="textarea-description"]').should('have.value', 'automated description')
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })
     })
@@ -72,8 +76,6 @@ describe('Test for creating a template', () => {
 
   context('Test for creating a template with missing short name', () => {
     it('should not be able to create a template with missing short name', () => {
-      cy.get('.nav-sidebar').contains('Templates').click()
-      cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-handle"]').type('missing_short_name')
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
@@ -83,8 +85,6 @@ describe('Test for creating a template', () => {
 
   context('Test for creating a template with same name and handle as another one', () => {
     it('should be able to create a template with identical name', () => {
-      cy.get('.nav-sidebar').contains('Templates').click()
-      cy.get('[data-test-id="button-new-template"]').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type('automated template')
         cy.get('[data-test-id="input-handle"]').type('duplicate_template')

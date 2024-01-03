@@ -1,19 +1,24 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating an application', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb( provisionAll)
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: adminURL })
+    
+    cy.visit(adminURL + '/')
+    
+    cy.navigateAdmin({ app: 'Applications' })
+    cy.get('[data-test-id="button-new-application"]').click()
   })
 
   context('Test for creating an application without a name entered', () => {
     it('should not be able to create an application', () => {
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Applications').click()
-      cy.get('[data-test-id="button-new-application"]').click()
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
@@ -39,15 +44,12 @@ describe('Test for creating an application', () => {
         cy.get('[data-icon="check"]')
         cy.get('[data-test-id="button-submit"]', { timeout: 10000 }).should('exist')
       })
-    })
-  })
 
-  context('Test for checking if the created application exists', () => {
-    it('should exist', () => {
       cy.intercept('/api/system/application/?query=automated&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('created_app')
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').should('have.value', 'automated application')
       })
+
       cy.get('.nav-sidebar').contains('Applications').click()
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.wait('@created_app')

@@ -1,9 +1,15 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../provision/list'
+
 const baseURL = Cypress.env('HOST')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for checking the log in and be remembered button functionality', () => {
+  before(() => {
+    cy.seedDb(provisionAll)
+  })
+
   context('Test for logging in and be remembered with missing data or misconfiguration', () => {
     it('should not be able to log in and be remembered with not registered email', () => {
       cy.login({ email: 'email@email.com', password, url: baseURL })
@@ -18,7 +24,7 @@ describe('Test for checking the log in and be remembered button functionality', 
     })
 
     it('should not be able to log in and be remembered with no data entered', () => {
-      cy.login({})
+      cy.login({ url: baseURL })
       cy.url().should('be.equal', baseURL + '/auth/login')
     })
 

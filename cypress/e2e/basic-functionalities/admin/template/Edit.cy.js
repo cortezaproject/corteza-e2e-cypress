@@ -1,19 +1,24 @@
 /// <reference types="cypress" />
+import { provisionAll, provisionAutomatedTemplateCreate } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for editing a template', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb( [...provisionAll, ...provisionAutomatedTemplateCreate])
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: adminURL })
+    
+    cy.visit(adminURL + '/')
+    
+    cy.navigateAdmin({ app: 'Templates' })
   })
 
   context('Test for checking that new, delete and submit buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a template', () => {
       cy.intercept('/api/system/template/?query=automated_template&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('edit_template')
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Templates').click()
       cy.get('[data-test-id="input-search"]').type('automated_template')
       cy.wait('@edit_template')
       cy.wait(1000)
@@ -28,6 +33,11 @@ describe('Test for editing a template', () => {
 
   context('Test for editing a template', () => {
     it('should be able to edit the template', () => {
+      cy.intercept('/api/system/template/?query=automated_template&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('edit_template')
+      cy.get('[data-test-id="input-search"]').type('automated_template')
+      cy.wait('@edit_template')
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').type(' edited')
         cy.get('[data-test-id="input-handle"]').type('_edited')
@@ -40,13 +50,18 @@ describe('Test for editing a template', () => {
   context('Test for checking if the template got edited', () => {
     it('should be edited', () => {
       cy.intercept('/api/system/template/?query=automated_template&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('automated_template')
+      cy.get('[data-test-id="input-search"]').type('automated_template')
+      cy.wait('@automated_template')
+      cy.wait(1000)
+      cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
         cy.get('[data-test-id="input-short-name"]').should('have.value', 'automated template edited')
         cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_template_edited')
         cy.get('[data-test-id="textarea-description"]').should('have.value', 'automated description edited')
         cy.get('[data-test-id="input-updated-at"]').should('exist')
       })
-      cy.get('.nav-sidebar').contains('Templates').click()
+
+      cy.navigateAdmin({ app: 'Templates' })
       cy.get('[data-test-id="input-search"]').type('automated_template')
       cy.wait('@automated_template')
       cy.contains('automated_template_edited').should('exist')
