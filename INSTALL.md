@@ -22,7 +22,7 @@ For more info visit https://docs.cypress.io/guides/getting-started/installing-cy
 
 <br />
 
-## Instal TypeScript
+## Install TypeScript
 
 ```shell
 npm install --save-dev typescript

@@ -26,6 +26,7 @@ The main configuration file is the `cypress.env.json`, but do try to separate th
   "USER_EMAIL_NEW": "permissions@email.com",
   "USER_DPO": "dpo@email.com",
   "USER_DPO_USER_PASSWORD": "dpo@email.com",
+  "PROVISION_DB_DSN": "postgres://corteza:corteza@localhost:5432/corteza_cy_test?sslmode=disable"
 }
 ----
 
@@ -120,9 +121,9 @@ $ docker-compose -f docker-compose.yaml -f docker-compose.screen.yaml up --exit-
 
 == Custom commands
 
-This project also adds several custom commands in cypress/support/commands.js. They are useful to create one or more default todos from the tests.
+This project also adds several custom commands in `cypress/support/`. They are useful to create one or more default todos from the tests.
 
-[source,bash]
+[source,javascript]
 ----
 Cypress.Commands.add('login', (params) => {
   // custom login function
