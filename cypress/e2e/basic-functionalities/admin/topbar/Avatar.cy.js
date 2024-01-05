@@ -1,30 +1,25 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
+const baseURL = Cypress.env('HOST')
 
 describe('Test avatar functionalities', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb( provisionAll)
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: adminURL })
+    cy.visit(adminURL + '/')
   })
 
   context('Test for checking logged in user', () => {
-    it('should be able to see username', () => {
+    it('should be able to see username and relevant links', () => {
       cy.get('[data-test-id="dropdown-profile"]').click({ force: true })
       cy.get('[data-test-id="dropdown-item-username"]').contains('Cypress test account')
-    })
-  })
-
-  context('Test for checking if the user can access profile in auth page', () => {
-    it('should be able to visit profile', () => {
+      
       cy.get('[data-test-id="dropdown-profile-user"]').url('exist', '/auth')
-    })
-  })
-
-  context('Test for checking if the user can change password in auth page', () => {
-    it('should be able to visit change password page', () => {
       cy.get('[data-test-id="dropdown-profile-change-password"]').url('exist', '/auth/change-password')
     })
   })
@@ -32,6 +27,7 @@ describe('Test avatar functionalities', () => {
   context('Test for logging out the user', () => {
     it('should be able to log out', () => {
       cy.get('[data-test-id="dropdown-profile-logout"]').click({ force: true })
+      cy.url().should('include', baseURL + '/auth/logout')
     })
   })
 })
