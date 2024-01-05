@@ -1,13 +1,21 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../provision/list'
+
 const baseURL = Cypress.env('HOST')
 const password = Cypress.env('USER_PASSWORD')
 const newPassword = Cypress.env('USER_PASSWORD_NEW')
 
-// When running this test make sure that the base url is set to localhost:3000
 describe('Test for checking the change password functionality', () => {
+  before(() => {
+    cy.seedDb(provisionAll)
+  })
+  
+  beforeEach(() => {
+    cy.preTestLogin({ url: baseURL })
+  })
+
   context('Test for changing the password of the user with misconfiguration or missing data', () => {
     it('should not be able to change the password of the user with no password entered', () => {
-      cy.visit(baseURL + '/auth')
       cy.get('[data-test-id="link-tab-security"]').click({ force: true })
       cy.get('[data-test-id="link-change-password"]').click({ force: true })
       cy.get('[data-test-id="button-change-password"]').click({ force: true })

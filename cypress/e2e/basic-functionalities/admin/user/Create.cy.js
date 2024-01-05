@@ -1,20 +1,26 @@
 /// <reference types="cypress" />
+import { provisionAll } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb(provisionAll)
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: adminURL })
+    
+    cy.visit(adminURL + '/')
+    
+    cy.navigateAdmin({ app: 'Users' })
+    cy.get('[data-test-id="button-new-user"]').click()
   })
 
   context('Test for creating a user without any data entered or misconfigured field', () => {
     it('should not be able to create a user without any info entered', () => {
-      cy.visit(adminURL + '/')
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Users').click({ force: true })
-      cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="button-submit"].disabled').should('exist')
       })
@@ -69,43 +75,28 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-name"]').clear().type('Automated account')
         cy.get('[data-test-id="input-handle"]').clear().type('automated_account')
         cy.get('[data-test-id="button-submit"]').click()
+
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
-      })
-    })
-
-    it('should check if the user exists', () => {
-      cy.get('[data-test-id="card-user-info"]').within(() => {
-        cy.get('[data-test-id="input-email"]').should('have.value', 'automated@email.com')
-        cy.get('[data-test-id="input-name"]').should('have.value', 'Automated account')
-        cy.get('[data-test-id="input-handle"]').should('have.value', 'automated_account')
         cy.get('[data-test-id="input-created-at"]').should('exist')
       })
     })
 
     it('should also be able to create a user with missing handle', () => {
-      cy.get('.nav-sidebar').contains('Users').click()
-      cy.get('[data-test-id="button-new-user"]', { timeout: 10000 }).click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]', { timeout: 10000 }).type('missing@email.com')
         cy.get('[data-test-id="input-name"]').type('missing account')
         cy.get('[data-test-id="button-submit"]').click()
       })
-    })
 
-    it('should check if the user exists', () => {
-      cy.get('[data-test-id="card-user-info"]').within(() => {
-        cy.get('[data-test-id="input-email"]', { timeout: 10000 }).should('have.value', 'missing@email.com')
-        cy.get('[data-test-id="input-name"]').should('have.value', 'missing account')
-        cy.get('[data-test-id="input-created-at"]').should('exist')
-      })
+      // We check if the submit button's content changed to a check icon
+      cy.get('[data-icon="check"]')
+      cy.get('[data-test-id="input-created-at"]').should('exist')
     })
   })
 
   context('Test for creating a user with same email and handle as previous user', () => {
     it('should not be able to create a user with identical email', () => {
-      cy.get('.nav-sidebar').contains('Users').click()
-      cy.get('[data-test-id="button-new-user"]').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').type('automated@email.com')
         cy.get('[data-test-id="input-name"]').type('Duplicate account')

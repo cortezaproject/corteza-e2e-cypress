@@ -23,5 +23,6 @@ coverage
 /cypress/reports-build
 /cypress/screenshots
 /cypress/reports
+/cypress/screenshots
 cypress.env.json
 .env

@@ -1,0 +1,1 @@
+insert into templates (id, handle, type, meta, language, partial, template) values (370875687545864193, 'automated_template', 'text/html', '{"short": "automated template", "description": "automated description"}'::json, '', false, '');

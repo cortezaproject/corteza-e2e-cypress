@@ -1,11 +1,16 @@
-// Will probably be refactored into a provisioning script or something similar
-// because without this file the other tests fail
 /// <reference types="cypress" />
+import { provisionAll, provisionDefaultUserDelete } from '../../../provision/list'
+
 const baseURL = Cypress.env('HOST')
 const email = Cypress.env('USER_EMAIL')
 const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
+  before(() => {
+    // remove user again, it was added in provisionAll
+    cy.seedDb([...provisionAll, ...provisionDefaultUserDelete])
+  })
+
   context('Test for creating a user with misconfigured parameter', () => {
     it('should not be able to create an account without any info entered', () => {
       cy.visit(baseURL + '/auth/signup')

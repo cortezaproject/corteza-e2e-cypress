@@ -1,19 +1,20 @@
 /// <reference types="cypress" />
+import { provisionAll, provisionAutomatedRoleCreate } from '../../../../provision/list'
+
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for deleting a role', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: adminURL })
-    }
+    cy.seedDb( [...provisionAll, ...provisionAutomatedRoleCreate]).then(() => {
+      cy.preTestLogin({ url: adminURL })
+      cy.visit(adminURL + '/')
+      cy.navigateAdmin({ app: 'Roles' })
+    })
   })
 
   context('Test for deleting a role', () => {
     it('should be able to delete it', () => {
       cy.intercept('/api/system/roles/?query=automated&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
-      cy.get('.nav-sidebar', { timeout: 10000 }).contains('Roles').click()
       cy.get('[data-test-id="input-search"]').clear().type('automated')
       cy.contains('automated', { timeout: 10000 }).should('exist')
       cy.wait('@role')
@@ -23,7 +24,8 @@ describe('Test for deleting a role', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      cy.get('.nav-sidebar').contains('Roles').click()
+
+      cy.navigateAdmin({ app: 'Roles' })
       cy.get('[data-test-id="input-search"]').type('automated')
       cy.contains('automated', { timeout: 10000 }).should('not.exist')
     })

@@ -1,13 +1,8 @@
 version: "3.2"
 
 services:
-  corteza:
-    image: cortezaproject/corteza:${CORTEZA_VERSION}
-    environment:
-      DOMAIN: corteza
-
   cypress:
-    image: cypress/included:13.5.0
+    image: cypress/included:${CYPRESS_VERSION}
     environment:
       - CYPRESS_HOST=${CYPRESS_HOST}
       - CYPRESS_BASE_URL=${CYPRESS_BASE_URL}
@@ -23,7 +18,7 @@ services:
       - CYPRESS_USER_PASSWORD_NEW=${CYPRESS_USER_PASSWORD_NEW}
       - CYPRESS_USER_DPO=${CYPRESS_USER_DPO}
       - CYPRESS_USER_DPO_PASSWORD=${CYPRESS_USER_DPO_PASSWORD}
-    # depends_on: [ corteza ]
+      - CYPRESS_PROVISION_DB_DSN=${CYPRESS_PROVISION_DB_DSN}
     network_mode: host
     ipc: host # does not work in docker without it
     working_dir: /e2e #entrypoint: "cypress run --spec cypress/integration/basic-functionalities/admin/user/index.js"

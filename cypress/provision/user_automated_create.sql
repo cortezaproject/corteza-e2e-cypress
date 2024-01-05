@@ -1,0 +1,1 @@
+insert into users (id, username, kind, email, email_confirmed, name, handle, created_at) values (368979993402802178, '', '', 'automated@email.com', true, 'Automated account', 'automated_account', now());
