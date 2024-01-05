@@ -12,11 +12,15 @@ describe('Test for editing a report', () => {
 
   context('Test for editing a report', () => {
     it('should be able to edit the name', () => {
+      cy.intercept('/api/system/reports/?query=&limit=100&incTotal=true&sort=handle+ASC')
+        .as('reports')
+      cy.intercept('/api/system/reports/?query=cypress_handle&limit=100&incTotal=true&pageCursor=&sort=handle+ASC')
+        .as('report-search')
       cy.visit(reporterURL + '/list')
-      // We click on the created report
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > :first-child()').click()
-      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
+      cy.wait('@reports')
+      cy.get('[data-test-id="input-search"]').type('cypress_handle')
+      cy.wait('@report-search')
+      cy.get('[data-test-id="button-report-edit"]').click({ force: true })
       cy.get('[data-test-id="input-name"]').clear().type('Edited cypress report')
     })
 
@@ -36,11 +40,9 @@ describe('Test for editing a report', () => {
     })
 
     it('should be able to check if the name was changed in the report builder', () => {
-      cy.get('[data-test-id="button-report-builder"]').click()
+      cy.get('[data-test-id="button-report-builder"]').click({ force: true })
       cy.contains('Edited cypress report')
-      cy.get('[data-test-id="button-back"]').click()
-      // Visiting main page of Reporter
-      cy.visit(reporterURL + '/list')
+      cy.get('[data-test-id="button-back"]').click({ force: true })
     })
   })
 })

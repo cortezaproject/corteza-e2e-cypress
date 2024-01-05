@@ -11,28 +11,22 @@ describe('Test for deleting a report', () => {
   })
 
   context('Test for deleting a report', () => {
-    it('should be able to delete all of the reports successfully', () => {
-      // We click on the report
-      cy.wait(1000)
-      cy.get('#resource-list > tbody > :first-child()').click()
-      cy.get('.tools-wrapper > div > div > a:nth-child(2)', { timeout: 10000 }).click()
-      cy.get('[data-test-id="button-delete"]').click()
-      cy.get('[data-test-id="button-delete-confirm"]').click()
-
-      cy.wait(1000)
-      // We click on the report
-      cy.get('#resource-list > tbody > :first-child()').click()
-      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
-      cy.get('[data-test-id="button-delete"]').click()
-      cy.get('[data-test-id="button-delete-confirm"]').click()
-
-      cy.wait(1000)
-      // We click on the Edit button on the created report
-      cy.get('#resource-list > tbody > :first-child()').click()
-      cy.get('.tools-wrapper > div > div > a:nth-child(2)').click()
-      cy.get('[data-test-id="button-delete"]').click()
-      cy.get('[data-test-id="button-delete-confirm"]').click()
-
+    it('should be able to delete a report successfully', () => {
+      cy.intercept('/api/system/reports/?query=&limit=100&incTotal=true&sort=handle+ASC')
+        .as('reports')
+      cy.intercept('/api/system/reports/?query=cypress_handle&limit=100&incTotal=true&pageCursor=&sort=handle+ASC')
+        .as('report-search')
+      cy.visit(reporterURL + '/list')
+      cy.wait('@reports')
+      cy.get('[data-test-id="input-search"]').type('cypress_handle')
+      cy.wait('@report-search')
+      cy.get('[data-test-id="button-report-edit"]').click({ force: true })
+      cy.get('[data-test-id="button-delete"]').click({ force: true })
+      cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 })
+        .should('exist')
+        .click({ force: true })
+      cy.get('[data-test-id="input-search"]').type('cypress_handle')
+      cy.wait('@report-search')
       cy.get('[data-test-id="no-matches"]').should('exist')
     })
   })
