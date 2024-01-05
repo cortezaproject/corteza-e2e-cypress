@@ -22,7 +22,7 @@ describe('Test for checking system permissions', () => {
       cy.wait('@permissions')
       cy.get('[data-test-id="button-add-role"]').click({ force: true })
       cy.get('[data-test-id="select-edit-roles"]').type('Security administrator{enter}')
-      cy.contains('Save & Close').click({ force: true })
+      cy.get('#permissions-modal-eval [data-test-id="button-save"]').click({ force: true })
     })
 
     it('should be able to restrict the permission to access all settings', () => {

@@ -38,7 +38,7 @@ describe('Test for adding compose data that will be used for different types of 
       cy.get('.modal-content').within(() => {
         cy.get('.nav-item').contains('Privacy').click()
         cy.get('[data-test-id="select-sens-lvl"]').click().type('level_1{enter}')
-        cy.get('button').contains('Save and close').click()
+        cy.get('#permissions-modal [data-test-id="button-save"]').click({ force: true })
       })
       cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click({ force: true })
     })

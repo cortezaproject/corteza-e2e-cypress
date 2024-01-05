@@ -24,7 +24,7 @@ describe('Testing permissions in admin applications', () => {
       cy.get('[data-test-id="select-user-list-roles"]', { timeout: 10000 }).type('Security administrator{enter}')
       cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]', { timeout: 10000 })
         .click({ force: true })
-      cy.get('footer').contains('Save changes').click({ force: true })
+      cy.get('#permissions-modal [data-test-id="button-save"]').click({ force: true })
     })
 
     it('should be able to log in with the limited permissions account and check if it has restrictions', () => {

@@ -28,8 +28,8 @@ describe('Testing permissions of an auth client', () => {
       cy.get('[data-test-id="select-user-list-roles"]').type('Security administrator{enter}')
       cy.get('[data-test-id="icon-add"]').click({ force: true })
       cy.get('[data-test-id="select-user"]').type('Permissions account{enter}')
-      cy.get('.modal-footer').contains('Save & Close').click({ force: true })
-      cy.contains('Cancel').click({ force: true })
+      cy.get('#permissions-modal-eval [data-test-id="button-save"]').click({ force: true })
+      cy.get('#permissions-modal [data-test-id="button-cancel"]').click({ force: true })
     })
 
     it('should be able to adjust permissions', () => {
@@ -40,7 +40,7 @@ describe('Testing permissions of an auth client', () => {
       cy.get('[data-test-id="button-permissions"]', { timeout: 10000 }).click({ force: true })
       cy.wait('@permissions')
       cy.get('[data-test-id="toggle-role-permissions"]:first input[value="deny"]').click({ force: true })
-      cy.get('footer').contains('Save changes').click({ force: true })
+      cy.get('#permissions-modal [data-test-id="button-save"]').click({ force: true })
     })
 
     it('should be able to login with the limited permissions account and check if permissions are applied', () => {
