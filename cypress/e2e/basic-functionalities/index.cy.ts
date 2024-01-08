@@ -1,4 +1,3 @@
-import './server/Create_user.cy'
 import './admin/index.cy'
 import './compose/index.cy'
 import './topbar/compose/index.cy'
