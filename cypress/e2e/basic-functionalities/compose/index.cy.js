@@ -8,3 +8,4 @@ import './record-page/Delete.cy'
 // import './module/Delete.cy
 import './namespace/Edit.cy'
 import './namespace/Delete.cy'
+import './topbar/index.cy'

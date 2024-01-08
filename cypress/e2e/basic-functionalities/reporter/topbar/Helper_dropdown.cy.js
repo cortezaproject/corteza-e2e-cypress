@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import { provisionAll } from '../../../../provision/list'
 
-const adminURL = Cypress.env('ADMIN_URL')
+const reporterURL = Cypress.env('REPORTER_URL')
 
 describe('Test helper dropdown functionalities', () => {
   before(() => {
@@ -9,8 +9,8 @@ describe('Test helper dropdown functionalities', () => {
   })
 
   beforeEach(() => {
-    cy.preTestLogin({ url: adminURL })
-    cy.visit(adminURL + '/')
+    cy.preTestLogin({ url: reporterURL })
+    cy.visit(reporterURL + '/')
   })
 
   context('Test for checking helper links (forum, documentation, feedback)', () => {
