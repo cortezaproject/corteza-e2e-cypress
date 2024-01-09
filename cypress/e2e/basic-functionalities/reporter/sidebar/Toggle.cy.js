@@ -1,32 +1,26 @@
 /// <reference types="cypress" />
+import { provisionAll, provisionDefaultReportCreate } from '../../../../provision/list'
+
 const reporterURL = Cypress.env('REPORTER_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Testing the toggle functionality of the sidebar', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: reporterURL })
-    }
+    // syntax issue
+    cy.seedDb([...provisionAll, ...provisionDefaultReportCreate])
   })
 
-  context('Test for creating report so we can test the sidebar', () => {
-    it('should be able to create a report', () => {
-      cy.visit(reporterURL + '/list')
-      cy.get('[data-test-id="button-create-report"]').click()
-      cy.get('[data-test-id="input-name"]').type('Cypress report')
-      cy.get('[data-test-id="button-save"]').click()
-    })
+  beforeEach(() => {
+    cy.preTestLogin({ url: reporterURL })
+    cy.visit(reporterURL + '/list')
+
+    // We click on the report builder on the created report
+    cy.get('table > tbody > :first-child()', { timeout: 10000 }).should('exist')
+    cy.contains('Report Builder').click({ force: true })
+    cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click({ force: true })
   })
 
   context('Testing the toggle functionality of the sidebar', () => {
     it('should be able to unpin the sidebar', () => {
-      cy.visit(reporterURL + '/list')
-      cy.contains("Cypress").should("exist")
-      // We click on the report builder on the created report
-      cy.get('table > tbody > :first-child()', { timeout: 10000 }).should("exist")
-      cy.contains("Report Builder").click()
-      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click()
       // We click on the center of the page to move the focus away from the sidebar so it can hide
       cy.get('body').click('center')
       // We check that the pin icon is not present
@@ -38,7 +32,7 @@ describe('Testing the toggle functionality of the sidebar', () => {
     it('should be able to pin the sidebar', () => {
       // We hover on the three lines in the top left corner so that the sidebar will expand
       cy.get('[data-test-id="button-sidebar-open"]', { timeout: 10000 }).trigger('mouseover', { force: true })
-      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click()
+      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click({ force: true })
       // We click on the center of the page to move the focus away from the sidebar and to see if it will stay
       cy.get('body').click('center')
       // We check that the pin icon is present

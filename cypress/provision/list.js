@@ -6,6 +6,7 @@ export const provisionAll = [
     'role_automated_delete',
     'app_automated_delete',
     'template_automated_delete',
+    'report_delete',
 ]
 
 export const provisionAutomatedUserCreate = [
@@ -26,4 +27,12 @@ export const provisionAutomatedTemplateCreate = [
 
 export const provisionDefaultUserDelete = [
     'user_delete'
+]
+
+export const provisionDefaultReportCreate = [
+    'report_create'
+]
+
+export const provisionDefaultReportDelete = [
+    'report_delete'
 ]
