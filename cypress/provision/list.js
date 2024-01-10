@@ -7,6 +7,7 @@ export const provisionAll = [
     'app_automated_delete',
     'template_automated_delete',
     'report_delete',
+    'workflow_delete'
 ]
 
 export const provisionAutomatedUserCreate = [
@@ -35,4 +36,12 @@ export const provisionDefaultReportCreate = [
 
 export const provisionDefaultReportDelete = [
     'report_delete'
+]
+
+export const provisionDefaultWorkflowCreate = [
+    'workflow_create'
+]
+
+export const provisionDefaultWorkflowDelete = [
+    'workflow_delete'
 ]
