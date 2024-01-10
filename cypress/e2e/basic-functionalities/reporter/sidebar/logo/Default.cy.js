@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
-import { provisionAll } from '../../../../../provision/list'
+import { provisionAll, provisionDefaultReportCreate } from '../../../../../provision/list'
 
 const reporterURL = Cypress.env('REPORTER_URL')
 
 describe('Testing the sidebar default logo', () => {
   before(() => {
-    cy.seedDb(provisionAll)
+    cy.seedDb([...provisionAll, ...provisionDefaultReportCreate])
     cy.preTestLogin({ url: reporterURL })
     cy.visit(reporterURL + '/list')
   })
