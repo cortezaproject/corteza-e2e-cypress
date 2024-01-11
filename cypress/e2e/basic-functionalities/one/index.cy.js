@@ -1,3 +1,2 @@
-import './Webpage_tour_test.cy'
-import './Search_bar_functionality.cy'
+import './App_search'
 import './topbar/index.cy'
