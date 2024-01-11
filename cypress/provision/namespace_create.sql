@@ -1,0 +1,1 @@
+insert into compose_namespace (id, slug, enabled, meta, name, created_at) values (37169336485952369, 'cypress_namespace', true, '{"iconID": "0", "logoID": "0", "hideSidebar": false}'::json, 'New cypress namespace', now());
