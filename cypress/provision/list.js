@@ -8,6 +8,7 @@ export const provisionAll = [
     'template_automated_delete',
     'namespace_delete',
     'module_delete',
+    'page_delete',
     'field_delete',
     'report_delete',
     'workflow_delete',
@@ -47,6 +48,14 @@ export const provisionDefaultModuleCreate = [
 
 export const provisionDefaultModuleDelete = [
     'module_delete'
+]
+
+export const provisionDefaultPageCreate = [
+    'page_create'
+]
+
+export const provisionDefaultPageDelete = [
+    'page_delete'
 ]
 
 export const provisionDefaultFieldCreate = [
