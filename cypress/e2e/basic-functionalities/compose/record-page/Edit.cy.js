@@ -4,6 +4,7 @@ import {
   provisionDefaultNamespaceCreate,
   provisionDefaultModuleCreate,
   provisionDefaultFieldCreate,
+  provisionDefaultPageCreate,
 } from '../../../../provision/list'
 
 const composeURL = Cypress.env('COMPOSE_URL')
@@ -15,6 +16,7 @@ describe('Test for editing a record page', () => {
       ...provisionDefaultNamespaceCreate,
       ...provisionDefaultModuleCreate,
       ...provisionDefaultFieldCreate,
+      ...provisionDefaultPageCreate,
     ])
 
     cy.preTestLogin({ url: composeURL })

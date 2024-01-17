@@ -46,7 +46,6 @@ describe('Test for creating a record page', () => {
       cy.get('[data-test-id="button-create-page"]').click({ force: true })
       cy.get('[data-test-id="input-handle"]').type('new_cypress_page')
       cy.get('[data-test-id="input-description"]').type('Description')
-      cy.get('[data-test-id="checkbox-page-visibility"]').check({ force: true }) 
       cy.get('[data-test-id="button-save-and-close"]').click({ force: true })
     })
   })
