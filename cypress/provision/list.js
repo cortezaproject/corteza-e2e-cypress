@@ -8,8 +8,8 @@ export const provisionAll = [
     'template_automated_delete',
     'namespace_delete',
     'module_delete',
-    'page_delete',
     'field_delete',
+    'page_delete',
     'report_delete',
     'workflow_delete',
 ]
