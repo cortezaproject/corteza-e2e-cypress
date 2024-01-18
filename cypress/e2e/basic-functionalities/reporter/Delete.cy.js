@@ -19,6 +19,7 @@ describe('Test for deleting a report', () => {
       cy.wait('@reports')
       cy.get('[data-test-id="input-search"]').type('cypress-report')
       cy.wait('@report-search')
+      cy.wait(100)
       cy.get('[data-test-id="button-report-edit"]').click({ force: true })
       cy.get('[data-test-id="button-delete"]').click({ force: true })
       cy.get('[data-test-id="button-delete-confirm"]', { timeout: 10000 })
