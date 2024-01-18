@@ -35,7 +35,6 @@ describe('Test for editing a record page', () => {
       cy.get('[data-test-id="input-title"]').clear().type('Cypress page')
       cy.get('[data-test-id="input-handle"]').clear().type('cypress_page')
       cy.get('[data-test-id="input-description"]').clear().type('Page description')
-      cy.get('[data-test-id="checkbox-page-visibility"]').check({ force: true })
       cy.get('[data-test-id="button-save-and-close"]').click({ force: true })
 
       // Check if the change was persisted
