@@ -1,0 +1,1 @@
+insert into compose_record (id, revision, rel_module, values, meta, rel_namespace, created_at, owned_by, created_by) values (373044119611637865, 1, 37269336485952369, '{"Age": ["28"], "Name": ["John"], "Surname": ["Doe"]}'::json, '{}'::json, 37169336485952369, now(), 368979993402802177, 368979993402802177);
