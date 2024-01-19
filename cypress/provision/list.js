@@ -9,7 +9,9 @@ export const provisionAll = [
     'namespace_delete',
     'module_delete',
     'field_delete',
+    'record_delete',
     'page_delete',
+    'page_layout_delete',
     'report_delete',
     'workflow_delete',
 ]
@@ -50,6 +52,14 @@ export const provisionDefaultModuleDelete = [
     'module_delete'
 ]
 
+export const provisionDefaultFieldCreate = [
+    'field_create'
+]
+
+export const provisionDefaultFieldDelete = [
+    'field_delete'
+]
+
 export const provisionDefaultPageCreate = [
     'page_create'
 ]
@@ -58,12 +68,20 @@ export const provisionDefaultPageDelete = [
     'page_delete'
 ]
 
-export const provisionDefaultFieldCreate = [
-    'field_create'
+export const provisionDefaultPageLayoutCreate = [
+    'page_layout_create'
 ]
 
-export const provisionDefaultFieldDelete = [
-    'field_delete'
+export const provisionDefaultPageLayoutDelete = [
+    'page_layout_delete'
+]
+
+export const provisionDefaultRecordCreate = [
+    'record_create'
+]
+
+export const provisionDefaultRecordDelete = [
+    'record_delete'
 ]
 
 export const provisionDefaultReportCreate = [
