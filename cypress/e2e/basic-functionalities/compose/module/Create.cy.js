@@ -66,7 +66,7 @@ describe('Test for creating a module', () => {
       cy.get('[data-test-id="table-module-fields"] > tbody').find('tr').eq(2).within(() => {
         cy.get('input:first').type('age')
         cy.get('input:eq(1)').type('Age')
-        cy.get('[data-test-id="select"]').parent().click({ force: true })
+        cy.get('[data-test-id="select"]').click({ force: true }).trigger('mousedown')
         cy.get('input[type="search"]').type('Number input{enter}')
       })
       cy.get('[data-test-id="button-save"]', { timeout: 10000 }).click({ force: true })
