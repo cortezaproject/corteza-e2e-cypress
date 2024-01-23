@@ -77,7 +77,7 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="field-surname"]').type('Fritz')
       cy.get('[data-test-id="field-age"]').clear().type(30)
       cy.get('[data-test-id="button-save"]').click({ force: true })
-      cy.get('.card-body', { timeout: 10000 }).contains('30').should('exist')
+      cy.get('.card-body', { timeout: 10000 }).contains(30).should('exist')
       cy.get('.card-body').contains('Mark').should('exist')
       cy.get('.card-body').contains('Fritz').should('exist')
       cy.url().should('contain', '/record')
