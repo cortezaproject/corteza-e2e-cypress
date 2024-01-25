@@ -61,7 +61,7 @@ describe('Test for editing a user', () => {
         cy.get('[data-test-id="input-handle"]').should('have.value', 'edited_handle')
         cy.get('[data-test-id="input-updated-at"]').should('exist')
       })
-      cy.get('.nav-sidebar').contains('Users').click()
+      cy.navigateAdmin({ app: 'Users' })
       cy.contains('Edited automated name').should('exist')
     })
   })
