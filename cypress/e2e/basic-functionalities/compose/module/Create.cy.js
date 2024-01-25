@@ -12,7 +12,7 @@ describe('Test for creating a module', () => {
     cy.preTestLogin({ url: composeURL })
 
     cy.visit(composeURL + '/namespaces')
-    cy.get('[data-test-id="input-search"]').type('cypress')
+    cy.searchItem()
     cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]', { timeout: 10000 })
       .should('exist')
       .click({ force: true })

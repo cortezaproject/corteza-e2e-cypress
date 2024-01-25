@@ -15,7 +15,7 @@ describe('Test for deleting a template', () => {
   context('Test for deleting a template', () => {
     it('should be able to delete a template', () => {
       cy.intercept('/api/system/template/?query=automated_template&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('delete_template')
-      cy.get('[data-test-id="input-search"]').type('automated_template')
+      cy.searchItem({ item: 'automated_template' })
       cy.wait('@delete_template')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').click()
@@ -23,7 +23,7 @@ describe('Test for deleting a template', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      cy.get('[data-test-id="input-search"]').type('automated_template')
+      cy.searchItem({ item: 'automated_template' })
       cy.contains('automated_template').should('not.exist')
     })
   })

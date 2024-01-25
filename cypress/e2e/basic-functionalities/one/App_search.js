@@ -17,14 +17,14 @@ describe('Test for checking the search bar functionality', () => {
 
   context('Test for searching a non existing app', () => {
     it('should not be able to search for a non existing app', () => {
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('xw')
+      cy.searchItem({ item: 'xw' })
       cy.get('[data-test-id="heading-no-apps"]', { timeout: 10000 }).should('exist')
     })
   })
 
   context('Test for searching an existing app', () => {
     it('should be able to search for the Admin Area', () => {
-      cy.get('[data-test-id="input-search"]').clear().type('admin')
+      cy.searchItem({ item: 'admin' })
       cy.get('[data-test-id="Admin Area"]', { timeout: 10000 }).click({ force: true })
       cy.url().should('exist', oneURL + '/admin')
     })

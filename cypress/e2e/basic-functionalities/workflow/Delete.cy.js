@@ -14,7 +14,7 @@ describe('Test for deleting a workflow', () => {
       cy.intercept('/api/automation/workflows/?query=Cypress&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&pageCursor=&sort=handle+ASC').as('cypress_wf')
       cy.intercept('/api/automation/workflows/?query=test&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&pageCursor=&sort=handle+ASC').as('test_wf')
       cy.visit(workflowURL + '/list')
-      cy.get('[data-test-id="input-search"]').type('Cypress')
+      cy.searchItem({ item: 'Cypress' })
       cy.wait('@cypress_wf')
       cy.contains('Cypress workflow').should('exist').click({ force: true })
       cy.get('[data-test-id="button-configure-workflow"]').click({ force: true })

@@ -19,8 +19,8 @@ describe('Test for editing an application', () => {
   context('Test for checking that new and delete buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a template', () => {
       cy.intercept('/api/system/application/?query=automated+application&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('edit_app')
-      
-      cy.get('[data-test-id="input-search"]').type('automated application')
+
+      cy.searchItem({ item: 'automated application' })
       cy.wait('@edit_app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
@@ -35,7 +35,7 @@ describe('Test for editing an application', () => {
     it('should be able to edit the application', () => {
       cy.intercept('/api/system/application/?query=automated+application&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('edit_app')
       
-      cy.get('[data-test-id="input-search"]').type('automated application')
+      cy.searchItem({ item: 'automated application' })
       cy.wait('@edit_app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
@@ -49,7 +49,7 @@ describe('Test for editing an application', () => {
 
   context('Test for checking if the application got edited', () => {
     it('should be edited', () => {
-      cy.get('[data-test-id="input-search"]').type('edited application')
+      cy.searchItem({ item: 'edited application' })
       cy.contains('edited application', { timeout: 10000 }).should('exist')
     })
   })
@@ -57,7 +57,7 @@ describe('Test for editing an application', () => {
   context('Test for checking if you can create an application through edit mode', () => {
     it('should be able to create an application', () => {
       cy.intercept('/api/system/application/?query=edited&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('app')
-      cy.get('[data-test-id="input-search"]').type('edited')
+      cy.searchItem({ item: 'edited' })
       cy.wait('@app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()

@@ -15,7 +15,7 @@ describe('Test for deleting an application', () => {
       cy.intercept('/api/system/application/?query=automated+application&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('app')
       cy.navigateAdmin({ app: 'Applications' })
       
-      cy.get('[data-test-id="input-search"]').type('automated application')
+      cy.searchItem({ item: 'automated application' })
       cy.wait('@app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click({ force: true })
@@ -23,7 +23,7 @@ describe('Test for deleting an application', () => {
         cy.get('[data-test-id="button-delete"]').click()
         cy.get('.confirmation-confirm').click()
       })
-      cy.get('[data-test-id="input-search"]').type('automated application')
+      cy.searchItem({ item: 'automated application' })
       cy.contains('automated application').should('not.exist')
     })
   })

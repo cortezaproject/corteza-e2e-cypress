@@ -12,10 +12,10 @@ describe('Testing the toggle functionality of the sidebar', () => {
     cy.preTestLogin({ url: composeURL })
     cy.visit(composeURL + '/')
 
-    cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('crm')
-      // We need to visit a namespace so that the sidebar will be present
-      cy.get('[data-test-id="link-visit-namespace-crm"]', { timeout: 10000 }).click({ force: true })
-      cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click({ force: true })
+    cy.searchItem({ item: 'crm' })
+    // We need to visit a namespace so that the sidebar will be present
+    cy.get('[data-test-id="link-visit-namespace-crm"]', { timeout: 10000 }).click({ force: true })
+    cy.get('[data-test-id="button-pin-icon"]', { timeout: 10000 }).click({ force: true })
   })
 
   context('Testing the toggle functionality of the sidebar', () => {

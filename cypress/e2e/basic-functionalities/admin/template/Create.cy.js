@@ -61,7 +61,7 @@ describe('Test for creating a template', () => {
     it('should exist', () => {
       cy.intercept('/api/system/template/?query=automated&handle=&deleted=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('template')
       cy.navigateAdmin({ app: 'Templates' })
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@template')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').click()

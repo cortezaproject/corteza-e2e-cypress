@@ -26,7 +26,7 @@ describe('Test for creating a record', () => {
     cy.preTestLogin({ url: composeURL })
 
     cy.visit(composeURL + '/namespaces')
-    cy.get('[data-test-id="input-search"]').type('cypress')
+    cy.searchItem()
     cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
     cy.get('[data-test-id="button-admin"]', { timeout: 10000 })
       .should('exist')

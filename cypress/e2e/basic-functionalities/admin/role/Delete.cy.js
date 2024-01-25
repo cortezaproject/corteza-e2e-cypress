@@ -15,7 +15,7 @@ describe('Test for deleting a role', () => {
   context('Test for deleting a role', () => {
     it('should be able to delete it', () => {
       cy.intercept('/api/system/roles/?query=automated&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('role')
-      cy.get('[data-test-id="input-search"]').clear().type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.contains('automated', { timeout: 10000 }).should('exist')
       cy.wait('@role')
       cy.wait(1000)
@@ -26,7 +26,7 @@ describe('Test for deleting a role', () => {
       })
 
       cy.navigateAdmin({ app: 'Roles' })
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.contains('automated', { timeout: 10000 }).should('not.exist')
     })
   })

@@ -22,15 +22,16 @@ describe('Test for creating a record page', () => {
     cy.preTestLogin({ url: composeURL })
 
     cy.visit(composeURL + '/namespaces')
-    cy.get('[data-test-id="input-search"]').type('cypress')
+    cy.searchItem()
     cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
     cy.get('[data-test-id="button-admin"]').click({ force: true })
   })
 
   context('Test for creating a record page', () => {
     it('should be able to create a record page', () => {
-      cy.get('[data-test-id="table-modules-list"] [data-test-id="input-search"]')
-        .type('cypress')
+      cy.get('[data-test-id="table-modules-list"]').within(() => {
+        cy.searchItem()
+      })
       cy.get('[data-test-id="button-record-page-create"]').click({ force: true })
       cy.get('.related-pages-dropdown').click({ force: true })
       cy.get('[data-test-id="dropdown-link-record-list-page-create"]').click({ force: true })

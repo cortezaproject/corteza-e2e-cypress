@@ -25,7 +25,7 @@ describe('Test for deleting a record page', () => {
   context('Test for deleting a record page', () => {
     it('should be able to delete a record page', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.searchItem()
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).click({ force: true })
       cy.visit(composeURL + '/ns/cypress_namespace/admin/pages')

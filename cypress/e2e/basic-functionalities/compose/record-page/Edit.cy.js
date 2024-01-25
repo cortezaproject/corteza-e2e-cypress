@@ -25,7 +25,7 @@ describe('Test for editing a record page', () => {
   context('Test for editing a record page', () => {
     it('should be able to edit a record page and check if the change was persisted', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.searchItem()
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).should('exist').click({ force: true })
       cy.contains('Modules').should('exist')

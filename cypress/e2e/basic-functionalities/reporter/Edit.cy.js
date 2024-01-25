@@ -21,7 +21,7 @@ describe('Test for editing a report', () => {
       cy.intercept('/api/system/reports/?query=cypress-report&limit=100&incTotal=true&pageCursor=&sort=handle+ASC')
         .as('report-search')
       cy.wait('@reports')
-      cy.get('[data-test-id="input-search"]').type('cypress-report')
+      cy.searchItem({ item: 'cypress-report' })
       cy.wait('@report-search')
       cy.get('[data-test-id="button-report-edit"]').click({ force: true })
       cy.get('[data-test-id="input-name"]').clear().type('Edited cypress report')

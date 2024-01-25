@@ -36,7 +36,7 @@ describe('Test for rejecting a request', () => {
       cy.get('.card-header').within(() => {
       cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
       cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')
-        cy.get('[data-test-id="input-search"]').clear().type('pending')
+      cy.searchItem({ item: 'pending' })
       })
       cy.get('#resource-list > tbody > tr:first > td:first > div > [type="checkbox"]').check({ force: true })
       cy.get('.card-header').within(() => {
@@ -48,7 +48,7 @@ describe('Test for rejecting a request', () => {
     it('should be rejected', () => {
       cy.get('[data-test-id="button-home"]').click()
       cy.get('a[href="/request/list"]').click()
-      cy.get('[data-test-id="input-search"]').clear().type('rejected')
+      cy.searchItem({ item: 'rejected' })
       cy.get('#resource-list > tbody > tr').should('have.length', 2)
       cy.get('[data-test-id="button-delete"].btn-primary').should('be.disabled')
       cy.get('[data-test-id="button-delete"].btn-danger').should('be.disabled')

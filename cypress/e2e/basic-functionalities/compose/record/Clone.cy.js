@@ -27,7 +27,7 @@ describe('Test for editing a record', () => {
   context('Test for cloning a record', () => {
     it('should be able to clone a record and check if the changes were persisted', () => {
       cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.searchItem()
       cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
       cy.get('[data-test-id="button-admin"]', { timeout: 10000 })
         .should('exist')
