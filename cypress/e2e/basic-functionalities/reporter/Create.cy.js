@@ -89,7 +89,7 @@ describe('Test for creating a report', () => {
         .as('reports')
       cy.get('[data-test-id="button-back"]').click({ force: true })
       cy.wait('@reports')
-      cy.get('[data-test-id="input-search"]').type('cypress-report')
+      cy.searchItem({ item: 'cypress-report' })
       cy.wait('@report-search')
       cy.get('[data-test-id="button-report-edit"]').click({ force: true })
     cy.get('[data-test-id="button-create-report"]').click({ force: true })

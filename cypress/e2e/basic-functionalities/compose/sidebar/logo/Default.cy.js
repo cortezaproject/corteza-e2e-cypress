@@ -12,7 +12,7 @@ describe('Testing the sidebar default logo', () => {
 
   context('Testing the sidebar default logo', () => {
     it('should be able to see the default logo', () => {
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('crm')
+      cy.searchItem({ item: 'crm' })
       // We need to visit a namespace so that the sidebar will be present
       cy.get('[data-test-id="link-visit-namespace-crm"]', { timeout: 10000 }).click({ force: true })
       cy.get('[data-test-id="img-main-logo"]')

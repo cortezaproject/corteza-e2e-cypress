@@ -15,7 +15,7 @@ describe('Test for editing a namespace', () => {
       .as('ns_cypress')
     cy.visit(composeURL + '/namespaces')
     cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
-    cy.get('[data-test-id="input-search"]').type('cypress')
+    cy.searchItem()
     cy.wait('@ns_cypress')
     cy.get('tbody').contains('cypress').should('exist').click({ force: true })
   })
@@ -41,7 +41,7 @@ describe('Test for editing a namespace', () => {
 
       cy.visit(composeURL + '/namespaces')
       cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('edited')
+      cy.searchItem({ item: 'edited' })
       cy.wait('@ns_edited')
       cy.get('tbody').contains('edited').should('exist').click({ force: true })
       cy.get('[data-test-id="input-name"]').should('have.value', 'Edited namespace')

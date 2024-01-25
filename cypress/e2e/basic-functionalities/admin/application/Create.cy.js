@@ -51,7 +51,7 @@ describe('Test for creating an application', () => {
       })
 
       cy.get('.nav-sidebar').contains('Applications').click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@created_app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click({ force: true })

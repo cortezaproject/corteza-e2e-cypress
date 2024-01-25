@@ -34,7 +34,7 @@ describe('Test for canceling an export data request', () => {
       cy.get('a[href="/request/list"]').click({ force: true })
       cy.get('.card-header').within(() => {
         cy.get('[data-test-id="button-delete"]').should('be.disabled')
-        cy.get('[data-test-id="input-search"]').clear().type('pending')
+        cy.searchItem({ item: 'pending' })
       })
       cy.get('#resource-list > tbody > tr:first > td:first > div > [type="checkbox"]').check({ force: true })
       cy.get('.card-header').within(() => {
@@ -46,7 +46,7 @@ describe('Test for canceling an export data request', () => {
     it('should be canceled', () => {
       cy.get('[data-test-id="button-home"]').click({ force: true })
       cy.get('a[href="/request/list"]').click({ force: true })
-      cy.get('[data-test-id="input-search"]').type('canceled')
+      cy.searchItem({ item: 'canceled' })
       cy.get('#resource-list > tbody > tr').should('have.length', 2)
       cy.get('[data-test-id="button-delete"]').should('be.disabled')
     })

@@ -14,7 +14,7 @@ describe('Test for editing a workflow', () => {
     cy.intercept('/api/automation/workflows/?query=cypress&deleted=0&disabled=0&subWorkflow=1&limit=100&incTotal=true&pageCursor=&sort=handle+ASC')
       .as('wf_cypress')
     cy.visit(workflowURL + '/list')
-    cy.get('[data-test-id="input-search"]').type('cypress')
+    cy.searchItem()
     cy.wait('@wf_cypress')
     cy.contains('Cypress workflow', { timeout: 10000 }).click({ force: true })
     cy.get('[data-test-id="button-configure-workflow"]').click({ force: true })

@@ -71,7 +71,7 @@ describe('Test for creating a role', () => {
       cy.intercept('/api/system/roles/?query=automated&deleted=0&archived=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('automated_role')
       cy.navigateAdmin({ app: 'Roles' })
 
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@automated_role')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()

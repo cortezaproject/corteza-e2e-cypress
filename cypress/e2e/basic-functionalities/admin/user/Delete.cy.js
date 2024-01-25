@@ -17,7 +17,7 @@ describe('Test for deleting a user', () => {
       cy.intercept('/api/system/users/?query=missing&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('missing_user')
 
       cy.navigateAdmin({ app: 'Users' })
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@delete_user')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()

@@ -18,7 +18,7 @@ describe('Test for editing a record', () => {
         .as('ns-search')
       cy.get('[data-test-id="button-manage-namespaces"]').click({ force: true })
       cy.wait('@ns-manage')
-      cy.get('[data-test-id="input-search"]').type('cypress')
+      cy.searchItem()
       cy.wait('@ns-search')
       cy.get('tbody').contains('cypress').should('exist').click({ force: true })
       cy.get('[data-test-id="button-clone"]').click({ force: true })
