@@ -19,7 +19,7 @@ describe('Test for editing a user', () => {
   context('Test for checking that delete, suspend, revoke and new buttons are displayed when in edit mode', () => {
     it('should be displayed when editing a user', () => {
       cy.intercept('/api/system/users/?query=automated&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('automated_user')
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@automated_user')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
@@ -37,7 +37,7 @@ describe('Test for editing a user', () => {
       cy.intercept('/api/system/users/?query=automated&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('automated_user')
       cy.intercept('/api/system/users/?query=edited&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('edited_user')
 
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@automated_user')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
@@ -50,7 +50,7 @@ describe('Test for editing a user', () => {
       })
 
       cy.navigateAdmin({ app: 'Users' })
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('edited')
+      cy.searchItem({ item: 'edited' })
       cy.wait('@edited_user')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
@@ -61,7 +61,7 @@ describe('Test for editing a user', () => {
         cy.get('[data-test-id="input-handle"]').should('have.value', 'edited_handle')
         cy.get('[data-test-id="input-updated-at"]').should('exist')
       })
-      cy.get('.nav-sidebar').contains('Users').click()
+      cy.navigateAdmin({ app: 'Users' })
       cy.contains('Edited automated name').should('exist')
     })
   })
@@ -69,7 +69,7 @@ describe('Test for editing a user', () => {
   context('Test for checking if you can create a user through edit mode', () => {
     it('should be able to create a user', () => {
       cy.intercept('/api/system/users/?query=automated&deleted=0&suspended=0&limit=100&incTotal=true&pageCursor=&sort=createdAt+DESC').as('create_user')
-      cy.get('[data-test-id="input-search"]', { timeout: 10000 }).type('automated')
+      cy.searchItem({ item: 'automated' })
       cy.wait('@create_user')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()

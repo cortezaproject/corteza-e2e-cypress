@@ -1,0 +1,1 @@
+insert into reports (id, handle, meta, scenarios, sources, blocks, owned_by, created_at, created_by, updated_by, deleted_by) values (37161336385961369, 'cypress-report', '{"name": "Cypress report", "description": ""}'::json, '[]'::json, '[]'::json, '[]'::json, 0, now(), 0, 0, 0);

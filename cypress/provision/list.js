@@ -6,6 +6,14 @@ export const provisionAll = [
     'role_automated_delete',
     'app_automated_delete',
     'template_automated_delete',
+    'namespace_delete',
+    'module_delete',
+    'field_delete',
+    'record_delete',
+    'page_delete',
+    'page_layout_delete',
+    'report_delete',
+    'workflow_delete',
 ]
 
 export const provisionAutomatedUserCreate = [
@@ -26,4 +34,68 @@ export const provisionAutomatedTemplateCreate = [
 
 export const provisionDefaultUserDelete = [
     'user_delete'
+]
+
+export const provisionDefaultNamespaceCreate = [
+    'namespace_create'
+]
+
+export const provisionDefaultNamespaceDelete = [
+    'namespace_delete'
+]
+
+export const provisionDefaultModuleCreate = [
+    'module_create'
+]
+
+export const provisionDefaultModuleDelete = [
+    'module_delete'
+]
+
+export const provisionDefaultFieldCreate = [
+    'field_create'
+]
+
+export const provisionDefaultFieldDelete = [
+    'field_delete'
+]
+
+export const provisionDefaultPageCreate = [
+    'page_create'
+]
+
+export const provisionDefaultPageDelete = [
+    'page_delete'
+]
+
+export const provisionDefaultPageLayoutCreate = [
+    'page_layout_create'
+]
+
+export const provisionDefaultPageLayoutDelete = [
+    'page_layout_delete'
+]
+
+export const provisionDefaultRecordCreate = [
+    'record_create'
+]
+
+export const provisionDefaultRecordDelete = [
+    'record_delete'
+]
+
+export const provisionDefaultReportCreate = [
+    'report_create'
+]
+
+export const provisionDefaultReportDelete = [
+    'report_delete'
+]
+
+export const provisionDefaultWorkflowCreate = [
+    'workflow_create'
+]
+
+export const provisionDefaultWorkflowDelete = [
+    'workflow_delete'
 ]

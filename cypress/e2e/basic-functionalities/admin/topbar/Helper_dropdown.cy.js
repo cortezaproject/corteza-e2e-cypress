@@ -5,7 +5,7 @@ const adminURL = Cypress.env('ADMIN_URL')
 
 describe('Test helper dropdown functionalities', () => {
   before(() => {
-    cy.seedDb( provisionAll)
+    cy.seedDb(provisionAll)
   })
 
   beforeEach(() => {

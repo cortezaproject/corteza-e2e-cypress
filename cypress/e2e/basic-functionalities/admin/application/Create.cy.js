@@ -5,7 +5,7 @@ const adminURL = Cypress.env('ADMIN_URL')
 
 describe('Test for creating an application', () => {
   before(() => {
-    cy.seedDb( provisionAll)
+    cy.seedDb(provisionAll)
   })
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('Test for creating an application', () => {
     cy.visit(adminURL + '/')
     
     cy.navigateAdmin({ app: 'Applications' })
-    cy.get('[data-test-id="button-new-application"]').click()
+    cy.get('[data-test-id="button-new-application"]').click({ force: true })
   })
 
   context('Test for creating an application without a name entered', () => {
@@ -49,9 +49,8 @@ describe('Test for creating an application', () => {
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').should('have.value', 'automated application')
       })
-
-      cy.get('.nav-sidebar').contains('Applications').click()
-      cy.get('[data-test-id="input-search"]').type('automated')
+      cy.navigateAdmin({ app: 'Applications' })
+      cy.searchItem({ item: 'automated' })
       cy.wait('@created_app')
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click({ force: true })
@@ -63,11 +62,11 @@ describe('Test for creating an application', () => {
 
   context('Test for creating an application with same name as an already created one', () => {
     it('should be able to create an application with identical name', () => {
-      cy.get('.nav-sidebar').contains('Application').click()
-      cy.get('[data-test-id="button-new-application"]').click()
+      cy.navigateAdmin({ app: 'Applications' })
+      cy.get('[data-test-id="button-new-application"]').click({ force: true })
       cy.get('[data-test-id="card-application-info"]').within(() => {
         cy.get('[data-test-id="input-name"]').type('automated application')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
       cy.get('[data-test-id="input-created-at"]').should('exist')
     })

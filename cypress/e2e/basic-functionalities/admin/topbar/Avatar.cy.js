@@ -6,7 +6,7 @@ const baseURL = Cypress.env('HOST')
 
 describe('Test avatar functionalities', () => {
   before(() => {
-    cy.seedDb( provisionAll)
+    cy.seedDb(provisionAll)
   })
 
   beforeEach(() => {

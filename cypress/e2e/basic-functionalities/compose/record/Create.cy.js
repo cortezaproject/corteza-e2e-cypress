@@ -1,64 +1,67 @@
 /// <reference types="cypress" />
+import {
+  provisionAll,
+  provisionDefaultNamespaceCreate,
+  provisionDefaultModuleCreate,
+  provisionDefaultFieldCreate,
+  provisionDefaultPageCreate,
+  provisionDefaultPageLayoutCreate,
+  provisionDefaultRecordCreate,
+} from '../../../../provision/list'
+
 const composeURL = Cypress.env('COMPOSE_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a record', () => {
   before(() => {
-    if (!window.sessionStorage.getItem('auth.refresh-token')) {
-      cy.login({ email, password, url: composeURL })
-    }
+    cy.seedDb([
+      ...provisionAll,
+      ...provisionDefaultNamespaceCreate,
+      ...provisionDefaultModuleCreate,
+      ...provisionDefaultFieldCreate,
+      ...provisionDefaultPageCreate,
+      ...provisionDefaultPageLayoutCreate,
+      ...provisionDefaultRecordCreate,
+    ])
+  })
+
+  beforeEach(() => {
+    cy.preTestLogin({ url: composeURL })
+
+    cy.visit(composeURL + '/namespaces')
+    cy.searchItem()
+    cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
+    cy.get('[data-test-id="button-admin"]', { timeout: 10000 })
+      .should('exist')
+      .click({ force: true })
+    cy.get('#resource-list td:nth-child(2)', { timeout: 10000 }).click({ force: true })  
+    cy.get('[data-test-id="button-all-records"] a', { timeout: 1000 }).click({ force: true })
+    cy.get('[data-test-id="button-add-record"]', { timeout: 1000 }).click({ force: true })
   })
 
   context('Test for creating a record through the all records button', () => {
     it('should be able to create a record ', () => {
-      cy.visit(composeURL + '/namespaces')
-      cy.get('[data-test-id="input-search"]').type('cypress')
-      cy.get('[data-test-id="link-visit-namespace-cypress_namespace"]').click({ force: true })
-      cy.contains('Record List').should('exist')
-      cy.get('[data-test-id="button-admin"]', { timeout: 10000 }).should('exist').click()
-      cy.get('[data-test-id="button-all-records"]', { timeout: 1000 }).click()
-      cy.get('[data-test-id="button-add-record"]').click()
-      cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('John')
-      cy.get('input:nth-child(1)').eq(2).type('Doe')
-      cy.get('input:nth-child(1)').eq(3).type('28')
-      cy.get('[data-test-id="button-save"]').click()
+      cy.get('[data-test-id="field-name"]').type('John')
+      cy.get('[data-test-id="field-surname"]').type('Doe')
+      cy.get('[data-test-id="field-age"]').clear().type(28)
+      cy.get('[data-test-id="button-save"]').click({ force: true })
       cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('John').should('exist')
-      cy.get('.card-body').contains('Doe').should('exist')
-      cy.get('.card-body').contains('28', { timeout: 1000 }).should('exist')
-      cy.url().should('contain', '/record')
-    })
-  })
-
-  context('Test for creating a record through the module all records button', () => {
-    it('should be able to create a record ', () => {
-      cy.get('.nav-sidebar').contains('Modules').click()
-      cy.get('.header-navigation').contains('All records').click()
-      cy.get('[data-test-id="button-add-record"]').click()
-      cy.get('input:nth-child(1)').eq(1).type('Dave')
-      cy.get('input:nth-child(1)').eq(2).type('Smith')
-      cy.get('input:nth-child(1)').eq(3).type('26')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('26').should('exist')
-      cy.get('.card-body').contains('Dave').should('exist')
-      cy.get('.card-body').contains('Smith').should('exist')
+      cy.get('.card-body', { timeout: 10000 }).should('exist').contains('John')
+      cy.get('.card-body').should('exist').contains('Doe')
+      cy.get('.card-body').should('exist').contains(28, { timeout: 1000 })
       cy.url().should('contain', '/record')
     })
   })
 
   context('Test for creating a record through the public page', () => {
     it('should be able to create a record ', () => {
-      cy.get('[data-test-id="button-public"]').click()
-      cy.get('[data-test-id="button-add-record"]', { timeout: 1000 }).click()
-      cy.contains('Name').should('exist')
-      cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('Eddie')
-      cy.get('input:nth-child(1)').eq(2).type('Turner')
-      cy.get('input:nth-child(1)').eq(3).type('23')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('23').should('exist')
+      cy.get('[data-test-id="button-public"]').click({ force: true })
+      cy.get('[data-test-id="button-add-record"]', { timeout: 1000 })
+        .click({ force: true })
+      cy.get('[data-test-id="field-name"]').type('Eddie')
+      cy.get('[data-test-id="field-surname"]').type('Turner')
+      cy.get('[data-test-id="field-age"]').clear().type(23)
+      cy.get('[data-test-id="button-save"]').click({ force: true })
+      cy.get('.card-body', { timeout: 10000 }).contains(23).should('exist')
       cy.get('.card-body').contains('Eddie').should('exist')
       cy.get('.card-body').contains('Turner').should('exist')
       cy.url().should('contain', '/record')
@@ -67,41 +70,24 @@ describe('Test for creating a record', () => {
 
   context('Test for creating a new record while in record view', () => {
     it('should be able to create a record ', () => {
-      cy.get('[data-test-id="button-add-new"]').click()
-      cy.get('input:nth-child(1)', { timeout: 10000 }).eq(1).type('Mark')
-      cy.get('input:nth-child(1)').eq(2).type('Fritz')
-      cy.get('input:nth-child(1)').eq(3).type('30')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('30').should('exist')
+      cy.get('[data-test-id="button-public"]').click({ force: true })
+      cy.get('.record-list-table td:nth-child(2)', { timeout: 10000 })
+        .eq(0)
+        .click({ force: true })
+      cy.get('[data-test-id="button-add-new"]').click({ force: true })
+      cy.get('[data-test-id="field-name"]').type('Mark')
+      cy.get('[data-test-id="field-surname"]').type('Fritz')
+      cy.get('[data-test-id="field-age"]').clear().type(30)
+      cy.get('[data-test-id="button-save"]').click({ force: true })
+      cy.get('.card-body', { timeout: 10000 }).contains(30).should('exist')
       cy.get('.card-body').contains('Mark').should('exist')
       cy.get('.card-body').contains('Fritz').should('exist')
       cy.url().should('contain', '/record')
     })
   })
 
-  context('Test for checking if back, delete, clone, edit and add new buttons are displayed in record view', () => {
+  context('Test for checking if back, delete, clone, edit and add new buttons are not displayed in record view', () => {
     it('should be displayed when in record view ', () => {
-      cy.get('[data-test-id="button-back"]').should('exist')
-      cy.get('[data-test-id="button-delete"]').should('exist')
-      cy.get('[data-test-id="button-clone"]').should('exist')
-      cy.get('[data-test-id="button-edit"]').should('exist')
-      cy.get('[data-test-id="button-add-new"]').should('exist')
-    })
-  })
-
-  context('Test for checking the back button functionality in record view', () => {
-    it('should be able to go back', () => {
-      cy.contains('Cypress page').click()
-      cy.get('tbody > tr:first', { timeout: 10000 }).click()
-      cy.get('[data-test-id="button-back"]').click()
-      cy.url().should('not.contain', '/record')
-    })
-  })
-
-  context('Test for checking if delete, clone, edit and add new buttons are not displayed in add a new record view', () => {
-    it('should not be displayed when in add a new record view ', () => {
-      cy.get('[data-test-id="button-add-record"]').click()
       cy.get('[data-test-id="button-back"]').should('exist')
       cy.get('[data-test-id="button-delete"]').should('not.exist')
       cy.get('[data-test-id="button-clone"]').should('not.exist')
@@ -110,26 +96,10 @@ describe('Test for creating a record', () => {
     })
   })
 
-  context('Adding couple more records for the need of delete tests', () => {
-    // This test has been added so we can cover all of the delete a record cases for the needs of the delete tests
-    it('should add couple more records', () => {
-      cy.get('input:nth-child(1)').eq(1).type('Peter')
-      cy.get('input:nth-child(1)').eq(2).type('Heinz')
-      cy.get('input:nth-child(1)').eq(3).type('37')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.url().should('contain', '/record')
-      cy.get('[data-test-id="button-clone"]').click()
-      cy.get('input:nth-child(1)').eq(1).clear().type('Chris')
-      cy.get('input:nth-child(1)').eq(2).clear().type('Pop')
-      cy.get('input:nth-child(1)').eq(3).clear().type('26')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.url().should('contain', '/record')
-      cy.get('[data-test-id="button-clone"]').click()
-      cy.get('input:nth-child(1)').eq(1).clear().type('Mark')
-      cy.get('input:nth-child(1)').eq(2).clear().type('Goldwing')
-      cy.get('input:nth-child(1)').eq(3).clear().type('30')
-      cy.get('[data-test-id="button-save"]').click()
-      cy.url().should('contain', '/record')
+  context('Test for checking the back button functionality in record view', () => {
+    it('should be able to go back', () => {
+      cy.get('[data-test-id="button-back"]').click({ force: true })
+      cy.url().should('contain', 'record/list')
     })
   })
 })

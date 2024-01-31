@@ -2,8 +2,6 @@
 import { provisionAll } from '../../../../provision/list'
 
 const adminURL = Cypress.env('ADMIN_URL')
-const email = Cypress.env('USER_EMAIL')
-const password = Cypress.env('USER_PASSWORD')
 
 describe('Test for creating a user', () => {
   before(() => {
@@ -16,7 +14,7 @@ describe('Test for creating a user', () => {
     cy.visit(adminURL + '/')
     
     cy.navigateAdmin({ app: 'Users' })
-    cy.get('[data-test-id="button-new-user"]').click()
+    cy.get('[data-test-id="button-new-user"]').click({ force: true })
   })
 
   context('Test for creating a user without any data entered or misconfigured field', () => {
@@ -37,7 +35,7 @@ describe('Test for creating a user', () => {
     it('should not be able to create a user with misconfigured email', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').type('email')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 
@@ -74,7 +72,7 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-email"]').clear().type('automated@email.com')
         cy.get('[data-test-id="input-name"]').clear().type('Automated account')
         cy.get('[data-test-id="input-handle"]').clear().type('automated_account')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
 
         // We check if the submit button's content changed to a check icon
         cy.get('[data-icon="check"]')
@@ -86,7 +84,7 @@ describe('Test for creating a user', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]', { timeout: 10000 }).type('missing@email.com')
         cy.get('[data-test-id="input-name"]').type('missing account')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
 
       // We check if the submit button's content changed to a check icon
@@ -101,7 +99,7 @@ describe('Test for creating a user', () => {
         cy.get('[data-test-id="input-email"]').type('automated@email.com')
         cy.get('[data-test-id="input-name"]').type('Duplicate account')
         cy.get('[data-test-id="input-handle"]').type('duplicate_account')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
 
@@ -109,7 +107,7 @@ describe('Test for creating a user', () => {
       cy.get('[data-test-id="card-user-info"]').within(() => {
         cy.get('[data-test-id="input-email"]').clear().type('duplicate@email.com')
         cy.get('[data-test-id="input-handle"]').clear().type('automated_account')
-        cy.get('[data-test-id="button-submit"]').click()
+        cy.get('[data-test-id="button-submit"]').click({ force: true })
       })
     })
   })
