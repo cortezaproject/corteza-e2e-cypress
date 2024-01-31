@@ -1,1 +1,2 @@
-delete from compose_page_layout where id = '372153783544709225';
+delete from compose_page_layout where handle = 'record-list-layout';
+delete from compose_page_layout where handle = 'record-page-layout';

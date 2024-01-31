@@ -5,6 +5,7 @@ import {
   provisionDefaultModuleCreate,
   provisionDefaultFieldCreate,
   provisionDefaultPageCreate,
+  provisionDefaultPageLayoutCreate,
   provisionDefaultRecordCreate,
 } from '../../../../provision/list'
 
@@ -18,6 +19,7 @@ describe('Test for creating a record', () => {
       ...provisionDefaultModuleCreate,
       ...provisionDefaultFieldCreate,
       ...provisionDefaultPageCreate,
+      ...provisionDefaultPageLayoutCreate,
       ...provisionDefaultRecordCreate,
     ])
   })
@@ -43,9 +45,9 @@ describe('Test for creating a record', () => {
       cy.get('[data-test-id="field-age"]').clear().type(28)
       cy.get('[data-test-id="button-save"]').click({ force: true })
       cy.contains('View').should('exist')
-      cy.get('.card-body', { timeout: 10000 }).contains('John').should('exist')
-      cy.get('.card-body').contains('Doe').should('exist')
-      cy.get('.card-body').contains(28, { timeout: 1000 }).should('exist')
+      cy.get('.card-body', { timeout: 10000 }).should('exist').contains('John')
+      cy.get('.card-body').should('exist').contains('Doe')
+      cy.get('.card-body').should('exist').contains(28, { timeout: 1000 })
       cy.url().should('contain', '/record')
     })
   })
