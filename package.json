@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@cortezaproject/corteza-js": "^2023.9.7",
     "cypress-mailhog": "^1.6.0",
+    "lodash.merge": "^4.6.2",
     "pg": "^8.11.3"
   },
   "devDependencies": {

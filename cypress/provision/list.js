@@ -14,6 +14,7 @@ export const provisionAll = [
     'page_layout_delete',
     'report_delete',
     'workflow_delete',
+    'auth_client_delete'
 ]
 
 export const provisionAutomatedUserCreate = [
@@ -98,4 +99,8 @@ export const provisionDefaultWorkflowCreate = [
 
 export const provisionDefaultWorkflowDelete = [
     'workflow_delete'
+]
+
+export const provisionDefaultAuthClientCreate = [
+    'auth_client_create'
 ]
