@@ -26,7 +26,9 @@ The main configuration file is the `cypress.env.json`, but do try to separate th
   "USER_EMAIL_NEW": "permissions@email.com",
   "USER_DPO": "dpo@email.com",
   "USER_DPO_USER_PASSWORD": "dpo@email.com",
-  "PROVISION_DB_DSN": "postgres://corteza:corteza@localhost:5432/corteza_cy_test?sslmode=disable"
+  "PROVISION_DB_DSN": "postgres://corteza:corteza@localhost:5432/corteza_cy_test?sslmode=disable",
+  "AUTH_CLIENT_ID": "374948212714242049",
+  "AUTH_CLIENT_SECRET": "hPK7hiO15mI3qwboi7oTOrhc1ntn68mRRpmgLkbV6seXLLRjZtieUHdJECvEEN8Y"
 }
 ----
 
