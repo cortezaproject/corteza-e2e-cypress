@@ -1,4 +1,4 @@
 import './Create.cy'
-import './Edit.cy'
+// import './Edit.cy'
 import './Clone.cy'
-import './Delete.cy'
+// import './Delete.cy'

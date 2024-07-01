@@ -31,7 +31,11 @@ export default defineConfig({
     testIsolation: true,
     setupNodeEvents(on, config) {
       on('task', {
-        seedDb
+        seedDb,
+        log (message) {
+          console.log(message)
+          return null
+        }
       })
     },
   },

@@ -1,0 +1,5 @@
+export { default as module } from './compose/module.json'
+export { default as listPage } from './compose/listPage.json'
+export { default as listLayout } from './compose/listLayout.json'
+export { default as recordPage } from './compose/recordPage.json'
+export { default as recordLayout } from './compose/recordLayout.json'

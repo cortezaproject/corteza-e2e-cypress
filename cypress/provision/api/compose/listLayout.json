@@ -1,0 +1,59 @@
+{
+    "namespaceID": "37169336485952369",
+    "weight": 1,
+    "handle": "record-list-layout",
+    "meta": {
+        "title": "Record list layout",
+        "description": ""
+    },
+    "config": {
+        "visibility": {
+            "expression": "",
+            "roles": []
+        },
+        "buttons": {
+            "back": {
+                "enabled": true,
+                "label": ""
+            },
+            "delete": {
+                "enabled": true,
+                "label": ""
+            },
+            "clone": {
+                "enabled": true,
+                "label": ""
+            },
+            "new": {
+                "enabled": true,
+                "label": ""
+            },
+            "edit": {
+                "enabled": true,
+                "label": ""
+            },
+            "submit": {
+                "enabled": true,
+                "label": ""
+            }
+        },
+        "actions": [],
+        "useTitle": false
+    },
+    "blocks": [
+        {
+            "blockID": "1",
+            "xywh": [
+                0,
+                0,
+                20,
+                15
+            ],
+            "meta": {
+                "hidden": false,
+                "tempID": "tempID-ksl4l3o03eblxwye51i"
+            }
+        }
+    ],
+    "ownedBy": "0"
+}

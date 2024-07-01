@@ -1,0 +1,126 @@
+{
+    "namespaceID": "37169336485952369",
+    "name": "Cypress Module",
+    "handle": "cypress_module",
+    "meta": {},
+    "fields": [
+        {
+            "fieldID": "0",
+            "name": "name",
+            "kind": "String",
+            "label": "Name",
+            "defaultValue": [],
+            "maxLength": 0,
+            "isRequired": false,
+            "isMulti": false,
+            "isSystem": false,
+            "isSortable": true,
+            "isFilterable": true,
+            "options": {
+                "description": {
+                    "view": ""
+                },
+                "hint": {
+                    "view": ""
+                },
+                "multiLine": false,
+                "useRichTextEditor": false,
+                "multiDelimiter": "\n"
+            },
+            "expressions": {},
+            "config": {
+                "dal": {
+                    "encodingStrategy": null
+                },
+                "privacy": {
+                    "sensitivityLevelID": "0",
+                    "usageDisclosure": ""
+                },
+                "recordRevisions": {
+                    "enabled": false
+                }
+            },
+            "canUpdateRecordValue": false,
+            "canReadRecordValue": false
+        },
+        {
+            "fieldID": "0",
+            "name": "surname",
+            "kind": "String",
+            "label": "Surname",
+            "defaultValue": [],
+            "maxLength": 0,
+            "isRequired": false,
+            "isMulti": false,
+            "isSystem": false,
+            "isSortable": true,
+            "isFilterable": true,
+            "options": {
+                "description": {
+                    "view": ""
+                },
+                "hint": {
+                    "view": ""
+                },
+                "multiLine": false,
+                "useRichTextEditor": false,
+                "multiDelimiter": "\n"
+            },
+            "expressions": {},
+            "config": {
+                "dal": {
+                    "encodingStrategy": null
+                },
+                "privacy": {
+                    "sensitivityLevelID": "0",
+                    "usageDisclosure": ""
+                },
+                "recordRevisions": {
+                    "enabled": false
+                }
+            },
+            "canUpdateRecordValue": false,
+            "canReadRecordValue": false
+        },
+        {
+            "fieldID": "0",
+            "name": "age",
+            "kind": "Number",
+            "label": "Age",
+            "defaultValue": [],
+            "maxLength": 0,
+            "isRequired": false,
+            "isMulti": false,
+            "isSystem": false,
+            "isSortable": true,
+            "isFilterable": true,
+            "options": {
+                "description": {
+                    "view": ""
+                },
+                "hint": {
+                    "view": ""
+                },
+                "multiLine": false,
+                "useRichTextEditor": false,
+                "multiDelimiter": "\n"
+            },
+            "expressions": {},
+            "config": {
+                "dal": {
+                    "encodingStrategy": null
+                },
+                "privacy": {
+                    "sensitivityLevelID": "0",
+                    "usageDisclosure": ""
+                },
+                "recordRevisions": {
+                    "enabled": false
+                }
+            },
+            "canUpdateRecordValue": false,
+            "canReadRecordValue": false
+        }
+    ],
+    "labels": {}
+}
