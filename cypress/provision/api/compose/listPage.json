@@ -1,0 +1,93 @@
+{
+    "namespaceID": "37169336485952369",
+    "selfID": "0",
+    "title": "Record List for module \"Cypress module\"",
+    "handle": "record-list-page",
+    "description": "",
+    "weight": 0,
+    "labels": {},
+    "visible": true,
+    "blocks": [
+        {
+            "blockID": "1",
+            "kind": "RecordList",
+            "title": "",
+            "description": "",
+            "xywh": [
+                0,
+                0,
+                20,
+                15
+            ],
+            "options": {
+                "prefilter": "",
+                "presort": "createdAt DESC",
+                "fields": [],
+                "hideHeader": false,
+                "hideAddButton": false,
+                "hideImportButton": false,
+                "hideConfigureFieldsButton": true,
+                "hideSearch": false,
+                "hidePaging": false,
+                "hideSorting": false,
+                "hideFiltering": false,
+                "hideRecordReminderButton": false,
+                "hideRecordCloneButton": false,
+                "hideRecordEditButton": false,
+                "hideRecordViewButton": false,
+                "hideRecordPermissionsButton": false,
+                "enableRecordPageNavigation": false,
+                "allowExport": false,
+                "perPage": 20,
+                "recordDisplayOption": "sameTab",
+                "recordSelectorDisplayOption": "sameTab",
+                "magnifyOption": "",
+                "fullPageNavigation": false,
+                "showTotalCount": false,
+                "showDeletedRecordsOption": false,
+                "customFilterPresets": false,
+                "editable": false,
+                "draggable": false,
+                "editFields": [],
+                "linkToParent": false,
+                "openInNewTab": false,
+                "selectable": true,
+                "selectMode": "multi",
+                "selectionButtons": [],
+                "refreshRate": 0,
+                "showRefresh": false,
+                "bulkRecordEditEnabled": true,
+                "inlineRecordEditEnabled": false,
+                "filterPresets": [],
+                "showRecordPerPageOption": false
+            },
+            "meta": {
+                "hidden": false,
+                "tempID": "tempID-ksl4l3o03eblxwye51i"
+            },
+            "style": {
+                "variants": {
+                    "headerText": "dark"
+                },
+                "wrap": {
+                    "kind": "card"
+                },
+                "border": {
+                    "enabled": false
+                }
+            }
+        }
+    ],
+    "config": {
+        "navItem": {
+            "icon": {
+                "type": "link",
+                "src": ""
+            },
+            "expanded": false
+        }
+    },
+    "meta": {
+        "allowPersonalLayouts": true
+    }
+}

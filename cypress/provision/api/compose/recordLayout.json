@@ -1,0 +1,53 @@
+{
+    "namespaceID": "37169336485952369",
+    "weight": 0,
+    "handle": "record-page-layout",
+    "meta": {
+        "title": "Record page for module \"Cypress Module\"",
+        "description": ""
+    },
+    "config": {
+        "visibility": {
+            "expression": "",
+            "roles": []
+        },
+        "buttons": {
+            "back": {
+                "enabled": true
+            },
+            "delete": {
+                "enabled": true
+            },
+            "clone": {
+                "enabled": true
+            },
+            "new": {
+                "enabled": true
+            },
+            "edit": {
+                "enabled": true
+            },
+            "submit": {
+                "enabled": true
+            }
+        },
+        "actions": [],
+        "useTitle": false
+    },
+    "blocks": [
+        {
+            "blockID": "1",
+            "xywh": [
+                0,
+                0,
+                48,
+                82
+            ],
+            "meta": {
+                "hidden": false,
+                "tempID": "tempID-csd6oohko1lxx1ttlx"
+            }
+        }
+    ],
+    "ownedBy": "0"
+}
