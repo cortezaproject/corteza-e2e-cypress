@@ -22,7 +22,7 @@ describe('Test for deleting a user', () => {
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-user-info"]').within(() => {
-        cy.get('[data-test-id="button-delete"]').click()
+        cy.get('[data-test-id="button-delete-confirm"]').should('be.visible').click()
         cy.get('.confirmation-confirm', { timeout: 10000 })
           .click({ force: true })
       })
