@@ -21,8 +21,8 @@ describe('Test for deleting a role', () => {
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').should('exist').click()
       cy.get('[data-test-id="card-role-info"]').within(() => {
-        cy.get('[data-test-id="button-delete"]').click()
-        cy.get('.confirmation-confirm').click()
+        cy.get('[data-test-id="button-delete"]').should('be.visible').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click()
       })
 
       cy.navigateAdmin({ app: 'Roles' })

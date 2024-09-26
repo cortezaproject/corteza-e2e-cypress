@@ -20,8 +20,8 @@ describe('Test for deleting a template', () => {
       cy.wait(1000)
       cy.get('#resource-list > tbody > tr:last').click()
       cy.get('[data-test-id="card-template-info"]').within(() => {
-        cy.get('[data-test-id="button-delete"]').click()
-        cy.get('.confirmation-confirm').click()
+        cy.get('[data-test-id="button-delete"]').should('be.visible').click()
+        cy.get('[data-test-id="button-delete-confirm"]').click()
       })
       cy.searchItem({ item: 'automated_template' })
       cy.contains('automated_template').should('not.exist')
